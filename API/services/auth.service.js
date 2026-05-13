@@ -55,4 +55,9 @@ const deleteAllService = async() => {
     const supprimer = await auth.destroy({where:{role:"user"}})
     return supprimer
 }
-module.exports = { authService, loginService,AllUserService,deleteAllService };
+
+const deleteUserService = async (id) => {
+    const supprimer = await auth.destroy({where:{role:"user",id}})
+    return supprimer
+}
+module.exports = { authService, loginService,AllUserService,deleteAllService, deleteUserService};

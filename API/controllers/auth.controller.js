@@ -1,4 +1,4 @@
-const {authService,loginService,AllUserService,deleteAllService} = require("../services/auth.service");
+const {authService,loginService,AllUserService,deleteAllService,deleteUserService} = require("../services/auth.service");
 
 const createAuth = async(req,res)=>{
     try {
@@ -43,4 +43,14 @@ const deleteAll = async (req,res) => {
         res.status(500).json("erreur avec la réinitialisation des users")
     }
 }
-module.exports = {createAuth,loginController,allUsers,deleteAll};
+
+const deleteUser = async (req,res) => {
+    try {
+        const id = req.params.id
+        const info = await deleteUserService(id)
+        res.json(info)
+    } catch (error) {
+        res.status(500).json("problème pour supprimer un seul user")
+    }
+}
+module.exports = {createAuth,loginController,allUsers,deleteAll,deleteUser};

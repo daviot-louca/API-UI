@@ -13,7 +13,7 @@ db.user = user;
 db.ticket = ticket;
 
 // relations
-db.user.hasMany(db.ticket);
+db.user.hasMany(db.ticket,{foreignKey:"userId",onDelete:"CASCADE"});
 db.ticket.belongsTo(db.user);
 
 module.exports = db;
