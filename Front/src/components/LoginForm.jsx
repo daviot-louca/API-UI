@@ -1,5 +1,8 @@
-function LoginForm({email,password,setEmail,setPassword,handleSubmit}){
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
+function LoginForm(){
+  const {email,password,setEmail,setPassword, handleSubmit} = useContext(AuthContext);
     return <div>
         <form onSubmit={handleSubmit}>
 

@@ -1,47 +1,51 @@
-function TicketList({
-  tickets,
-  supprimerTicket,
-  modifierTickets,
-  role
-}) {
+import { useContext } from "react";
+
+import TicketItem from "./TicketItem";
+
+import { TicketContext } from "../context/TicketContext";
+
+function TicketList() {
+  
+    const {
+        tickets
+    } = useContext(TicketContext);
+
 
   return (
-    <div>
+    <div className="mt-5">
 
-      <h1>Mes Tickets</h1>
+      <h2>Tickets des utilisateurs</h2>
 
-      <div>
+      <div className="flex justify-around mt-2">
         <div>
-          <h2>ID</h2>
+          <h3>ID</h3>
         </div>
 
         <div>
-          <h2>Titre</h2>
+          <h3>Titre</h3>
         </div>
 
         <div>
-          <h2>Description</h2>
+          <h3>Description</h3>
         </div>
 
         <div>
-          <h2>Status</h2>
+          <h3>Status</h3>
         </div>
 
         <div>
-          <h2>Date de création</h2>
+          <h3>Date de création</h3>
         </div>
       </div>
 
       <div>
 
-        {tickets.map((ticket) => (
+        {tickets?.map((ticket) => (
 
           <TicketItem
-            key={ticket.id}
-            ticket={ticket}
-            supprimerTicket={supprimerTicket}
-            modifierTickets={modifierTickets}
-          />
+   key={ticket.id}
+   ticket={ticket}
+/>
 
         ))}
 

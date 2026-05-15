@@ -40,28 +40,78 @@ const createTicket = async (req,res)=>{
     }
 }
 
+
 const updateTicket = async(req,res)=>{
+
     try {
+
+        console.log(req.body);
+
         const ticketId = req.params.id;
-        const id = req.user.id
-        const {title,description,status} = req.body;
-        const info = await updateTicketService({id,ticketId,title,description,status})
-        res.json(info)
+
+        const id = req.user.id;
+
+        const role = req.user.role;
+
+        const {
+            title,
+            description,
+            status
+        } = req.body;
+
+        const info = await updateTicketService({
+            id,
+            role,
+            ticketId,
+            title,
+            description,
+            status
+        });
+
+        res.json(info);
+
     } catch (error) {
-        console.log(error)
-        res.status(500).json("erreur dans le controller ou dans le service")
+
+        console.log(error);
+
+        res.status(500).json(
+            "erreur dans le controller ou dans le service"
+        );
     }
 }
 
+
 const deleteTicket = async (req,res)=>{
+
     try {
+
+        console.log(req.user);
+
+        console.log(req.params.id);
+
         const ticketId = req.params.id;
+
         const id = req.user.id;
-        const info = await deleteTicketService({ticketId,id})
-        res.json(info)
+
+        const role = req.user.role;
+
+        const info = await deleteTicketService({
+            ticketId,
+            id,
+            role
+        });
+
+        console.log(info);
+
+        res.json(info);
+
     } catch (error) {
-        console.log(error)
-        res.status(500).json("erreur dans le controller ou dans le service")
+
+        console.log(error);
+
+        res.status(500).json(
+            "erreur dans le controller ou dans le service"
+        );
     }
 }
 

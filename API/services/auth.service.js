@@ -22,10 +22,12 @@ const authService = async ({ username, email, password }) => {
 }
 
 const loginService = async ({ email, password }) => {
+    console.log("je passe dans le login")
     const user = await auth.findOne({
         where: { email }
     });
     if (!user) {
+        console.log("problème avec le user")
         return "utilisateur introuvable"
     }
     const passwordDB = user.password;
@@ -37,6 +39,7 @@ const loginService = async ({ email, password }) => {
             role:user.role
     }
     } else {   
+        console.log("mdp incorrect")
         return "identifiants incorrects"
     }
 }

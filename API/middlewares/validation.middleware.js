@@ -5,8 +5,10 @@ const AuthValidation = (req,res,next) => {
     console.log("Auth passe bien par le middleware")
     if(!verification.success){
         res.status(400).json("données invalides")
+        console.log("ça bloque ici")
     }else{
         next()
+        console.log("controller bon")
     }
 };
 

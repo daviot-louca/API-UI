@@ -1,45 +1,84 @@
-function RegisterForm({ handleRegister, username, setUsername, email, setEmail, password, setPassword }) {
-    return <div>
-        <form onSubmit={handleRegister}>
+import { useContext } from "react";
 
-            <h2>Inscription</h2>
+import { AuthContext } from "../context/AuthContext";
 
-            <label>
-                Username
-                <input
-                    type="text"
-                    placeholder="test"
-                    onChange={(e) => setUsername(e.target.value)}
-                    value={username}
-                />
-            </label>
-            <label>
-                Email :
-                <input
-                    type="text"
-                    placeholder="test.exemple@gmail.com"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                />
-            </label>
+function RegisterForm() {
 
-            <label>
-                Password :
-                <input
-                    type="password"
-                    placeholder="*************"
-                    onChange={(e) => setPassword(e.target.value)}
-                    value={password}
-                />
-            </label>
+    const {
+        handleRegister,
 
-            <button type="submit">
-                S'inscrire
-            </button>
+        username,
+        setUsername,
 
-        </form>
-    </div>
+        email,
+        setEmail,
 
+        password,
+        setPassword
+
+    } = useContext(AuthContext);
+
+    return (
+
+        <div>
+
+            <form onSubmit={handleRegister}>
+
+                <h2>Inscription</h2>
+
+                <label>
+
+                    Username
+
+                    <input
+                        type="text"
+                        placeholder="test"
+                        value={username}
+                        onChange={(e) =>
+                            setUsername(e.target.value)
+                        }
+                    />
+
+                </label>
+
+                <label>
+
+                    Email
+
+                    <input
+                        type="text"
+                        placeholder="test.exemple@gmail.com"
+                        value={email}
+                        onChange={(e) =>
+                            setEmail(e.target.value)
+                        }
+                    />
+
+                </label>
+
+                <label>
+
+                    Password
+
+                    <input
+                        type="password"
+                        placeholder="*************"
+                        value={password}
+                        onChange={(e) =>
+                            setPassword(e.target.value)
+                        }
+                    />
+
+                </label>
+
+                <button type="submit">
+                    S'inscrire
+                </button>
+
+            </form>
+
+        </div>
+    );
 }
 
 export default RegisterForm;

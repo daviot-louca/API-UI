@@ -1,14 +1,6 @@
 import RegisterForm from '../components/RegisterForm'
-export default function RegisterPage({username,setUsername,email,setEmail,password,setPassword,handleRegister}){
+export default function RegisterPage(){
     return <div>
-        <RegisterForm
-        username={username}
-        setUsername={setUsername}
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-        handleRegister={handleRegister}
-        />
+        <RegisterForm/>
     </div>
 }

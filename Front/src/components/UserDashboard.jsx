@@ -1,20 +1,22 @@
-function UserDashboard({ tickets, supprimerTicket, modifierTickets, role, titre, setTitre, description, setDescription, ajoutTicket,handleLogout }) {
-    return <div>
-        <button onClick={handleLogout}>Se déconnecter</button>
-        <TicketList
-            tickets={tickets}
-            supprimerTicket={supprimerTicket}
-            modifierTickets={modifierTickets}
-        />
+import { useContext } from "react";
+import TicketList from "./TicketList";
+import { AuthContext } from "../context/AuthContext";
+import DashboardLayoutUser from "./DashboardLayoutUser";
+function UserDashboard() {
 
-        <CreateTicketForm
-            titre={titre}
-            setTitre={setTitre}
-            description={description}
-            setDescription={setDescription}
-            ajoutTicket={ajoutTicket}
-        />
-    </div>
+    const { handleLogout } = useContext(AuthContext);
+
+    return (
+
+        <DashboardLayoutUser>
+
+            <button onClick={handleLogout}>
+                Se déconnecter
+            </button>
+
+            <TicketList />
+
+        </DashboardLayoutUser>
+    );
 }
-
-export default UserDashboard
+export default UserDashboard;

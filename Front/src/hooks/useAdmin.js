@@ -32,7 +32,7 @@ export function useAdmin() {
 
             await deleteAllService(token);
 
-            voirToutUser();
+            await voirToutUser();
 
         } catch (error) {
 

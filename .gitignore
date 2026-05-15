@@ -1,0 +1,22 @@
+# ENV
+API/.env
+
+# NODE MODULES
+API/node_modules
+Front/node_modules
+
+# BUILD
+Front/dist
+
+# LOGS
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VSCODE
+.vscode
+
+# IDE
+.idea

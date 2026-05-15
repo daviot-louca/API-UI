@@ -1,33 +1,60 @@
+import { useContext } from "react";
 
-function UserList ({users,deleteAll,supprimerUser}){
-    return <div>
-                  <div>
+import { AdminContext } from "../context/AdminContext";
+
+function UserList() {
+
+    const {
+        users,
+        supprimerUser
+    } = useContext(AdminContext);
+
+    return (
+
+        <div>
+
             <div>
-              <h2>liste des utilisateurs :</h2>
-              <button onClick={deleteAll}>Réinitialiser</button>
+
+                {users?.map((user) => (
+
+                    <div key={user.id}>
+
+                        <div>
+                            <p>{user.id}</p>
+                        </div>
+
+                        <div>
+                            <p>{user.username}</p>
+                        </div>
+
+                        <div>
+                            <p>{user.email}</p>
+                        </div>
+
+                        <div>
+                            <p>{user.role}</p>
+                        </div>
+
+                        <div>
+
+                            <button
+                                onClick={() =>
+                                    supprimerUser(user.id)
+                                }
+                            >
+                                Supprimer l'utilisateur
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                ))}
+
             </div>
 
-            {users.map((user) => (
-              <div key={user.id}>
-                <div>
-                  <p>{user.id}</p>
-                </div>
-                <div>
-                  <p>{user.username}</p>
-                </div>
-                <div>
-                  <p>{user.email}</p>
-                </div>
-                <div>
-                  <p>{user.role}</p>
-                </div>
-                <div>
-                  <button onClick={()=>supprimerUser(user.id)}>Supprimer l'utilisateur</button>
-                </div>
-              </div>
-            ))}
-          </div>
-    </div>
+        </div>
+    );
 }
 
 export default UserList;

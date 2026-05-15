@@ -1,4 +1,7 @@
-import { useState } from "react";
+import {
+    createContext,
+    useState
+} from "react";
 
 import {
     voirTickets,
@@ -7,13 +10,17 @@ import {
     modifierTicket
 } from "../services/ticket.service";
 
-import { voirToutTickets } from "../services/admin.service";
+import {
+    voirToutTickets
+} from "../services/admin.service";
 
-export function useTickets() {
+export const TicketContext = createContext();
+
+export function TicketProvider({ children }) {
 
     const [tickets, setTickets] = useState([]);
 
-    // VOIR SES TICKETS
+    // USER TICKETS
     const voirTicket = async () => {
 
         try {
@@ -30,40 +37,7 @@ export function useTickets() {
         }
     };
 
-    // AJOUTER TICKET
-    const ajoutTicket = async (titre, description) => {
-
-        try {
-
-            const token = localStorage.getItem("token");
-
-            if (titre.trim().length === 0) {
-
-                alert("veuillez mettre un titre");
-                return;
-            }
-
-            if (description.trim().length < 10) {
-
-                alert("Veuillez mettre une description d'un minima de 10 caractères");
-                return;
-            }
-
-            await ajoutTickets(
-                titre,
-                description,
-                token
-            );
-
-            voirTicket();
-
-        } catch (error) {
-
-            console.log(error);
-        }
-    };
-
-    // VOIR TOUS LES TICKETS
+    // ADMIN TICKETS
     const voirToutTicket = async () => {
 
         try {
@@ -80,7 +54,31 @@ export function useTickets() {
         }
     };
 
-    // SUPPRIMER TICKET
+    // AJOUT
+    const ajoutTicket = async (
+        titre,
+        description
+    ) => {
+
+        try {
+
+            const token = localStorage.getItem("token");
+
+            await ajoutTickets(
+                titre,
+                description,
+                token
+            );
+
+            voirTicket();
+
+        } catch (error) {
+
+            console.log(error);
+        }
+    };
+
+    // DELETE
     const supprimerTicket = async (id) => {
 
         try {
@@ -100,8 +98,11 @@ export function useTickets() {
         }
     };
 
-    // MODIFIER TICKET
-    const modifierTickets = async (id, newstatus) => {
+    // UPDATE
+    const modifierTickets = async (
+        id,
+        newstatus
+    ) => {
 
         try {
 
@@ -121,15 +122,26 @@ export function useTickets() {
         }
     };
 
-    return {
+    return (
 
-        tickets,
-        setTickets,
+        <TicketContext.Provider
+            value={{
 
-        voirTicket,
-        ajoutTicket,
-        voirToutTickets,
-        supprimerTicket,
-        modifierTickets
-    }
+                tickets,
+
+                voirTicket,
+                voirToutTicket,
+
+                ajoutTicket,
+
+                supprimerTicket,
+
+                modifierTickets
+            }}
+        >
+
+            {children}
+
+        </TicketContext.Provider>
+    );
 }

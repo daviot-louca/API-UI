@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { login, register } from "../services/auth.service";
@@ -17,6 +17,17 @@ export function AuthProvider({ children }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
+
+    useEffect(() => {
+
+        const roleStorage = localStorage.getItem("role");
+
+        if (roleStorage) {
+
+            setRole(roleStorage);
+        }
+
+    }, []);
 
     // LOGIN
     const handleSubmit = async (e) => {

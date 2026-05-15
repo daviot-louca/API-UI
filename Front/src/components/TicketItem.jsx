@@ -1,9 +1,16 @@
-function TicketItem({
-  ticket,
-  supprimerTicket,
-  modifierTickets,
-  role
-}) {
+import { useContext } from "react";
+
+import { AuthContext } from "../context/AuthContext";
+import { TicketContext } from "../context/TicketContext";
+
+function TicketItem({ ticket }) {
+
+  const { role } = useContext(AuthContext);
+
+  const {
+    supprimerTicket,
+    modifierTickets
+  } = useContext(TicketContext);
 
   return (
 
@@ -28,11 +35,16 @@ function TicketItem({
           <select
             value={ticket.status}
             onChange={(e) =>
-              modifierTickets(ticket.id, e.target.value)
+              modifierTickets(
+                ticket.id,
+                e.target.value
+              )
             }
           >
 
-            <option value="remis">remis</option>
+            <option value="remis">
+              remis
+            </option>
 
             <option value="ouvert">
               ouvert
@@ -59,10 +71,12 @@ function TicketItem({
       </div>
 
       <div>
+
         <p>
           {new Date(ticket.createdAt)
             .toLocaleDateString()}
         </p>
+
       </div>
 
       {role === "admin" && (
@@ -82,8 +96,7 @@ function TicketItem({
       )}
 
     </div>
-
-  )
+  );
 }
 
 export default TicketItem;

@@ -24,14 +24,32 @@ const loginController = async(req,res)=>{
 }
 
 const allUsers = async (req,res) => {
+
     try {
-        const {page,limit}=req.query;
-        const pageNumber = Number(page);
-        const limitNumber = Number(limit)
-        const informations = await AllUserService({pageNumber,limitNumber})
-        res.json(informations)
+
+        const { page, limit } = req.query;
+
+        const pageNumber =
+            Number(page) || 1;
+
+        const limitNumber =
+            Number(limit) || 5;
+
+        const informations =
+            await AllUserService({
+                pageNumber,
+                limitNumber
+            });
+
+        res.json(informations);
+
     } catch (error) {
-        res.status(500).json("erreur avec le AllUsers")
+
+        console.log(error);
+
+        res.status(500).json(
+            "erreur avec le AllUsers"
+        );
     }
 }
 

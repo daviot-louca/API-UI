@@ -16,7 +16,7 @@ export const register = async (
       password
     }
   );
-
+  console.log(reponse.data);
   return reponse.data;
 };
 

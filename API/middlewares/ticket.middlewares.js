@@ -5,8 +5,10 @@ const TicketMiddleware = (req,res,next)=>{
     console.log("la requête est bien passée dans le middleware auth")
     if(!verification.success){
         res.status(400).json("données invalides")
+        console.log("ça passe pas dans le schema")
     }else{
         next()
+        console.log("ça passe")
     }
 }
 

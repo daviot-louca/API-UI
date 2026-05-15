@@ -16,7 +16,9 @@ const authJwt = (req,res,next) => {
       const decode =jwt.verify(token,process.env.JWT_SECRET)  
       req.user =decode
       next()
+      console.log("ici ça passe")
     }catch(error){
+        console.log("ça marche pas")
         return res.status(401).json("token invalide")
     };
 };
