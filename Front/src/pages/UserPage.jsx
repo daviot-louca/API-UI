@@ -1,6 +1,20 @@
 import UserDashboard from "../components/UserDashboard";
+import {useState} from 'react'
+export default function UserPage({tickets,supprimerTicket,modifierTickets,role,ajoutTicket,handleLogout}){
+    const [titre,setTitre] = useState("")
+    const [description,setDescription] = useState("")
+    const handleAjoutTicket = async (e) => {
 
-export default function UserPage({tickets,supprimerTicket,modifierTickets,role,titre,setTitre,description,setDescription,ajoutTicket,handleLogout}){
+    e.preventDefault();
+
+    await ajoutTicket(
+        titre,
+        description
+    );
+
+    setTitre("");
+    setDescription("");
+}
     return <div>
         <UserDashboard
         tickets={tickets}
@@ -11,7 +25,7 @@ export default function UserPage({tickets,supprimerTicket,modifierTickets,role,t
         setTitre={setTitre}
         description={description}
         setDescription={setDescription}
-        ajoutTicket={ajoutTicket}
+        ajoutTicket={handleAjoutTicket}
         handleLogout={handleLogout}
         />
     </div>

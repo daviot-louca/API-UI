@@ -1,10 +1,3 @@
-/* SERVICES */
-import {
-  voirToutUsers,
-  deleteAllService,
-  supprimerUserService
-} from "./services/admin.service";
-
 /* ROUTER */
 import {
   Routes,
@@ -21,7 +14,6 @@ import HomePage from "./pages/HomePage";
 /* REACT */
 import {
   useEffect,
-  useState,
   useContext
 } from "react";
 
@@ -30,10 +22,14 @@ import { AuthContext } from "./context/AuthContext";
 
 /* HOOKS */
 import { useTickets } from "./hooks/useTickets";
+import { useAdmin } from "./hooks/useAdmin";
+
+/* PROTECTED ROUTES */
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
 
-  // TICKETS HOOK
+  // TICKETS
   const {
     tickets,
     voirTicket,
@@ -43,7 +39,15 @@ function App() {
     modifierTickets
   } = useTickets();
 
-  // AUTH CONTEXT
+  // ADMIN
+  const {
+    users,
+    supprimerUser,
+    deleteAll,
+    voirToutUser
+  } = useAdmin();
+
+  // AUTH
   const {
 
     role,
@@ -63,11 +67,6 @@ function App() {
     handleRegister
 
   } = useContext(AuthContext);
-
-  // LOCAL STATES
-  const [titre, setTitre] = useState("");
-  const [description, setDescription] = useState("");
-  const [users, setUsers] = useState([]);
 
   // AUTO LOGIN
   useEffect(() => {
@@ -91,74 +90,6 @@ function App() {
 
   }, []);
 
-  // AJOUT TICKET
-  const handleAjoutTicket = async (e) => {
-
-    e.preventDefault();
-
-    await ajoutTicket(
-      titre,
-      description
-    );
-
-    setTitre("");
-    setDescription("");
-  };
-
-  // VOIR TOUS LES USERS
-  const voirToutUser = async () => {
-
-    try {
-
-      const token = localStorage.getItem("token");
-
-      const data = await voirToutUsers(token);
-
-      setUsers(data);
-
-    } catch (error) {
-
-      console.log(error);
-    }
-  };
-
-  // SUPPRIMER USER
-  const supprimerUser = async (id) => {
-
-    try {
-
-      const token = localStorage.getItem("token");
-
-      await supprimerUserService(
-        id,
-        token
-      );
-
-      voirToutUser();
-
-    } catch (error) {
-
-      console.log(error);
-    }
-  };
-
-  // DELETE ALL USERS
-  const deleteAll = async () => {
-
-    try {
-
-      const token = localStorage.getItem("token");
-
-      await deleteAllService(token);
-
-      voirToutUser();
-
-    } catch (error) {
-
-      console.log(error);
-    }
-  };
-
   return (
 
     <div>
@@ -167,115 +98,97 @@ function App() {
 
       <Routes>
 
+        {/* HOME */}
         <Route
           path="/"
           element={<HomePage />}
         />
 
+        {/* REGISTER */}
         <Route
           path="/register"
           element={
             <RegisterPage
               username={username}
               setUsername={setUsername}
+
               email={email}
               setEmail={setEmail}
+
               password={password}
               setPassword={setPassword}
+
               handleRegister={handleRegister}
             />
           }
         />
 
+        {/* LOGIN */}
         <Route
           path="/login"
           element={
             <LoginPage
               email={email}
-              password={password}
               setEmail={setEmail}
+
+              password={password}
               setPassword={setPassword}
+
               handleSubmit={handleSubmit}
             />
           }
         />
 
+        {/* USER DASHBOARD */}
         <Route
           path="/dashboard"
           element={
-            role === "user"
+            <ProtectedRoute allowedRole="user">
 
-              ? (
+              <UserPage
+                tickets={tickets}
 
-                <UserPage
-                  tickets={tickets}
-                  supprimerTicket={supprimerTicket}
-                  modifierTickets={modifierTickets}
+                supprimerTicket={supprimerTicket}
 
-                  titre={titre}
-                  setTitre={setTitre}
+                modifierTickets={modifierTickets}
 
-                  description={description}
-                  setDescription={setDescription}
+                ajoutTicket={ajoutTicket}
 
-                  ajoutTicket={handleAjoutTicket}
+                handleLogout={handleLogout}
+              />
 
-                  handleLogout={handleLogout}
-                />
-
-              )
-
-              : (
-
-                <LoginPage
-                  email={email}
-                  password={password}
-                  setEmail={setEmail}
-                  setPassword={setPassword}
-                  handleSubmit={handleSubmit}
-                />
-
-              )
+            </ProtectedRoute>
           }
         />
 
+        {/* ADMIN DASHBOARD */}
         <Route
           path="/admin"
           element={
-            role === "admin"
+            <ProtectedRoute allowedRole="admin">
 
-              ? (
+              <AdminPage
+                tickets={tickets}
 
-                <AdminPage
-                  tickets={tickets}
-                  supprimerTicket={supprimerTicket}
-                  modifierTickets={modifierTickets}
+                supprimerTicket={supprimerTicket}
 
-                  users={users}
+                modifierTickets={modifierTickets}
 
-                  deleteAll={deleteAll}
+                users={users}
 
-                  handleLogout={handleLogout}
+                deleteAll={deleteAll}
 
-                  supprimerUser={supprimerUser}
-                />
+                handleLogout={handleLogout}
 
-              )
+                supprimerUser={supprimerUser}
+              />
 
-              : (
-
-                <LoginPage
-                  email={email}
-                  password={password}
-                  setEmail={setEmail}
-                  setPassword={setPassword}
-                  handleSubmit={handleSubmit}
-                />
-
-              )
+            </ProtectedRoute>
           }
         />
+
       </Routes>
+
     </div>
   );
 }

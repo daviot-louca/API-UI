@@ -3,10 +3,11 @@ import { useState } from "react";
 import {
     voirTickets,
     ajoutTickets,
-    voirToutTickets,
     supprimerTickets,
     modifierTicket
 } from "../services/ticket.service";
+
+import { voirToutTickets } from "../services/admin.service";
 
 export function useTickets() {
 
@@ -127,7 +128,7 @@ export function useTickets() {
 
         voirTicket,
         ajoutTicket,
-        voirToutTicket,
+        voirToutTickets,
         supprimerTicket,
         modifierTickets
     }
