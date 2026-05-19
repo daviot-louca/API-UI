@@ -21,7 +21,7 @@ function RegisterForm() {
 
         <form
             onSubmit={handleRegister}
-            className="w-[450px] flex flex-col"
+            className="w-112.5 flex flex-col"
         >
 
             {/* HEADER */}
