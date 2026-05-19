@@ -1,5 +1,5 @@
 
-const {seeTicketService,createTicketService,updateTicketService,deleteTicketService,seeAllService} = require("../services/ticket.service")
+const {seeTicketService,createTicketService,updateTicketService,deleteTicketService,seeAllService,seeTheTicketService} = require("../services/ticket.service")
 
 
 
@@ -25,6 +25,18 @@ const seeTicket = async (req,res) =>{
         res.json(informations)
     } catch (error) {
         res.status(500).json("erreur avec le seeTicket")
+    }
+}
+
+const seeTheTicket = async (req,res) =>{
+    try {
+        const id = req.params.id
+        const informations = await seeTheTicketService(id)
+        res.json(informations)
+        console.log("ça passe dans le controller")
+    } catch (error) {
+        console.log("ça bug dans le controller")
+        res.status(500).json("erreur dans le seeTheTicket")
     }
 }
 
@@ -116,4 +128,4 @@ const deleteTicket = async (req,res)=>{
 }
 
     
-module.exports ={seeTicket,createTicket,updateTicket,deleteTicket,seeAll};
+module.exports ={seeTicket,createTicket,updateTicket,deleteTicket,seeAll,seeTheTicket};

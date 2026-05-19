@@ -1,10 +1,11 @@
 import {
     createContext,
-    useState
+    useState,
+    useEffect
 } from "react";
-
 import {
     voirTickets,
+    voirUnTicket,
     ajoutTickets,
     supprimerTickets,
     modifierTicket
@@ -30,7 +31,7 @@ export function TicketProvider({ children }) {
             const data = await voirTickets(token);
 
             setTickets(data);
-
+            console.log(data)
         } catch (error) {
 
             console.log(error);
@@ -53,6 +54,26 @@ export function TicketProvider({ children }) {
             console.log(error);
         }
     };
+        const [ticket, setTicket] = useState();
+
+        const VoirUnTicketContext = async (id) => {
+
+            try {
+
+                const token =
+                    localStorage.getItem("token");
+
+                const data =
+                    await voirUnTicket(id, token);
+
+                setTicket(data);
+
+            } catch (error) {
+
+                console.log(error);
+            }
+        };
+
 
     // AJOUT
     const ajoutTicket = async (
@@ -127,11 +148,12 @@ export function TicketProvider({ children }) {
         <TicketContext.Provider
             value={{
 
+                ticket,
                 tickets,
 
                 voirTicket,
                 voirToutTicket,
-
+                VoirUnTicketContext,
                 ajoutTicket,
 
                 supprimerTicket,
@@ -143,5 +165,5 @@ export function TicketProvider({ children }) {
             {children}
 
         </TicketContext.Provider>
-    );
+    )
 }

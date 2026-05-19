@@ -14,17 +14,29 @@ export function AuthProvider({ children }) {
         localStorage.getItem("role") || ""
     );
 
+    const [username, setUsername] = useState(
+        localStorage.getItem("username") || ""
+    );
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [username, setUsername] = useState("");
 
     useEffect(() => {
 
-        const roleStorage = localStorage.getItem("role");
+        const roleStorage =
+            localStorage.getItem("role");
+
+        const usernameStorage =
+            localStorage.getItem("username");
 
         if (roleStorage) {
 
             setRole(roleStorage);
+        }
+
+        if (usernameStorage) {
+
+            setUsername(usernameStorage);
         }
 
     }, []);
@@ -51,7 +63,16 @@ export function AuthProvider({ children }) {
                 reponse.role
             );
 
+            localStorage.setItem(
+                "username",
+                reponse.username
+            );
+
             setRole(reponse.role);
+
+            setUsername(
+                reponse.username
+            );
 
             if (reponse.role === "admin") {
 
@@ -99,7 +120,16 @@ export function AuthProvider({ children }) {
                 reponse.role
             );
 
+            localStorage.setItem(
+                "username",
+                reponse.username
+            );
+
             setRole(reponse.role);
+
+            setUsername(
+                reponse.username
+            );
 
             if (reponse.role === "admin") {
 
@@ -110,7 +140,6 @@ export function AuthProvider({ children }) {
                 navigate("/dashboard");
             }
 
-            setUsername("");
             setEmail("");
             setPassword("");
 
@@ -125,19 +154,26 @@ export function AuthProvider({ children }) {
 
         localStorage.removeItem("token");
         localStorage.removeItem("role");
+        localStorage.removeItem("username");
 
         setRole("");
+        setUsername("");
 
         navigate("/");
     };
 
     return (
+
         <AuthContext.Provider
             value={{
 
                 // ROLE
                 role,
                 setRole,
+
+                // USERNAME
+                username,
+                setUsername,
 
                 // LOGIN
                 email,
@@ -146,17 +182,15 @@ export function AuthProvider({ children }) {
                 password,
                 setPassword,
 
-                // REGISTER
-                username,
-                setUsername,
-
                 // ACTIONS
                 handleSubmit,
                 handleRegister,
                 handleLogout
             }}
         >
+
             {children}
+
         </AuthContext.Provider>
     )
 }

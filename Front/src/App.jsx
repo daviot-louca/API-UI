@@ -4,15 +4,22 @@ import {
   Route
 } from "react-router-dom";
 
-/* PAGES */
-import AdminPageTickets from "./pages/AdminPageTickets";
-import AdminPageUsers from "./pages/AdminPageUsers";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import UserPage from "./pages/UserPage";
-import HomePage from "./pages/HomePage";
+/* PAGES ADMIN*/
+import AdminPageTickets from "./pages/admin/AdminPageTickets";
+import AdminPageUsers from "./pages/admin/AdminPageUsers";
+
+/* PAGES SHARED*/
+import LoginPage from "./pages/shared/LoginPage";
+import RegisterPage from "./pages/shared/RegisterPage";
+import HomePage from "./pages/shared/HomePage";
+
+/* PAGES USER*/
+import UserPage from "./pages/user/UserPage";
+import UserDashboardCreateTicket from "./pages/user/UserDashboardCreateTicket"
+
 /* PROTECTED ROUTES */
-import ProtectedRoute from "./components/protectedRoute";
+import ProtectedRoute from "./components/shared/ProtectedRoute";
+import AdminPageTicketDetail from "./pages/admin/AdminPageTicketDetail";
 
 function App() {
   return (
@@ -51,6 +58,13 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/create/Tickets"
+          element={
+            <ProtectedRoute allowedRole="user">
+              <UserDashboardCreateTicket />
+            </ProtectedRoute>}
+        />
 
         {/* ADMIN DASHBOARD */}
         <Route
@@ -68,6 +82,14 @@ function App() {
               <AdminPageUsers />
             </ProtectedRoute>
           }
+        />
+        <Route
+        path="/admin/tickets/:id"
+        element={
+          <ProtectedRoute allowedRole="admin">
+            <AdminPageTicketDetail/>
+          </ProtectedRoute>
+        }
         />
       </Routes>
     </div>

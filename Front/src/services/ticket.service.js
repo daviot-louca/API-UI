@@ -11,6 +11,14 @@ export const voirTickets = async (token) => {
     return reponse.data
 }
 
+export const voirUnTicket = async (id,token) => {
+    const reponse = await axios.get(`${url}/tickets/${id}`,{
+        headers:{Authorization:`Bearer ${token}`
+    }
+})
+return reponse.data
+}
+
 export const ajoutTickets = async (titre,description,token) => {
     const reponse = await axios.post(`${url}/tickets`,
         {

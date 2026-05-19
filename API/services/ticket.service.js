@@ -24,6 +24,13 @@ const seeTicketService = async ({ id, pageNumber = 1, limitNumber = 5 }) => {
     return data
 }
 
+const seeTheTicketService = async (id) => {
+    const data = await Ticket.findByPk(id,{
+        include: [User]
+    })
+    return data
+}
+
 const createTicketService = async ({ id, title, description, status }) => {
     const envoie = await Ticket.create({
         userId: id,
@@ -96,4 +103,4 @@ const deleteTicketService = async ({
     return supprimer;
 };
 
-module.exports = { seeTicketService, createTicketService, updateTicketService, deleteTicketService, seeAllService };    
+module.exports = { seeTicketService, createTicketService, updateTicketService, deleteTicketService, seeAllService, seeTheTicketService };    

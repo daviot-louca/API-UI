@@ -75,7 +75,6 @@ export function AdminProvider({ children }) {
             value={{
 
                 users,
-
                 voirToutUser,
 
                 supprimerUser,

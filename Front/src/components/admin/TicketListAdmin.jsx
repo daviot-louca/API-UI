@@ -1,8 +1,8 @@
 import { useContext } from "react";
 
-import TicketItem from "./TicketItem";
+import TicketItem from "../shared/TicketItem";
 
-import { TicketContext } from "../context/TicketContext";
+import { TicketContext } from "../../context/TicketContext";
 
 function TicketList() {
   
@@ -12,29 +12,32 @@ function TicketList() {
 
 
   return (
-    <div className="mt-5">
+    <div className="mt-5 ml-5">
 
       <h2>Tickets des utilisateurs</h2>
 
-      <div className="flex justify-around mt-2">
-        <div>
+      <div className="flex mt-2">
+        <div className="w-1/6">
           <h3>ID</h3>
         </div>
 
-        <div>
+        <div className="w-1/6">
           <h3>Titre</h3>
         </div>
 
-        <div>
-          <h3>Description</h3>
+        <div className="w-1/6">
+          <h3>Utilisateur</h3>
         </div>
 
-        <div>
+        <div className="w-1/6">
           <h3>Status</h3>
         </div>
 
-        <div>
+        <div className="w-1/6">
           <h3>Date de création</h3>
+        </div>
+        <div className="w-1/6">
+          <h3>gestion du tickets</h3>
         </div>
       </div>
 
