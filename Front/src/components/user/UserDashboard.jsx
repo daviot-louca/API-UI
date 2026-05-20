@@ -150,9 +150,9 @@ function UserDashboard() {
                         </div>
 
                         {/* TABLE HEADER */}
-                        <div className="grid grid-cols-5 p-5 mt-5 font-semibold text-slate-700">
+                        <div className="grid grid-cols-[40px_180px_600px_180px_190px] p-5 mt-5 font-semibold text-slate-700">
 
-                            <div>id</div>
+                            <div className="grid">id</div>
 
                             <div>titre</div>
 

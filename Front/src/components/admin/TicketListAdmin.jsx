@@ -14,31 +14,31 @@ function TicketList() {
 
 
   return (
-    <div className="mt-5 ml-5">
+    <div className=" ml-5">
 
       <h2>Tickets des utilisateurs</h2>
 
-      <div className="flex mt-2">
-        <div className="w-1/6">
+      <div className="px-8 py-3 grid grid-cols-[40px_250px_250px_200px_200px_200px]">
+        <div className="">
           <h3>ID</h3>
         </div>
 
-        <div className="w-1/6">
+        <div className="">
           <h3>Titre</h3>
         </div>
 
-        <div className="w-1/6">
+        <div className="">
           <h3>Utilisateur</h3>
         </div>
 
-        <div className="w-1/6">
+        <div className="">
           <h3>Status</h3>
         </div>
 
-        <div className="w-1/6">
+        <div className="">
           <h3>Date de création</h3>
         </div>
-        <div className="w-1/6">
+        <div className="">
           <h3>gestion du tickets</h3>
         </div>
       </div>
@@ -55,7 +55,7 @@ function TicketList() {
         ))}
 
       </div>
-<div className="flex items-center justify-center gap-4 mt-10">
+<div className="flex items-center justify-center gap-4 mt-5">
 
                 {/* PREVIOUS */}
                 <button

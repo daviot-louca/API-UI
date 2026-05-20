@@ -23,7 +23,7 @@ function TicketItem({ ticket }) {
             {
                 role === "admin" ? (
 
-                    <div className="p-6 grid grid-cols-6">
+                    <div className="px-8 py-3 grid grid-cols-[40px_250px_250px_200px_200px_200px]">
 
                         {/* ID */}
                         <div>
@@ -137,7 +137,7 @@ function TicketItem({ ticket }) {
 
                 ) : (
                     <div>
-                    <div className="p-6 grid grid-cols-5">
+                    <div className="p-6 grid grid-cols-[40px_180px_600px_180px_190px]">
                         <div>
                             {ticket?.id}
                         </div>
@@ -147,7 +147,7 @@ function TicketItem({ ticket }) {
                         <div className="truncate">
                             {ticket?.description}
                         </div>
-                        <div className="ml-2 w-40">
+                        <div className=" w-30">
                             <StatusBadge status={ticket.status}/>
                         </div>
                         <div>
@@ -157,7 +157,7 @@ function TicketItem({ ticket }) {
                                 }
                         </div>
                     </div>
-                    <hr className="w-290" />
+                    <hr className="w-295" />
                     </div>
                     
                 )
