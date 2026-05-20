@@ -10,7 +10,7 @@ function Sidebar() {
 
     return (
 
-        <aside className="w-260px min-h-screen bg-indigo-950 text-white flex flex-col justify-between p-6">
+        <aside className="w-260px min-h-screen bg-slate-800 text-slate-400 flex flex-col justify-between p-10">
 
             {/* TOP */}
             <div>
@@ -40,7 +40,7 @@ function Sidebar() {
                                     `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                                         isActive
                                             ? "bg-indigo-600 text-white shadow-lg"
-                                            : "text-gray-300 hover:bg-indigo-900"
+                                            : "text-slate-400 hover:bg-indigo-900"
                                     }`
                                 }
                             >
@@ -49,29 +49,6 @@ function Sidebar() {
 
                                 <span>
                                     Mes tickets
-                                </span>
-
-                            </NavLink>
-
-                        </li>
-
-                        <li>
-
-                            <NavLink
-                                to="/create/Tickets"
-                                className={({ isActive }) =>
-                                    `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-                                        isActive
-                                            ? "bg-indigo-600 text-white shadow-lg"
-                                            : "text-gray-300 hover:bg-indigo-900"
-                                    }`
-                                }
-                            >
-
-                                <span>+</span>
-
-                                <span>
-                                    Ajouter un ticket
                                 </span>
 
                             </NavLink>

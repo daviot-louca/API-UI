@@ -23,7 +23,7 @@ function TicketItem({ ticket }) {
             {
                 role === "admin" ? (
 
-                    <div className="grid grid-cols-6 items-center bg-white rounded-2xl shadow-sm px-6 py-5 mb-4 hover:shadow-md transition">
+                    <div className="p-6 grid grid-cols-6">
 
                         {/* ID */}
                         <div>
@@ -136,47 +136,30 @@ function TicketItem({ ticket }) {
                     </div>
 
                 ) : (
-
-                    <div className="bg-white rounded-3xl shadow-sm p-6 flex items-start justify-between hover:shadow-md transition mb-5">
-
-                        {/* LEFT */}
-                        <div className="flex flex-col gap-3 mr-">
-
-                            <h2 className="text-2xl font-bold text-gray-800">
-
-                                {ticket.title}
-
-                            </h2>
-
-                            <p className="text-gray-500 leading-relaxed">
-
-                                {ticket.description}
-
-                            </p>
-
+                    <div>
+                    <div className="p-6 grid grid-cols-5">
+                        <div>
+                            {ticket?.id}
                         </div>
-
-                        {/* RIGHT */}
-                        <div className="flex items-end gap-2">
-
-                            {/* STATUS */}
-                            <div>
-                                <StatusBadge status={ticket.status} />
-                            </div>
+                        <div>
+                            {ticket?.title}
                         </div>
-                        {/* DATE */}
-                        <p className="text-gray-400 text-sm mr-50">
-
-                            {
-                                new Date(ticket.createdAt)
-                                    .toLocaleDateString()
-                            }
-
-                        </p>
-
-
-
+                        <div className="truncate">
+                            {ticket?.description}
+                        </div>
+                        <div className="ml-2 w-40">
+                            <StatusBadge status={ticket.status}/>
+                        </div>
+                        <div>
+                                                            {
+                                    new Date(ticket.createdAt)
+                                        .toLocaleDateString()
+                                }
+                        </div>
                     </div>
+                    <hr className="w-290" />
+                    </div>
+                    
                 )
             }
 

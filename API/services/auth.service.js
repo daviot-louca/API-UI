@@ -70,8 +70,8 @@ const loginService = async ({ email, password }) => {
 }
 
 const AllUserService = async ({ pageNumber = 1, limitNumber = 5 }) => {
-    const limit = limitNumber
-    const offset = ((pageNumber - 1) * limitNumber)
+    const limit = limitNumber ||5
+    const offset = (pageNumber - 1) * limit
     const data = await auth.findAll({
         limit,
         offset

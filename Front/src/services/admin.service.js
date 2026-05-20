@@ -1,8 +1,8 @@
 import axios from "axios";
 const url = "http://localhost:3030";
 
-export const voirToutTickets = async (token) => {
-          const reponse = await axios.get(`${url}/admin/tickets`, {
+export const voirToutTickets = async (token,page) => {
+          const reponse = await axios.get(`${url}/admin/tickets?page=${page}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

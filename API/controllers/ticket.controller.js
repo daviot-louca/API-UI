@@ -6,8 +6,8 @@ const {seeTicketService,createTicketService,updateTicketService,deleteTicketServ
 const seeAll = async (req,res) =>{
     try {
         const {page,limit}=req.query;
-        const pageNumber = Number(page);
-        const limitNumber = Number(limit)
+        const pageNumber = Number(page)||1;
+        const limitNumber = Number(limit)||5
         const informations = await seeAllService({pageNumber,limitNumber})
         res.json(informations)
     } catch (error) {

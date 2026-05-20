@@ -1,8 +1,8 @@
 import {
     createContext,
-    useState,
-    useEffect
+    useState
 } from "react";
+
 import {
     voirTickets,
     voirUnTicket,
@@ -21,17 +21,28 @@ export function TicketProvider({ children }) {
 
     const [tickets, setTickets] = useState([]);
 
+    const [ticket, setTicket] = useState();
+
+    // PAGINATION
+    const [currentPage, setCurrentPage] = useState(1);
+
     // USER TICKETS
-    const voirTicket = async () => {
+    const voirTicket = async (page) => {
 
         try {
 
             const token = localStorage.getItem("token");
 
-            const data = await voirTickets(token);
+            const data = await voirTickets(
+                token,
+                page
+            );
 
+            // IMPORTANT
             setTickets(data);
-            console.log(data)
+
+            console.log(data);
+
         } catch (error) {
 
             console.log(error);
@@ -39,14 +50,18 @@ export function TicketProvider({ children }) {
     };
 
     // ADMIN TICKETS
-    const voirToutTicket = async () => {
+    const voirToutTicket = async (currentPage) => {
 
         try {
 
             const token = localStorage.getItem("token");
 
-            const data = await voirToutTickets(token);
+            const data = await voirToutTickets(
+                token,
+                currentPage
+            );
 
+            // IMPORTANT
             setTickets(data);
 
         } catch (error) {
@@ -54,26 +69,25 @@ export function TicketProvider({ children }) {
             console.log(error);
         }
     };
-        const [ticket, setTicket] = useState();
 
-        const VoirUnTicketContext = async (id) => {
+    // VOIR UN TICKET
+    const VoirUnTicketContext = async (id) => {
 
-            try {
+        try {
 
-                const token =
-                    localStorage.getItem("token");
+            const token =
+                localStorage.getItem("token");
 
-                const data =
-                    await voirUnTicket(id, token);
+            const data =
+                await voirUnTicket(id, token);
 
-                setTicket(data);
+            setTicket(data);
 
-            } catch (error) {
+        } catch (error) {
 
-                console.log(error);
-            }
-        };
-
+            console.log(error);
+        }
+    };
 
     // AJOUT
     const ajoutTicket = async (
@@ -91,7 +105,7 @@ export function TicketProvider({ children }) {
                 token
             );
 
-            voirTicket();
+            voirTicket(currentPage);
 
         } catch (error) {
 
@@ -111,7 +125,7 @@ export function TicketProvider({ children }) {
                 token
             );
 
-            voirToutTicket();
+            voirToutTicket(currentPage);
 
         } catch (error) {
 
@@ -135,7 +149,7 @@ export function TicketProvider({ children }) {
                 newstatus
             );
 
-            voirToutTicket();
+            voirToutTicket(currentPage);
 
         } catch (error) {
 
@@ -148,16 +162,21 @@ export function TicketProvider({ children }) {
         <TicketContext.Provider
             value={{
 
-                ticket,
+                // STATES
                 tickets,
+                ticket,
 
+                // PAGINATION
+                currentPage,
+                setCurrentPage,
+
+                // ACTIONS
                 voirTicket,
                 voirToutTicket,
                 VoirUnTicketContext,
+
                 ajoutTicket,
-
                 supprimerTicket,
-
                 modifierTickets
             }}
         >
@@ -165,5 +184,5 @@ export function TicketProvider({ children }) {
             {children}
 
         </TicketContext.Provider>
-    )
+    );
 }

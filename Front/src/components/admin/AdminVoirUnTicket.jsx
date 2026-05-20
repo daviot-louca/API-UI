@@ -74,7 +74,6 @@ export default function VoirUnTicketComponent() {
                     </div>
                 </div>
 
-
             </div>
         </DashboardLayout>
 

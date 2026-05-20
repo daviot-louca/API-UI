@@ -2,14 +2,19 @@ import axios from "axios";
 
 const url = "http://localhost:3030";
 
-export const voirTickets = async (token) => {
-    const reponse = await axios.get(`${url}/tickets`, {
-        headers: {
-            Authorization: `Bearer ${token}`
+export const voirTickets = async (token, page) => {
+
+    const reponse = await axios.get(
+        `${url}/tickets?page=${page}`,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
         }
-    });
-    return reponse.data
-}
+    );
+
+    return reponse.data;
+};
 
 export const voirUnTicket = async (id,token) => {
     const reponse = await axios.get(`${url}/tickets/${id}`,{

@@ -1,58 +1,25 @@
-
+import { Link } from "react-router-dom";
 import RegisterForm from "../../components/shared/RegisterForm";
-
-export default function RegisterPage() {
+export default function HomePage() {
 
     return (
 
-        <div className="w-full h-screen bg-[#EEF2FF] flex items-center justify-center overflow-hidden">
+        <div className="w-full h-screen bg-slate-100 flex items-center justify-center overflow-hidden">
 
-            <div className="w-[1400px] h-[800px] bg-white rounded-[40px] shadow-2xl overflow-hidden flex">
-
-                {/* LEFT SIDE */}
-                <div className="w-1/2 bg-indigo-600 flex flex-col justify-between p-20 text-white">
-
-                    <div>
-
-                        <div className="w-24 h-24 bg-white/20 rounded-3xl flex items-center justify-center text-5xl mb-14">
-
-                            🎫
-
-                        </div>
-
-                        <h1 className="text-7xl font-bold leading-tight">
-
-                            Dashboard
-
-                        </h1>
-
-                        <p className="text-indigo-100 text-2xl mt-10 leading-relaxed max-w-lg">
-
-                            Gérez vos tickets, utilisateurs et demandes de support
-
-                        </p>
-
+            <div className="w-250 h-150 bg-white rounded-2xl shadow-2xl overflow-hidden flex">
+                {/*coté gauche insription*/}
+                <div className="w-1/2 bg-slate-800 flex flex-col items-center">
+                    <p className="text-white text-2xl font-bold mt-10">Connectez-vous à votre compte</p>
+                    <p className="text-white mt-80">Déjà connecté ?</p>
+                    <div className="mt-8 flex justify-center">
+                        <Link to="/login" className="inline-block bg-slate-100 p-3 rounded-xl">Se connecter</Link>
                     </div>
-
-                    <div>
-
-                        <p className="text-indigo-200 text-xl">
-
-                            Dashboard Ticket
-
-                        </p>
-
-                    </div>
-
                 </div>
-
-                {/* RIGHT SIDE */}
-                <div className="w-1/2 bg-[#F8FAFC] flex items-center justify-center">
-
-                    <RegisterForm />
-
+                {/*côté droit connexion */}
+                <div className="w-1/2 flex flex-col items-center">
+                    <h1 className="text-slate-800 text-2xl mt-10 font-bold">Commencez maintenant</h1>
+                    <RegisterForm/>
                 </div>
-
             </div>
 
         </div>
