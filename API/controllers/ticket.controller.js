@@ -1,63 +1,154 @@
+const {
+    seeTicketService,
+    createTicketService,
+    updateTicketService,
+    deleteTicketService,
+    seeAllService,
+    seeTheTicketService,
+    statsTicketService,
+    adminStatsService
+} = require("../services/ticket.service");
 
-const {seeTicketService,createTicketService,updateTicketService,deleteTicketService,seeAllService,seeTheTicketService} = require("../services/ticket.service")
+// SEE ALL ADMIN
+const seeAll = async (req, res) => {
 
-
-
-const seeAll = async (req,res) =>{
     try {
-        const {page,limit}=req.query;
-        const pageNumber = Number(page)||1;
-        const limitNumber = Number(limit)||5
-        const informations = await seeAllService({pageNumber,limitNumber})
-        res.json(informations)
+
+        const {
+            page,
+            limit,
+            status,
+            type
+        } = req.query;
+
+        const pageNumber =
+            Number(page) || 1;
+
+        const limitNumber =
+            Number(limit) || 5;
+
+        const informations =
+            await seeAllService({
+                pageNumber,
+                limitNumber,
+                status,
+                type
+            });
+
+        res.json(informations);
+
     } catch (error) {
-        res.status(500).json("erreur avec le seeAll")
-    }
-}
 
-const seeTicket = async (req,res) =>{
-    try {
-        const id = req.user.id
-        const {page,limit}=req.query;
-        const pageNumber = Number(page);
-        const limitNumber = Number(limit)
-        const informations = await seeTicketService({id,pageNumber,limitNumber})
-        res.json(informations)
-    } catch (error) {
-        res.status(500).json("erreur avec le seeTicket")
-    }
-}
+        console.log(error);
 
-const seeTheTicket = async (req,res) =>{
-    try {
-        const id = req.params.id
-        const informations = await seeTheTicketService(id)
-        res.json(informations)
-        console.log("ça passe dans le controller")
-    } catch (error) {
-        console.log("ça bug dans le controller")
-        res.status(500).json("erreur dans le seeTheTicket")
+        res.status(500).json(
+            "erreur avec le seeAll"
+        );
     }
-}
+};
 
-const createTicket = async (req,res)=>{
+// SEE USER TICKETS
+const seeTicket = async (req, res) => {
+
     try {
+
         const id = req.user.id;
-        const {title,description,status} = req.body
-        const informations = await createTicketService({id,title,description,status})
-        res.json(informations) 
+
+        const {
+            page,
+            limit,
+            status,
+            type
+        } = req.query;
+
+        const pageNumber =
+            Number(page) || 1;
+
+        const limitNumber =
+            Number(limit) || 5;
+
+        const informations =
+            await seeTicketService({
+                id,
+                pageNumber,
+                limitNumber,
+                status,
+                type
+            });
+
+        res.json(informations);
+
     } catch (error) {
-        console.log(error)
-        res.status(500).json("erreur dans le controller ou dans le service")
+
+        console.log(error);
+
+        res.status(500).json(
+            "erreur avec le seeTicket"
+        );
     }
-}
+};
 
-
-const updateTicket = async(req,res)=>{
+// SEE ONE TICKET
+const seeTheTicket = async (req, res) => {
 
     try {
 
-        console.log(req.body);
+        const id = req.params.id;
+
+        const informations =
+            await seeTheTicketService(id);
+
+        res.json(informations);
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json(
+            "erreur dans le seeTheTicket"
+        );
+    }
+};
+
+// CREATE
+const createTicket = async (req, res) => {
+
+    try {
+
+        const id = req.user.id;
+
+        const {
+            type,
+            title,
+            description,
+            status
+        } = req.body;
+
+        const informations =
+            await createTicketService({
+                id,
+                type,
+                title,
+                description,
+                status
+            });
+
+        res.json(informations);
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json(
+            "erreur dans le controller ou dans le service"
+        );
+    }
+};
+
+// UPDATE
+const updateTicket = async (req, res) => {
+
+    try {
 
         const ticketId = req.params.id;
 
@@ -66,19 +157,22 @@ const updateTicket = async(req,res)=>{
         const role = req.user.role;
 
         const {
+            type,
             title,
             description,
             status
         } = req.body;
 
-        const info = await updateTicketService({
-            id,
-            role,
-            ticketId,
-            title,
-            description,
-            status
-        });
+        const info =
+            await updateTicketService({
+                id,
+                role,
+                ticketId,
+                type,
+                title,
+                description,
+                status
+            });
 
         res.json(info);
 
@@ -90,16 +184,12 @@ const updateTicket = async(req,res)=>{
             "erreur dans le controller ou dans le service"
         );
     }
-}
+};
 
-
-const deleteTicket = async (req,res)=>{
+// DELETE
+const deleteTicket = async (req, res) => {
 
     try {
-
-        console.log(req.user);
-
-        console.log(req.params.id);
 
         const ticketId = req.params.id;
 
@@ -107,13 +197,12 @@ const deleteTicket = async (req,res)=>{
 
         const role = req.user.role;
 
-        const info = await deleteTicketService({
-            ticketId,
-            id,
-            role
-        });
-
-        console.log(info);
+        const info =
+            await deleteTicketService({
+                ticketId,
+                id,
+                role
+            });
 
         res.json(info);
 
@@ -125,7 +214,59 @@ const deleteTicket = async (req,res)=>{
             "erreur dans le controller ou dans le service"
         );
     }
-}
+};
 
-    
-module.exports ={seeTicket,createTicket,updateTicket,deleteTicket,seeAll,seeTheTicket};
+// STATS
+const statsTickets = async (req, res) => {
+
+    try {
+
+        const id = req.user.id;
+
+        const informations =
+            await statsTicketService(id);
+
+        res.json(informations);
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json(
+            "erreur stats tickets"
+        );
+    }
+};
+
+const adminStats = async (
+    req,
+    res
+) => {
+
+    try {
+
+        const informations =
+            await adminStatsService();
+
+        res.json(informations);
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json(
+            "erreur admin stats"
+        );
+    }
+};
+
+module.exports = {
+    seeTicket,
+    createTicket,
+    updateTicket,
+    deleteTicket,
+    seeAll,
+    seeTheTicket,
+    statsTickets,
+    adminStats
+};

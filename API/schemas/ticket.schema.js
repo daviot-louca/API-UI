@@ -1,6 +1,10 @@
 const {z} = require("zod");
 
 const TicketSchema = z.object({
+    type:z
+        .enum([
+          "Poste de travail","téléphonie","compte d'accès","messagerie","autres"
+        ]),
     title: z
         .string()
         .trim()

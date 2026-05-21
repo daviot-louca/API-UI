@@ -8,15 +8,19 @@ function TicketList() {
 
     const {
         tickets,
+
         currentPage,
-        setCurrentPage
+        setCurrentPage,
     } = useContext(TicketContext);
 
-
     return (
+
         <div className="mt-5">
 
+            {/* FILTERS */}
 
+
+            {/* LIST */}
             {tickets?.map((ticket) => (
 
                 <TicketItem
@@ -25,6 +29,7 @@ function TicketList() {
                 />
 
             ))}
+
             {/* PAGINATION */}
             <div className="flex items-center justify-center gap-4 mt-10">
 
@@ -40,7 +45,7 @@ function TicketList() {
                 </button>
 
                 {/* CURRENT PAGE */}
-                <div className="bg-slate-800 text-white px-5 py-3 rounded-2xl font-semibold">
+                <div className="bg-[#303030] text-white px-5 py-3 rounded-2xl font-semibold">
 
                     {currentPage}
 
@@ -51,7 +56,7 @@ function TicketList() {
                     onClick={() =>
                         setCurrentPage(currentPage + 1)
                     }
-                    className="bg-slate-800 hover:bg-indigo-700 text-white px-5 py-3 rounded-2xl font-medium transition"
+                    className="bg-[#303030] hover:bg-[#505050] text-white px-5 py-3 rounded-2xl font-medium transition"
                 >
                     Suivant
                 </button>
@@ -59,7 +64,7 @@ function TicketList() {
             </div>
 
         </div>
-    )
+    );
 }
 
 export default TicketList;

@@ -19,7 +19,7 @@ import UserDashboardCreateTicket from "./pages/user/UserDashboardCreateTicket"
 
 /* PROTECTED ROUTES */
 import ProtectedRoute from "./components/shared/ProtectedRoute";
-import AdminPageTicketDetail from "./pages/admin/AdminPageTicketDetail";
+import AdminPageReports from "./pages/admin/AdminPageReports";
 
 function App() {
   return (
@@ -84,10 +84,10 @@ function App() {
           }
         />
         <Route
-        path="/admin/tickets/:id"
+        path="/admin/reports"
         element={
           <ProtectedRoute allowedRole="admin">
-            <AdminPageTicketDetail/>
+            <AdminPageReports/>
           </ProtectedRoute>
         }
         />

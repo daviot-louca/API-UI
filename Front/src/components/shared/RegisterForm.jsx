@@ -23,7 +23,7 @@ function RegisterForm() {
             className="w-112.5 flex flex-col"
         >
 
-            <label className="text-slate-800 font-semibold text-lg mb-1">
+            <label className="text-[#303030] font-semibold text-lg mb-1">
 
                 Pseudo
 
@@ -36,10 +36,10 @@ function RegisterForm() {
                     setUsername(e.target.value)
                 }
                 value={username}
-                className="bg-slate-100 rounded-2xl px-6 py-3 text-lg outline-none focus:ring-2 focus:ring-slate-800 transition mb-8"
+                className="bg-slate-100 rounded-2xl px-6 py-3 text-lg outline-none focus:ring-2 focus:ring-[#303030] transition mb-8"
             />
             {/* EMAIL */}
-            <label className="text-slate-800 font-semibold text-lg mb-2">
+            <label className="text-[#303030] font-semibold text-lg mb-2">
 
                 Email
 
@@ -52,11 +52,11 @@ function RegisterForm() {
                     setEmail(e.target.value)
                 }
                 value={email}
-                className="bg-slate-100 rounded-2xl px-6 py-3 text-lg outline-none focus:ring-2 focus:ring-slate-800 transition mb-8"
+                className="bg-slate-100 rounded-2xl px-6 py-3 text-lg outline-none focus:ring-2 focus:ring-[#303030] transition mb-8"
             />
 
             {/* PASSWORD */}
-            <label className="text-slate-800 font-semibold text-lg mb-2">
+            <label className="text-[#303030] font-semibold text-lg mb-2">
 
                 Mot de passe
 
@@ -69,7 +69,7 @@ function RegisterForm() {
                     setPassword(e.target.value)
                 }
                 value={password}
-                className="bg-slate-100 rounded-2xl px-6 py-3 text-lg outline-none focus:ring-2 focus:ring-slate-800 transition mb-8"
+                className="bg-slate-100 rounded-2xl px-6 py-3 text-lg outline-none focus:ring-2 focus:ring-[#303030] transition mb-8"
             />
 
             {/* ACTIONS */}
@@ -77,7 +77,7 @@ function RegisterForm() {
 
                 <button
                     type="submit"
-                    className="inline-block bg-slate-800 p-3 rounded-xl text-slate-100 mt-5"
+                    className="inline-block bg-[#303030] p-3 rounded-xl text-slate-100 mt-5"
                 >
                     Créer un compte
                 </button>

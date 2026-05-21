@@ -6,7 +6,8 @@ function UserList() {
 
     const {
         users,
-        supprimerUser
+        supprimerUser,
+        updateUser
     } = useContext(AdminContext);
 
     return (
@@ -115,6 +116,14 @@ function UserList() {
 
                                 <div>
 
+                                    <button
+                                        onClick={() =>
+                                            updateUser(user.id)
+                                        }
+                                        className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl font-medium transition"
+                                    >
+                                        role
+                                    </button>
                                     <button
                                         onClick={() =>
                                             supprimerUser(user.id)

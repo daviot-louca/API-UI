@@ -6,7 +6,8 @@ import {
 import {
     voirToutUsers,
     supprimerUserService,
-    deleteAllService
+    deleteAllService,
+    updateRole
 } from "../services/admin.service";
 
 export const AdminContext = createContext();
@@ -69,6 +70,16 @@ export function AdminProvider({ children }) {
         }
     };
 
+    const updateUser = async (id) => {
+        try{
+            const token = localStorage.getItem("token");
+            await updateRole(token,id)
+            voirToutUser()
+        }catch{
+            console.log(error)
+        }
+    }
+
     return (
 
         <AdminContext.Provider
@@ -79,7 +90,8 @@ export function AdminProvider({ children }) {
 
                 supprimerUser,
 
-                deleteAll
+                deleteAll,
+                updateUser
             }}
         >
 

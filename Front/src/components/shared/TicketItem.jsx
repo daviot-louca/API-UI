@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext,useState } from "react";
 import { Link } from "react-router-dom";
 
 import { AuthContext } from "../../context/AuthContext";
@@ -6,7 +6,7 @@ import { TicketContext } from "../../context/TicketContext";
 
 import StatusBadge from "./StatusBadge"
 
-function TicketItem({ ticket }) {
+function TicketItem({ ticket,setIsShowTicketOpen,setSelectedTicket }) {
 
     const { role } =
         useContext(AuthContext);
@@ -23,21 +23,26 @@ function TicketItem({ ticket }) {
             {
                 role === "admin" ? (
 
-                    <div className="px-8 py-3 grid grid-cols-[40px_250px_250px_200px_200px_200px]">
+                    <div className="px-8 py-3 grid grid-cols-[40px_150px_250px_220px_200px_200px_200px]">
 
                         {/* ID */}
                         <div>
 
-                            <p className="font-semibold text-gray-800">
+                            <p className="font-semibold text-[#303030]">
                                 #{ticket.id}
                             </p>
 
+                        </div>
+                        <div>
+                            <p>
+                                {ticket?.type}
+                            </p>
                         </div>
 
                         {/* TITLE */}
                         <div>
 
-                            <p className="font-semibold text-gray-800">
+                            <p className="font-semibold text-[#303030]">
                                 {ticket.title}
                             </p>
 
@@ -46,15 +51,15 @@ function TicketItem({ ticket }) {
                         {/* USER */}
                         <div className="flex items-center gap-3">
 
-                            <div className="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">
+                            <div className="w-10 h-10 rounded-full bg-[#303030] text-slate-100 flex items-center justify-center font-bold">
 
-                                {ticket.user.username.slice(0,2)}
+                                {ticket.user.username.slice(0, 2)}
 
                             </div>
 
                             <div>
 
-                                <p className="font-medium text-gray-800">
+                                <p className="font-medium text-[#303030]">
                                     {ticket.user.username}
                                 </p>
 
@@ -63,10 +68,10 @@ function TicketItem({ ticket }) {
                         </div>
 
                         {/* STATUS */}
-                        <div>
+                        <div className="">
 
                             <select
-                                className="bg-gray-100 rounded-xl px-4 py-2 outline-none border-none"
+                                className="bg-slate-100 text-[#303030] rounded-xl px-4 py-2 outline-none border-none"
                                 value={ticket.status}
                                 onChange={(e) =>
                                     modifierTickets(
@@ -99,7 +104,7 @@ function TicketItem({ ticket }) {
                         {/* DATE */}
                         <div>
 
-                            <p className="text-gray-500 font-medium">
+                            <p className="text-[#303030] font-medium">
 
                                 {
                                     new Date(ticket.createdAt)
@@ -114,19 +119,18 @@ function TicketItem({ ticket }) {
                         <div className="flex items-center gap-3">
 
                             {/* VOIR */}
-                            <Link
-                                to={`/admin/tickets/${ticket.id}`}
-                                className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-xl font-medium transition"
-                            >
+                            <button
+                                onClick={() => { setSelectedTicket(ticket); setIsShowTicketOpen(true); }}
+                                className="bg-[#303030] hover:bg-[#505050] text-slate-100 px-4 py-2 rounded-[5px] font-medium transition">
                                 Voir
-                            </Link>
+                            </button>
 
                             {/* DELETE */}
                             <button
                                 onClick={() =>
                                     supprimerTicket(ticket.id)
                                 }
-                                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl font-medium transition"
+                                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-[5px] font-medium transition"
                             >
                                 Supprimer
                             </button>
@@ -137,29 +141,32 @@ function TicketItem({ ticket }) {
 
                 ) : (
                     <div>
-                    <div className="p-6 grid grid-cols-[40px_180px_600px_180px_190px]">
-                        <div>
-                            {ticket?.id}
-                        </div>
-                        <div>
-                            {ticket?.title}
-                        </div>
-                        <div className="truncate">
-                            {ticket?.description}
-                        </div>
-                        <div className=" w-30">
-                            <StatusBadge status={ticket.status}/>
-                        </div>
-                        <div>
-                                                            {
+                        <div className="p-3 grid grid-cols-[40px_140px_150px_500px_180px_190px]">
+                            <div className=" mx-3">
+                                {ticket?.id}
+                            </div>
+                            <div className=" mx-3">
+                                {ticket?.type}
+                            </div>
+                            <div className="truncate mx-3">
+                                {ticket?.title}
+                            </div>
+                            <div className="truncate mx-3">
+                                {ticket?.description}
+                            </div>
+                            <div className=" w-30 mx-3">
+                                <StatusBadge status={ticket.status} />
+                            </div>
+                            <div>
+                                {
                                     new Date(ticket.createdAt)
                                         .toLocaleDateString()
                                 }
+                            </div>
                         </div>
+                        <hr className="w-295" />
                     </div>
-                    <hr className="w-295" />
-                    </div>
-                    
+
                 )
             }
 

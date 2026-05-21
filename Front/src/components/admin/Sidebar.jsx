@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
-
 import { AuthContext } from "../../context/AuthContext";
 
 function Sidebar() {
@@ -10,7 +9,7 @@ function Sidebar() {
 
     return (
 
-        <aside className="w-260px min-h-screen bg-indigo-950 text-white flex flex-col justify-between p-6">
+        <aside className="w-260px min-h-screen bg-[#303030] text-white flex flex-col justify-between p-6">
 
             {/* TOP */}
             <div>
@@ -37,18 +36,14 @@ function Sidebar() {
                             <NavLink
                                 to="/admin"
                                 className={({ isActive }) =>
-                                    `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-                                        isActive
-                                            ? "bg-indigo-600 text-white shadow-lg"
-                                            : "text-gray-300 hover:bg-indigo-900"
+                                    `flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200  hover:px-5 ${isActive
+                                        ? "bg-[#266fdb] text-white px-5"
+                                        : "text-slate-400 hover:bg-indigo-900"
                                     }`
                                 }
                             >
-
-                                <span>🎫</span>
-
                                 <span>
-                                    Tickets
+                                    Dashboard
                                 </span>
 
                             </NavLink>
@@ -60,18 +55,32 @@ function Sidebar() {
                             <NavLink
                                 to="/users"
                                 className={({ isActive }) =>
-                                    `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-                                        isActive
-                                            ? "bg-indigo-600 text-white shadow-lg"
-                                            : "text-gray-300 hover:bg-indigo-900"
+                                    `flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200  hover:px-5 ${isActive
+                                        ? "bg-[#266fdb] text-white px-5"
+                                        : "text-slate-400 hover:bg-indigo-900"
                                     }`
                                 }
                             >
-
-                                <span>👥</span>
-
                                 <span>
                                     Utilisateurs
+                                </span>
+
+                            </NavLink>
+
+                        </li>
+                        <li>
+
+                            <NavLink
+                                to="/admin/reports"
+                                className={({ isActive }) =>
+                                    `flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200  hover:px-5 ${isActive
+                                        ? "bg-[#266fdb] text-white px-5"
+                                        : "text-slate-400 hover:bg-indigo-900"
+                                    }`
+                                }
+                            >
+                                <span>
+                                    Reports
                                 </span>
 
                             </NavLink>

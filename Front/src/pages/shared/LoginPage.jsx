@@ -8,7 +8,7 @@ export default function HomePage() {
 
             <div className="w-250 h-150 bg-white rounded-2xl shadow-2xl overflow-hidden flex">
                 {/*coté gauche insription*/}
-                <div className="w-1/2 bg-slate-800 flex flex-col items-center">
+                <div className="w-1/2 bg-[#303030] flex flex-col items-center">
                     <p className="text-white text-2xl font-bold mt-10">Commencez maintenant</p>
                     <p className="text-white mt-80">Pas encore de compte ?</p>
                     <div className="mt-8 flex justify-center">
@@ -17,7 +17,7 @@ export default function HomePage() {
                 </div>
                 {/*côté droit connexion */}
                 <div className="w-1/2 flex flex-col items-center">
-                    <h1 className="text-slate-800 text-2xl mt-10 font-bold">Accédez à votre compte</h1>
+                    <h1 className="text-[#303030] text-2xl mt-10 font-bold">Accédez à votre compte</h1>
                     <LoginForm/>
                 </div>
             </div>

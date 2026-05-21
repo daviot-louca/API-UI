@@ -1,4 +1,4 @@
-const {authService,loginService,AllUserService,deleteAllService,deleteUserService} = require("../services/auth.service");
+const {authService,loginService,AllUserService,deleteAllService,deleteUserService,updateUserService} = require("../services/auth.service");
 
 const createAuth = async(req,res)=>{
     try {
@@ -71,4 +71,14 @@ const deleteUser = async (req,res) => {
         res.status(500).json("problème pour supprimer un seul user")
     }
 }
-module.exports = {createAuth,loginController,allUsers,deleteAll,deleteUser};
+const updateUsers = async (req,res)=>{
+    try{
+        const id = req.params.id
+        const info = await updateUserService(id)
+        res.json(info)
+    }catch(error){
+        res.status(500).json("problème modification user à admin")
+    }
+}
+module.exports = {createAuth,loginController,allUsers,deleteAll,deleteUser,updateUsers};
+

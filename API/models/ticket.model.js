@@ -7,12 +7,14 @@ const ticket = db.define("ticket", {
         autoIncrement: true,
         type: DataTypes.INTEGER
     },
-
+    type:{
+        allowNull:false,
+        type:DataTypes.ENUM("Poste de travail","téléphonie","compte d'accès","messagerie")
+    },
     title: {
         allowNull: false,
         type: DataTypes.STRING
     },
-
     description: {
         allowNull: false,
         type: DataTypes.TEXT

@@ -35,3 +35,25 @@ export const deleteAllService = async (token) =>{
       });
       return reponse.data
 }
+export const voirAdminStats = async (
+    token
+) => {
+
+    const reponse = await axios.get(
+        `${url}/tickets/admin/stats`,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    );
+
+    return reponse.data;
+};
+
+export const updateRole = async (token,id) => {
+  const reponse = await axios.patch(`${url}/admin/user/${id}`,{
+    header:{Authorization:`Bearer:${token}`}
+  });
+  return reponse.data;
+}

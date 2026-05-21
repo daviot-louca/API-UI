@@ -23,7 +23,7 @@ function LoginForm() {
         >
 
             {/* EMAIL */}
-            <label className="text-slate-800 font-semibold text-lg mb-3 mt-13">
+            <label className="text-[#303030] font-semibold text-lg mb-3 mt-13">
 
                 Entrez votre e-mail
 
@@ -36,11 +36,11 @@ function LoginForm() {
                     setEmail(e.target.value)
                 }
                 value={email}
-                className="bg-slate-100 rounded-2xl px-6 py-5 text-lg outline-none focus:ring-2 focus:ring-slate-800 transition mb-8"
+                className="bg-slate-100 rounded-2xl px-6 py-5 text-lg outline-none focus:ring-2 focus:ring-[#303030] transition mb-8"
             />
 
             {/* PASSWORD */}
-            <label className="text-slate-800 font-semibold text-lg mb-3">
+            <label className="text-[#303030] font-semibold text-lg mb-3">
 
                 Mot de passe
 
@@ -53,7 +53,7 @@ function LoginForm() {
                     setPassword(e.target.value)
                 }
                 value={password}
-                className="bg-slate-100 rounded-2xl px-6 py-5 text-lg outline-none focus:ring-2 focus:ring-slate-800 transition mb-10"
+                className="bg-slate-100 rounded-2xl px-6 py-5 text-lg outline-none focus:ring-2 focus:ring-[#303030] transition mb-10"
             />
 
             {/* ACTIONS */}
@@ -61,7 +61,7 @@ function LoginForm() {
 
                 <button
                     type="submit"
-                    className="inline-block bg-slate-800 p-3 rounded-xl text-slate-100 mt-9"
+                    className="inline-block bg-[#303030] p-3 rounded-xl text-slate-100 mt-9"
                 >
                     Se connecter
                 </button>

@@ -88,4 +88,10 @@ const deleteUserService = async (id) => {
     const supprimer = await auth.destroy({ where: { role: "user", id } })
     return supprimer
 }
-module.exports = { authService, loginService, AllUserService, deleteAllService, deleteUserService };
+
+const updateUserService = async(id) =>{
+    const modifier = await auth.update({id,role:"admin"})
+    return modifier
+}
+
+module.exports = { authService, loginService, AllUserService, deleteAllService, deleteUserService,updateUserService };

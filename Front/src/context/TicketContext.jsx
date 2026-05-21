@@ -8,40 +8,76 @@ import {
     voirUnTicket,
     ajoutTickets,
     supprimerTickets,
-    modifierTicket
+    modifierTicket,
+    voirStatsTickets
 } from "../services/ticket.service";
 
 import {
-    voirToutTickets
+    voirToutTickets,
+    voirAdminStats
 } from "../services/admin.service";
 
-export const TicketContext = createContext();
+// CONTEXT
+export const TicketContext =
+    createContext();
 
-export function TicketProvider({ children }) {
+// PROVIDER
+export function TicketProvider({
+    children
+}) {
 
-    const [tickets, setTickets] = useState([]);
+    // STATS
+    const [stats, setStats] = useState({
+        total: 0,
+        remis: 0,
+        ouvert: 0,
+        enCours: 0,
+        resolu: 0
+    });
+    const [adminStats, setAdminStats] =
+        useState(null);
 
-    const [ticket, setTicket] = useState();
+    // TICKETS
+    const [tickets, setTickets] =
+        useState([]);
+
+    // TOTAL
+    const [totalTickets, setTotalTickets] =
+        useState(0);
+
+    // ONE TICKET
+    const [ticket, setTicket] =
+        useState();
 
     // PAGINATION
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] =
+        useState(1);
+
+    // FILTER
+    const [selectedStatus, setSelectedStatus] =
+        useState("all");
 
     // USER TICKETS
-    const voirTicket = async (page) => {
+    const voirTicket = async (
+        page,
+        status = "all"
+    ) => {
 
         try {
 
-            const token = localStorage.getItem("token");
+            const token =
+                localStorage.getItem("token");
 
-            const data = await voirTickets(
-                token,
-                page
-            );
+            const data =
+                await voirTickets(
+                    token,
+                    page,
+                    status
+                );
 
-            // IMPORTANT
-            setTickets(data);
+            setTickets(data.rows);
 
-            console.log(data);
+            setTotalTickets(data.count);
 
         } catch (error) {
 
@@ -50,19 +86,26 @@ export function TicketProvider({ children }) {
     };
 
     // ADMIN TICKETS
-    const voirToutTicket = async (currentPage) => {
+    const voirToutTicket = async (
+        page,
+        status = "all"
+    ) => {
 
         try {
 
-            const token = localStorage.getItem("token");
+            const token =
+                localStorage.getItem("token");
 
-            const data = await voirToutTickets(
-                token,
-                currentPage
-            );
+            const data =
+                await voirToutTickets(
+                    token,
+                    page,
+                    status
+                );
 
-            // IMPORTANT
-            setTickets(data);
+            setTickets(data.rows);
+
+            setTotalTickets(data.count);
 
         } catch (error) {
 
@@ -71,41 +114,53 @@ export function TicketProvider({ children }) {
     };
 
     // VOIR UN TICKET
-    const VoirUnTicketContext = async (id) => {
+    const VoirUnTicketContext =
+        async (id) => {
 
-        try {
+            try {
 
-            const token =
-                localStorage.getItem("token");
+                const token =
+                    localStorage.getItem("token");
 
-            const data =
-                await voirUnTicket(id, token);
+                const data =
+                    await voirUnTicket(
+                        id,
+                        token
+                    );
 
-            setTicket(data);
+                setTicket(data);
 
-        } catch (error) {
+            } catch (error) {
 
-            console.log(error);
-        }
-    };
+                console.log(error);
+            }
+        };
 
     // AJOUT
     const ajoutTicket = async (
+        type,
         titre,
         description
     ) => {
 
         try {
 
-            const token = localStorage.getItem("token");
+            const token =
+                localStorage.getItem("token");
 
             await ajoutTickets(
+                type,
                 titre,
                 description,
                 token
             );
 
-            voirTicket(currentPage);
+            voirTicket(
+                currentPage,
+                selectedStatus
+            );
+
+            voirStatsTicket();
 
         } catch (error) {
 
@@ -114,24 +169,31 @@ export function TicketProvider({ children }) {
     };
 
     // DELETE
-    const supprimerTicket = async (id) => {
+    const supprimerTicket =
+        async (id) => {
 
-        try {
+            try {
 
-            const token = localStorage.getItem("token");
+                const token =
+                    localStorage.getItem("token");
 
-            await supprimerTickets(
-                id,
-                token
-            );
+                await supprimerTickets(
+                    id,
+                    token
+                );
 
-            voirToutTicket(currentPage);
+                voirToutTicket(
+                    currentPage,
+                    selectedStatus
+                );
 
-        } catch (error) {
+                voirStatsTicket();
 
-            console.log(error);
-        }
-    };
+            } catch (error) {
+
+                console.log(error);
+            }
+        };
 
     // UPDATE
     const modifierTickets = async (
@@ -141,7 +203,8 @@ export function TicketProvider({ children }) {
 
         try {
 
-            const token = localStorage.getItem("token");
+            const token =
+                localStorage.getItem("token");
 
             await modifierTicket(
                 id,
@@ -149,13 +212,59 @@ export function TicketProvider({ children }) {
                 newstatus
             );
 
-            voirToutTicket(currentPage);
+            voirToutTicket(
+                currentPage,
+                selectedStatus
+            );
+
+            voirAdminStatistiques();
+            voirStatsTicket();
 
         } catch (error) {
 
             console.log(error);
         }
     };
+
+    // STATS
+    const voirStatsTicket =
+        async () => {
+
+            try {
+
+                const token =
+                    localStorage.getItem("token");
+
+                const data =
+                    await voirStatsTickets(token);
+
+                setStats(data);
+
+            } catch (error) {
+
+                console.log(error);
+            }
+        };
+
+    // ADMIN STATS
+    const voirAdminStatistiques =
+        async () => {
+
+            try {
+
+                const token =
+                    localStorage.getItem("token");
+
+                const data =
+                    await voirAdminStats(token);
+
+                setAdminStats(data);
+
+            } catch (error) {
+
+                console.log(error);
+            }
+        };
 
     return (
 
@@ -165,19 +274,29 @@ export function TicketProvider({ children }) {
                 // STATES
                 tickets,
                 ticket,
+                totalTickets,
+                stats,
+                adminStats,
+                voirAdminStatistiques,
 
                 // PAGINATION
                 currentPage,
                 setCurrentPage,
 
+                // FILTER
+                selectedStatus,
+                setSelectedStatus,
+
                 // ACTIONS
                 voirTicket,
                 voirToutTicket,
                 VoirUnTicketContext,
-
+                voirStatsTicket,
+                voirAdminStatistiques,
                 ajoutTicket,
                 supprimerTicket,
                 modifierTickets
+
             }}
         >
 
