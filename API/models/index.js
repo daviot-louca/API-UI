@@ -1,19 +1,79 @@
-const sequelize = require("../config/db.config");
+const sequelize =
+    require("../config/db.config");
 
-const user = require("./user.model");
-const ticket = require("./ticket.model");
+const User =
+    require("./user.model");
+
+const Ticket =
+    require("./ticket.model");
+
+const Message =
+    require("./message.model");
 
 const db = {};
 
-// connexion sequelize
+/* CONNEXION */
+
 db.sequelize = sequelize;
 
-// modèles
-db.user = user;
-db.ticket = ticket;
+/* MODELS */
 
-// relations
-db.user.hasMany(db.ticket,{foreignKey:"userId",onDelete:"CASCADE"});
-db.ticket.belongsTo(db.user);
+db.user = User;
+
+db.ticket = Ticket;
+
+db.message = Message;
+
+/* RELATIONS USER ↔ TICKET */
+
+db.user.hasMany(
+    db.ticket,
+    {
+        foreignKey: "userId",
+        onDelete: "CASCADE"
+    }
+);
+
+db.ticket.belongsTo(
+    db.user,
+    {
+        foreignKey: "userId"
+    }
+);
+
+/* RELATIONS USER ↔ MESSAGE */
+
+db.user.hasMany(
+    db.message,
+    {
+        foreignKey: "userId",
+        onDelete:"NO ACTION"
+    }
+);
+
+db.message.belongsTo(
+    db.user,
+    {
+        foreignKey: "userId",
+        onDelete:"NO ACTION"
+    }
+);
+
+/* RELATIONS TICKET ↔ MESSAGE */
+
+db.ticket.hasMany(
+    db.message,
+    {
+        foreignKey: "ticketId",
+        onDelete: "CASCADE"
+    }
+);
+
+db.message.belongsTo(
+    db.ticket,
+    {
+        foreignKey: "ticketId"
+    }
+);
 
 module.exports = db;

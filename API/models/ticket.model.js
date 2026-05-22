@@ -26,7 +26,15 @@ const ticket = db.define("ticket", {
     },
     userId: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull:false
+    },
+    priority:{
+        type:DataTypes.ENUM("faible","moyenne","haute","urgente"),
+        defaultValue:"faible"
+    },
+    closedAt:{
+        type:DataTypes.DATE,
+        allowNull:true
     }
 });
 

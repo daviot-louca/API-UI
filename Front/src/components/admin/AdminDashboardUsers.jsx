@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 
 import UserList from "./UserList";
 
@@ -11,15 +11,20 @@ function AdminDashboard() {
     const {
         voirToutUser,
         deleteAll,
-        users
+        users,
+        rechercheUserContext
     } = useContext(AdminContext);
     const { handleLogout, username } =
         useContext(AuthContext);
+    const [recherche, setRecherche] = useState("")
     useEffect(() => {
+        if (recherche === "") {
+            voirToutUser();
+        } else {
+            rechercheUserContext(recherche)
+        }
 
-        voirToutUser();
-
-    }, []);
+    }, [recherche]);
 
     return (
 
@@ -53,7 +58,7 @@ function AdminDashboard() {
                             Réinitialiser les utilisateurs
                         </button>
 
-                                                <div className="relative group">
+                        <div className="relative group">
 
                             <button className="flex items-center gap-3 bg-white px-4 py-2 rounded-2xl shadow-sm hover:bg-gray-50 transition">
 
@@ -192,7 +197,6 @@ function AdminDashboard() {
                     <div className="flex items-center justify-between mb-8">
 
                         <div>
-
                             <h2 className="text-2xl font-bold text-gray-800">
                                 Liste des utilisateurs
                             </h2>
@@ -200,9 +204,13 @@ function AdminDashboard() {
                             <p className="text-gray-500 mt-1">
                                 Gestion et suppression des comptes
                             </p>
-
                         </div>
-
+                        <div className="mr-10">
+                            <input type="search" name="search" id="sear"
+                                placeholder="Rechercher l'utilisateur..."
+                                className="bg-slate-100 border-2 border-[#909090] w-80 rounded-xl p-2 focus:border-[#303030] text-[#303030]"
+                                onChange={(e) => setRecherche(e.target.value)} />
+                        </div>
                     </div>
 
                     <UserList />

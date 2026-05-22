@@ -7,7 +7,7 @@ function UserList() {
     const {
         users,
         supprimerUser,
-        updateUser
+        modifierRole
     } = useContext(AdminContext);
 
     return (
@@ -15,7 +15,7 @@ function UserList() {
         <div className="flex flex-col gap-4">
 
             {/* HEADER */}
-            <div className="grid grid-cols-5 bg-indigo-600 text-white rounded-2xl px-6 py-4 font-semibold shadow-sm">
+            <div className="grid grid-cols-5 text-white rounded-2xl px-6 py-4 font-semibold shadow-sm">
 
                 <div>
                     ID
@@ -111,19 +111,23 @@ function UserList() {
                         </div>
 
                         {/* ACTIONS */}
+                        <div>
+
+                        <button onClick={() => modifierRole(user.id,user.role)}>
+                                        {
+                                            user.role === "admin"
+
+                                                ? "Passer user"
+
+                                                : "Passer admin"
+                                        }
+                                    </button>
                         {
                             user.role === "user" && (
 
                                 <div>
 
-                                    <button
-                                        onClick={() =>
-                                            updateUser(user.id)
-                                        }
-                                        className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl font-medium transition"
-                                    >
-                                        role
-                                    </button>
+                                    
                                     <button
                                         onClick={() =>
                                             supprimerUser(user.id)
@@ -136,6 +140,7 @@ function UserList() {
                                 </div>
                             )
                         }
+                        </div>
 
                     </div>
                 ))

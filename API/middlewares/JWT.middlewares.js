@@ -16,9 +16,9 @@ const authJwt = (req,res,next) => {
       const decode =jwt.verify(token,process.env.JWT_SECRET)  
       req.user =decode
       next()
-      console.log("ici ça passe")
+      console.log("ici ça passe dans le middleware authJwt")
     }catch(error){
-        console.log("ça marche pas")
+        console.log("ça marche pas dans le middleware authJwt")
         return res.status(401).json("token invalide")
     };
 };

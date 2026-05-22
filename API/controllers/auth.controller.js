@@ -1,10 +1,10 @@
-const {authService,loginService,AllUserService,deleteAllService,deleteUserService,updateUserService} = require("../services/auth.service");
+const { authService, loginService, AllUserService, deleteAllService, deleteUserService, updateUserService, rechercheUsersService,modifierUsersService } = require("../services/auth.service");
 
-const createAuth = async(req,res)=>{
+const createAuth = async (req, res) => {
     try {
-        const {username,email,password} =req.body;
-        const info = await authService({username,email,password});
-        res.json(info) 
+        const { username, email, password } = req.body;
+        const info = await authService({ username, email, password });
+        res.json(info)
     } catch (error) {
         res.status(500).json("données bloquées au niveau du controller")
     }
@@ -12,10 +12,10 @@ const createAuth = async(req,res)=>{
 
 
 //problème dans le log 
-const loginController = async(req,res)=>{
+const loginController = async (req, res) => {
     try {
-        const {email,password} = req.body;
-        const info = await loginService({email,password})
+        const { email, password } = req.body;
+        const info = await loginService({ email, password })
         res.json(info)
     } catch (error) {
         console.log(error)
@@ -23,7 +23,7 @@ const loginController = async(req,res)=>{
     }
 }
 
-const allUsers = async (req,res) => {
+const allUsers = async (req, res) => {
 
     try {
 
@@ -53,7 +53,7 @@ const allUsers = async (req,res) => {
     }
 }
 
-const deleteAll = async (req,res) => {
+const deleteAll = async (req, res) => {
     try {
         const info = await deleteAllService()
         res.json(info)
@@ -62,7 +62,7 @@ const deleteAll = async (req,res) => {
     }
 }
 
-const deleteUser = async (req,res) => {
+const deleteUser = async (req, res) => {
     try {
         const id = req.params.id
         const info = await deleteUserService(id)
@@ -71,14 +71,46 @@ const deleteUser = async (req,res) => {
         res.status(500).json("problème pour supprimer un seul user")
     }
 }
-const updateUsers = async (req,res)=>{
-    try{
-        const id = req.params.id
-        const info = await updateUserService(id)
-        res.json(info)
-    }catch(error){
-        res.status(500).json("problème modification user à admin")
+const updateUsers = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const { role } = req.body;
+        console.log(userId)
+        const info = await updateUserService({ userId, role });
+        res.json(info);
+    } catch (error) {
+        console.log(console.log("erreur dans le service"));
+        res.status(500).json(
+            "problème modification user"
+        );
+    }
+};
+
+const rechercheUsers = async (req, res) => {
+    try {
+        const { recherche } = req.query
+        const infos = await rechercheUsersService({ recherche });
+        res.json(infos)
+    } catch (error) {
+        console.log("erreur dans le service")
+        res.status(500).json("problème recherche User")
+    }
+
+}
+
+const modifierUsers =async (req,res) => {
+    try {
+        console.log("je passe dans le controller")
+        const {id} = req.params
+        const {email,username}=req.body
+        console.log("je passe dans les req")
+        const infos = await modifierUsersService({id,email,username})
+        res.json(infos)
+    } catch (error) {
+        console.log("problème back modifier user")
+        res.status(500).json("problème modifier User")
     }
 }
-module.exports = {createAuth,loginController,allUsers,deleteAll,deleteUser,updateUsers};
+
+module.exports = { createAuth, loginController, allUsers, deleteAll, deleteUser, updateUsers, rechercheUsers,modifierUsers };
 

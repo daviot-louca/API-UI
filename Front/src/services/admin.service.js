@@ -1,59 +1,100 @@
 import axios from "axios";
 const url = "http://localhost:3030";
 
-export const voirToutTickets = async (token,page) => {
-          const reponse = await axios.get(`${url}/admin/tickets?page=${page}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      return reponse.data
+export const voirToutTickets = async (token, page) => {
+  const reponse = await axios.get(`${url}/admin/tickets?page=${page}`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  return reponse.data
 }
 
-export const voirToutUsers = async (token)=> {
-          const reponse = await axios.get(`${url}/admin/users`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      return reponse.data
+export const voirToutUsers = async (token) => {
+  const reponse = await axios.get(`${url}/admin/users`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  return reponse.data
 }
 
-export const supprimerUserService = async (id,token) => {
-    const reponse = await axios.delete(`${url}/admin/user/${id}`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    });
-    return reponse.data
+export const supprimerUserService = async (id, token) => {
+  const reponse = await axios.delete(`${url}/admin/user/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  return reponse.data
 }
-export const deleteAllService = async (token) =>{
-          const reponse = await axios.delete(`${url}/delete/users`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      return reponse.data
+export const deleteAllService = async (token) => {
+  const reponse = await axios.delete(`${url}/delete/users`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  return reponse.data
 }
 export const voirAdminStats = async (
-    token
+  token
 ) => {
 
-    const reponse = await axios.get(
-        `${url}/tickets/admin/stats`,
-        {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }
-    );
+  const reponse = await axios.get(
+    `${url}/tickets/admin/stats`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
 
-    return reponse.data;
+  return reponse.data;
 };
 
-export const updateRole = async (token,id) => {
-  const reponse = await axios.patch(`${url}/admin/user/${id}`,{
-    header:{Authorization:`Bearer:${token}`}
-  });
-  return reponse.data;
-}
+export const modifierRoleUser =
+  async (
+    id,
+    role,
+    token
+  ) => {
+
+    const reponse =
+      await axios.patch(
+
+        `${url}/users/${id}`,
+
+        {
+          role
+        },
+
+        {
+          headers: {
+            Authorization:
+              `Bearer ${token}`
+          }
+        }
+      );
+
+    return reponse.data;
+  };
+
+
+export const rechercheUser =
+  async (
+    token,
+    recherche
+  ) => {
+    console.log(recherche)
+    const reponse =
+      await axios.get(
+        `${url}/users?recherche=${recherche}`,
+        {
+          headers:
+          {
+            Authorization:
+              `Bearer ${token}`
+          }
+        }
+      );
+      return reponse.data;
+  }

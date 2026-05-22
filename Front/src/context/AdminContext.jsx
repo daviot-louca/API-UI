@@ -7,7 +7,8 @@ import {
     voirToutUsers,
     supprimerUserService,
     deleteAllService,
-    updateRole
+    modifierRoleUser,
+    rechercheUser
 } from "../services/admin.service";
 
 export const AdminContext = createContext();
@@ -70,12 +71,26 @@ export function AdminProvider({ children }) {
         }
     };
 
-    const updateUser = async (id) => {
-        try{
+    const modifierRole = async (id, currentRole
+    ) => {
+        try {
+            const token =
+                localStorage.getItem("token");
+            const newRole =
+                currentRole === "admin" ? "user" : "admin";
+            await modifierRoleUser(id,newRole,token);
+            voirToutUser();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const rechercheUserContext = async (recherche) => {
+        try {
             const token = localStorage.getItem("token");
-            await updateRole(token,id)
-            voirToutUser()
-        }catch{
+            const data = await rechercheUser(token,recherche);
+            setUsers(data)
+        } catch (error) {
             console.log(error)
         }
     }
@@ -91,7 +106,8 @@ export function AdminProvider({ children }) {
                 supprimerUser,
 
                 deleteAll,
-                updateUser
+                modifierRole,
+                rechercheUserContext
             }}
         >
 

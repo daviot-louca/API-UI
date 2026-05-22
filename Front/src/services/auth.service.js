@@ -13,17 +13,41 @@ export const register = async (
     {
       username,
       email,
-      password
+      password,
     }
   );
   console.log(reponse.data);
   return reponse.data;
 };
 
-export const login = async (email,password) => {
-        const reponse = await axios.post(`${url}/login`, {
-        email,
-        password
-      });
-      return reponse.data
+export const login = async (email, password) => {
+  const reponse = await axios.post(`${url}/login`, {
+    email,
+    password,
+  });
+  console.log(reponse.data)
+  return reponse.data
 }
+
+export const modifierProfil = async (
+    id,
+    token,
+    email,
+    username
+) => {
+
+    const reponse = await axios.patch(
+        `${url}/me/${id}`,
+        {
+            email,
+            username
+        },
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    );
+
+    return reponse.data;
+};

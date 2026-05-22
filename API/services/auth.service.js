@@ -2,6 +2,7 @@ const auth = require("../models/user.model")
 const { hash, compare } = require("bcrypt")
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
+const { Op } = require("sequelize")
 
 const authService = async ({ username, email, password }) => {
     const userExist = await auth.findOne({
@@ -13,10 +14,12 @@ const authService = async ({ username, email, password }) => {
         return "email déjà utilisé";
     }
     const passwordcrypt = await hash(password, 10)
+    const avatar = username.toUpperCase().slice(0, 2)
     const envoie = await auth.create({
         username,
         email,
         password: passwordcrypt,
+        avatar
     })
     return envoie
 }
@@ -24,7 +27,6 @@ const authService = async ({ username, email, password }) => {
 const loginService = async ({ email, password }) => {
 
     console.log("je passe dans le login")
-
     const user = await auth.findOne({
         where: { email }
     });
@@ -37,7 +39,6 @@ const loginService = async ({ email, password }) => {
     }
 
     const passwordDB = user.password;
-
     const result =
         await compare(password, passwordDB);
 
@@ -51,14 +52,16 @@ const loginService = async ({ email, password }) => {
                 {
                     id: user.id,
                     email: user.email,
-                    role: user.role
+                    role: user.role,
+                    avatar: user.avatar
                 },
                 process.env.JWT_SECRET
             ),
-
+            id:user.id,
             role: user.role,
-
-            username: user.username
+            email: user.email,
+            username: user.username,
+            avatar: user.avatar
         }
 
     } else {
@@ -70,7 +73,7 @@ const loginService = async ({ email, password }) => {
 }
 
 const AllUserService = async ({ pageNumber = 1, limitNumber = 5 }) => {
-    const limit = limitNumber ||5
+    const limit = limitNumber || 5
     const offset = (pageNumber - 1) * limit
     const data = await auth.findAll({
         limit,
@@ -89,9 +92,42 @@ const deleteUserService = async (id) => {
     return supprimer
 }
 
-const updateUserService = async(id) =>{
-    const modifier = await auth.update({id,role:"admin"})
-    return modifier
+const updateUserService = async ({ userId, role }) => {
+    const user =
+        await auth.findByPk(userId);
+    if (!user) {
+        return "utilisateur introuvable";
+    }
+    user.role = role;
+    await user.save();
+    return user;
+};
+
+const rechercheUsersService = async ({ recherche }) => {
+    const search = await auth.findAll({
+        where: {
+            username
+                : {
+                [Op.like]
+                    : `%${recherche}%`
+            }
+        }
+    })
+    return search
 }
 
-module.exports = { authService, loginService, AllUserService, deleteAllService, deleteUserService,updateUserService };
+const modifierUsersService = async ({id, email, username }) => {
+    const user = await auth.findByPk(id)
+    if(!user){
+        console.log("user introuvable")
+    }
+    console.log(id)
+    user.email = email
+    user.username = username
+    user.avatar = username.slice(0,2).toUpperCase()
+    await user.save()
+    return user
+}
+
+
+module.exports = { authService, loginService, AllUserService, deleteAllService, deleteUserService, updateUserService, rechercheUsersService, modifierUsersService };
