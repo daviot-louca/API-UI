@@ -5,6 +5,7 @@ const createAuth = async (req, res) => {
         const { username, email, password } = req.body;
         const info = await authService({ username, email, password });
         res.json(info)
+        console.log(info)
     } catch (error) {
         res.status(500).json("données bloquées au niveau du controller")
     }
@@ -79,7 +80,7 @@ const updateUsers = async (req, res) => {
         const info = await updateUserService({ userId, role });
         res.json(info);
     } catch (error) {
-        console.log(console.log("erreur dans le service"));
+        console.log(error);
         res.status(500).json(
             "problème modification user"
         );
@@ -113,4 +114,3 @@ const modifierUsers =async (req,res) => {
 }
 
 module.exports = { createAuth, loginController, allUsers, deleteAll, deleteUser, updateUsers, rechercheUsers,modifierUsers };
-

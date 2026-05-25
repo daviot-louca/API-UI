@@ -1,4 +1,4 @@
-import UserDashboard from "../../components/user/UserDashboard";
+import UserDashboard from "../../components/user/dashboard/UserDashboard";
 
 export default function UserPage() {
 

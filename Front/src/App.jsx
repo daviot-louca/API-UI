@@ -7,6 +7,7 @@ import {
 /* PAGES ADMIN*/
 import AdminPageTickets from "./pages/admin/AdminPageTickets";
 import AdminPageUsers from "./pages/admin/AdminPageUsers";
+import AdminPageReports from "./pages/admin/AdminPageReports";
 
 /* PAGES SHARED*/
 import LoginPage from "./pages/shared/LoginPage";
@@ -15,11 +16,12 @@ import HomePage from "./pages/shared/HomePage";
 
 /* PAGES USER*/
 import UserPage from "./pages/user/UserPage";
-import UserDashboardCreateTicket from "./pages/user/UserDashboardCreateTicket"
+import Message from "./pages/user/Message"
+import TicketPage from "./pages/user/TicketPage";
+import FAQ from "./pages/user/FAQ";
 
 /* PROTECTED ROUTES */
 import ProtectedRoute from "./components/shared/ProtectedRoute";
-import AdminPageReports from "./pages/admin/AdminPageReports";
 
 function App() {
   return (
@@ -49,24 +51,7 @@ function App() {
           }
         />
 
-        {/* USER DASHBOARD */}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute allowedRole="user">
-              <UserPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/create/Tickets"
-          element={
-            <ProtectedRoute allowedRole="user">
-              <UserDashboardCreateTicket />
-            </ProtectedRoute>}
-        />
-
-        {/* ADMIN DASHBOARD */}
+        {/* ADMIN ROUTES */}
         <Route
           path="/admin"
           element={
@@ -84,12 +69,46 @@ function App() {
           }
         />
         <Route
-        path="/admin/reports"
-        element={
-          <ProtectedRoute allowedRole="admin">
-            <AdminPageReports/>
-          </ProtectedRoute>
-        }
+          path="/admin/reports"
+          element={
+            <ProtectedRoute allowedRole="admin">
+              <AdminPageReports />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* USER ROUTES */}
+        <Route
+          path="/user/dashboard"
+          element={
+            <ProtectedRoute allowedRole="user">
+              <UserPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/tickets"
+          element={
+            <ProtectedRoute allowedRole="user">
+              <TicketPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/message"
+          element={
+            <ProtectedRoute allowedRole="user">
+              <Message />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/faq"
+          element={
+            <ProtectedRoute allowedRole="user">
+              <FAQ />
+            </ProtectedRoute>
+          }
         />
       </Routes>
     </div>

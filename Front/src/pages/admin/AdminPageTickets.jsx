@@ -1,4 +1,4 @@
-import AdminDashboardTickets from "../../components/admin/AdminDashboardTickets"
+import AdminDashboardTickets from "../../components/admin/tickets/AdminDashboardTickets"
 export default function AdminPage() {
     return <AdminDashboardTickets />
 }

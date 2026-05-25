@@ -25,7 +25,7 @@ const seeAll = async (req, res) => {
             Number(page) || 1;
 
         const limitNumber =
-            Number(limit) || 5;
+            Number(limit) || 10;
 
         const informations =
             await seeAllService({
@@ -65,7 +65,7 @@ const seeTicket = async (req, res) => {
             Number(page) || 1;
 
         const limitNumber =
-            Number(limit) || 5;
+            Number(limit) || 10;
 
         const informations =
             await seeTicketService({
@@ -121,7 +121,8 @@ const createTicket = async (req, res) => {
             type,
             title,
             description,
-            status
+            status,
+            priority
         } = req.body;
 
         const informations =
@@ -130,7 +131,8 @@ const createTicket = async (req, res) => {
                 type,
                 title,
                 description,
-                status
+                status,
+                priority
             });
 
         res.json(informations);
@@ -160,7 +162,8 @@ const updateTicket = async (req, res) => {
             type,
             title,
             description,
-            status
+            status,
+            priority
         } = req.body;
 
         const info =
@@ -171,7 +174,8 @@ const updateTicket = async (req, res) => {
                 type,
                 title,
                 description,
-                status
+                status,
+                priority
             });
 
         res.json(info);

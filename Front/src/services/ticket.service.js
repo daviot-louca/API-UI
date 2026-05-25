@@ -5,13 +5,18 @@ const url = "http://localhost:3030";
 // VOIR TICKETS USER
 export const voirTickets = async (
     token,
-    page,
+    page = 1,
     status = "all",
     type = "all"
 ) => {
+    const params = new URLSearchParams({
+        page,
+        status,
+        type
+    });
 
     const reponse = await axios.get(
-        `${url}/tickets?page=${page}&status=${status}&type=${type}`,
+        `${url}/tickets?${params}`,
         {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -45,19 +50,25 @@ export const ajoutTickets = async (
     type,
     titre,
     description,
+    priority,
     token
 ) => {
+    const ticketPriority =
+        token ? priority : "faible";
+    const authToken =
+        token ?? priority;
 
     const reponse = await axios.post(
         `${url}/tickets`,
         {
             type,
             title: titre,
-            description
+            description,
+            priority: ticketPriority
         },
         {
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${authToken}`
             }
         }
     );
@@ -87,14 +98,16 @@ export const supprimerTickets = async (
 export const modifierTicket = async (
     id,
     token,
-    newstatus
+    updates
 ) => {
+    const payload =
+        typeof updates === "string"
+            ? { status: updates }
+            : updates;
 
     const reponse = await axios.put(
         `${url}/tickets/${id}`,
-        {
-            status: newstatus
-        },
+        payload,
         {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -121,4 +134,3 @@ export const voirStatsTickets = async (
 
     return reponse.data;
 };
-

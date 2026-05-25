@@ -1,8 +1,19 @@
 import axios from "axios";
 const url = "http://localhost:3030";
 
-export const voirToutTickets = async (token, page) => {
-  const reponse = await axios.get(`${url}/admin/tickets?page=${page}`, {
+export const voirToutTickets = async (
+  token,
+  page = 1,
+  status = "all",
+  type = "all"
+) => {
+  const params = new URLSearchParams({
+    page,
+    status,
+    type
+  });
+
+  const reponse = await axios.get(`${url}/admin/tickets?${params}`, {
     headers: {
       Authorization: `Bearer ${token}`
     }
@@ -85,9 +96,13 @@ export const rechercheUser =
     recherche
   ) => {
     console.log(recherche)
+    const params = new URLSearchParams({
+      recherche
+    });
+
     const reponse =
       await axios.get(
-        `${url}/users?recherche=${recherche}`,
+        `${url}/users?${params}`,
         {
           headers:
           {

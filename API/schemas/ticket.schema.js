@@ -3,7 +3,7 @@ const {z} = require("zod");
 const TicketSchema = z.object({
     type:z
         .enum([
-          "Poste de travail","téléphonie","compte d'accès","messagerie","autres"
+          "Poste de travail","Téléphonie","Compte d'accès","Messagerie","Autres"
         ]),
     title: z
         .string()
@@ -22,7 +22,15 @@ const TicketSchema = z.object({
     "en cours",
     "résolu"
   ])
-  .default("remis")
+  .default("remis"),
+    priority: z
+        .enum([
+            "faible",
+            "moyenne",
+            "haute",
+            "urgente"
+        ])
+        .default("faible")
 })
 
 module.exports = TicketSchema;

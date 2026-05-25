@@ -4,12 +4,12 @@ const User = require("../models/user.model");
 // SEE ALL ADMIN
 const seeAllService = async ({
     pageNumber = 1,
-    limitNumber = 5,
+    limitNumber = 10,
     status = "all",
     type = "all"
 }) => {
 
-    const limit = limitNumber || 5;
+    const limit = limitNumber || 10;
 
     const offset =
         (pageNumber - 1) * limit;
@@ -39,6 +39,8 @@ const seeAllService = async ({
 
         where: whereCondition,
 
+        order: [["updatedAt", "DESC"]],
+
         limit,
 
         offset,
@@ -53,12 +55,12 @@ const seeAllService = async ({
 const seeTicketService = async ({
     id,
     pageNumber = 1,
-    limitNumber = 5,
+    limitNumber = 10,
     status = "all",
     type = "all"
 }) => {
 
-    const limit = limitNumber || 5;
+    const limit = limitNumber || 10;
 
     const offset =
         (pageNumber - 1) * limit;
@@ -89,6 +91,7 @@ const seeTicketService = async ({
     const data = await Ticket.findAndCountAll({
 
         where: whereCondition,
+        order: [["updatedAt", "DESC"]],
 
         limit,
 
@@ -116,7 +119,8 @@ const createTicketService = async ({
     type,
     title,
     description,
-    status
+    status,
+    priority
 }) => {
 
     const envoie = await Ticket.create({
@@ -129,7 +133,9 @@ const createTicketService = async ({
 
         description,
 
-        status
+        status,
+
+        priority
     });
 
     return envoie;
@@ -143,7 +149,8 @@ const updateTicketService = async ({
     type,
     title,
     description,
-    status
+    status,
+    priority
 }) => {
 
     const ticket =
@@ -184,6 +191,12 @@ const updateTicketService = async ({
     if (status !== undefined) {
 
         ticket.status = status;
+    }
+
+    // PRIORITY
+    if (priority !== undefined) {
+
+        ticket.priority = priority;
     }
 
     await ticket.save();
@@ -307,21 +320,28 @@ const adminStatsService = async () => {
     const telephonie =
         await Ticket.count({
             where: {
-                type: "téléphonie"
+                type: "Téléphonie"
             }
         });
 
     const compteAcces =
         await Ticket.count({
             where: {
-                type: "compte d'accès"
+                type: "Compte d'accès"
             }
         });
 
     const messagerie =
         await Ticket.count({
             where: {
-                type: "messagerie"
+                type: "Messagerie"
+            }
+        });
+
+    const autres =
+        await Ticket.count({
+            where: {
+                type: "Autres"
             }
         });
 
@@ -340,7 +360,8 @@ const adminStatsService = async () => {
             posteTravail,
             telephonie,
             compteAcces,
-            messagerie
+            messagerie,
+            autres
         }
     };
 };

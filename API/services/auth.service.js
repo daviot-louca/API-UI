@@ -120,6 +120,7 @@ const modifierUsersService = async ({id, email, username }) => {
     const user = await auth.findByPk(id)
     if(!user){
         console.log("user introuvable")
+        return "user introuvable"
     }
     console.log(id)
     user.email = email

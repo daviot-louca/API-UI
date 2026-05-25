@@ -9,7 +9,7 @@ const ticket = db.define("ticket", {
     },
     type:{
         allowNull:false,
-        type:DataTypes.ENUM("Poste de travail","téléphonie","compte d'accès","messagerie")
+        type:DataTypes.ENUM("Poste de travail","Téléphonie","Compte d'accès","Messagerie","Autres")
     },
     title: {
         allowNull: false,
