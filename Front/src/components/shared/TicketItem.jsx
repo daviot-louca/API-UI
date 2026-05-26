@@ -131,7 +131,15 @@ function TicketItem({ ticket, setIsShowTicketOpen, setSelectedTicket }) {
               </div>
             </div>
             <div>
-              <button className="bg-[#303030] p-3 text-slate-100 rounded-xl">Voir →</button>
+              <button
+              onClick={() => {
+                setSelectedTicket(ticket);
+                setIsShowTicketOpen(true);
+              }}
+              className="bg-[#303030] hover:bg-[#505050] text-slate-100 px-4 py-2 rounded-[5px] font-medium transition"
+            >
+              Voir
+            </button>
             </div>
           </div>
           <hr className="w-full text-slate-300" />

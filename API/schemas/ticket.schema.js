@@ -18,7 +18,6 @@ const TicketSchema = z.object({
     status: z
   .enum([
     "remis",
-    "ouvert",
     "en cours",
     "résolu"
   ])

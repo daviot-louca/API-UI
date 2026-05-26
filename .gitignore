@@ -1,5 +1,6 @@
-# ENV
+# connexion
 API/.env
+API/config
 
 # NODE MODULES
 API/node_modules

@@ -21,7 +21,7 @@ const ticket = db.define("ticket", {
     },
 
     status: {
-        type: DataTypes.ENUM("remis","ouvert","en cours","résolu"),
+        type: DataTypes.ENUM("remis","en cours","résolu"),
         defaultValue:"remis"
     },
     userId: {

@@ -60,35 +60,6 @@ export default function DashboardNavbar({
       {/* RIGHT */}
       <div className="flex items-center gap-4">
 
-        {/* SEARCH */}
-        <div className="relative">
-
-          <Search
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 "
-            size={18}
-          />
-
-          <input
-            type="text"
-            placeholder="Rechercher un ticket..."
-            className="
-              bg-white
-              border
-              border-gray-200
-              rounded-xl
-              pl-10
-              pr-4
-              py-2.5
-              w-64
-              outline-none
-              focus:ring-2
-              focus:ring-[#303030]
-              shadow-sm
-            "
-          />
-
-        </div>
-
         {/* PROFILE */}
         <Profile
           username={username}

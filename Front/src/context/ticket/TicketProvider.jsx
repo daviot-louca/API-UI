@@ -2,284 +2,298 @@ import { useCallback, useMemo, useState } from "react";
 
 import { TicketContext } from "./TicketContext";
 import {
-    voirTickets,
-    voirUnTicket,
-    ajoutTickets,
-    supprimerTickets,
-    modifierTicket,
-    voirStatsTickets
+  voirTickets,
+  voirUnTicket,
+  ajoutTickets,
+  supprimerTickets,
+  modifierTicket,
+  voirStatsTickets,
 } from "../../services/ticket.service";
-import {
-    voirToutTickets,
-    voirAdminStats
-} from "../../services/admin.service";
+import { voirToutTickets, voirAdminStats } from "../../services/admin.service";
 
 const INITIAL_STATS = {
-    total: 0,
-    remis: 0,
-    enCours: 0,
-    resolu: 0
+  total: 0,
+  remis: 0,
+  enCours: 0,
+  resolu: 0,
 };
 
 export function TicketProvider({ children }) {
-    const [stats, setStats] = useState(INITIAL_STATS);
-    const [adminStats, setAdminStats] = useState(null);
-    const [tickets, setTickets] = useState([]);
-    const [totalTickets, setTotalTickets] = useState(0);
-    const [ticket, setTicket] = useState();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [selectedStatus, setSelectedStatus] =
-        useState("all");
+  const [stats, setStats] = useState(INITIAL_STATS);
+  const [adminStats, setAdminStats] = useState(null);
+  const [tickets, setTickets] = useState([]);
+  const [totalTickets, setTotalTickets] = useState(0);
+  const [ticket, setTicket] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedStatus, setSelectedStatus] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [priorityFilter, setPriorityFilter] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [sortFilter, setSortFilter] = useState("");
 
-    // USER TICKETS
-    const voirTicket = useCallback(
-        async (page, status = "all") => {
-            try {
-                const token =
-                    localStorage.getItem("token");
+  const filteredTickets = tickets?.filter((ticket) => {
+    const statusMatch = statusFilter === "" || ticket.status === statusFilter;
+    const priorityMatch =
+      priorityFilter === "" || ticket.priority === priorityFilter;
+    const categoryMatch =
+      categoryFilter === "" || ticket.type === categoryFilter;
 
-                const data =
-                    await voirTickets(
-                        token,
-                        page,
-                        status
-                    );
+    return statusMatch && priorityMatch && categoryMatch;
+  });
 
-                setTickets(data.rows);
-                setTotalTickets(data.count);
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        []
-    );
+  // USER TICKETS
+  const voirTicket = useCallback(
+    async (page, status, type, priority, sort,search) => {
+      try {
+        const token = localStorage.getItem("token");
 
-    // ADMIN TICKETS
-    const voirToutTicket = useCallback(
-        async (page, status = "all") => {
-            try {
-                const token =
-                    localStorage.getItem("token");
+        const data = await voirTickets(
+          token,
 
-                const data =
-                    await voirToutTickets(
-                        token,
-                        page,
-                        status
-                    );
+          page,
 
-                setTickets(data.rows);
-                setTotalTickets(data.count);
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        []
-    );
+          status,
 
-    // VOIR UN TICKET
-    const voirUnTicketContext = useCallback(
-        async (id) => {
-            try {
-                const token =
-                    localStorage.getItem("token");
+          type,
 
-                const data =
-                    await voirUnTicket(
-                        id,
-                        token
-                    );
+          priority,
 
-                setTicket(data);
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        []
-    );
+          sort,
+          search
+        );
 
-    // STATS USER
-    const voirStatsTicket = useCallback(
-        async () => {
-            try {
-                const token =
-                    localStorage.getItem("token");
+        setTickets(data.rows);
 
-                const data =
-                    await voirStatsTickets(token);
+        setTotalTickets(data.count);
+      } catch (error) {
+        console.log(error);
+      }
+    },
 
-                setStats(data);
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        []
-    );
+    [],
+  );
 
-    // ADMIN STATS
-    const voirAdminStatistiques = useCallback(
-        async () => {
-            try {
-                const token =
-                    localStorage.getItem("token");
+  // ADMIN TICKETS
+  const voirToutTicket = useCallback(async (page, status = "all") => {
+    try {
+      const token = localStorage.getItem("token");
 
-                const data =
-                    await voirAdminStats(token);
+      const data = await voirToutTickets(
+        token,
 
-                setAdminStats(data);
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        []
-    );
+        page,
 
-    // AJOUT
-    const ajoutTicket = useCallback(
-        async (
-            type,
-            titre,
-            description,
-            priority = "faible"
-        ) => {
-            try {
-                const token =
-                    localStorage.getItem("token");
+        statusFilter,
 
-                await ajoutTickets(
-                    type,
-                    titre,
-                    description,
-                    priority,
-                    token
-                );
+        categoryFilter,
 
-                await voirTicket(
-                    currentPage,
-                    selectedStatus
-                );
+        priorityFilter,
 
-                await voirStatsTicket();
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        [
-            currentPage,
-            selectedStatus,
-            voirStatsTicket,
-            voirTicket
-        ]
-    );
+        sortFilter,
+      );
 
-    // DELETE
-    const supprimerTicket = useCallback(
-        async (id) => {
-            try {
-                const token =
-                    localStorage.getItem("token");
+      setTickets(data.rows);
+      setTotalTickets(data.count);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
-                await supprimerTickets(
-                    id,
-                    token
-                );
+  // VOIR UN TICKET
+  const voirUnTicketContext = useCallback(async (id) => {
+    try {
+      const token = localStorage.getItem("token");
 
-                await voirToutTicket(
-                    currentPage,
-                    selectedStatus
-                );
+      const data = await voirUnTicket(id, token);
 
-                await voirAdminStatistiques();
-                await voirStatsTicket();
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        [
-            currentPage,
-            selectedStatus,
-            voirAdminStatistiques,
-            voirStatsTicket,
-            voirToutTicket
-        ]
-    );
+      setTicket(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
-    // UPDATE
-    const modifierTickets = useCallback(
-        async (id, updates) => {
-            try {
-                const token =
-                    localStorage.getItem("token");
+  // STATS USER
+  const voirStatsTicket = useCallback(async () => {
+    try {
+      const token = localStorage.getItem("token");
 
-                await modifierTicket(
-                    id,
-                    token,
-                    updates
-                );
+      const data = await voirStatsTickets(token);
 
-                await voirToutTicket(
-                    currentPage,
-                    selectedStatus
-                );
+      setStats(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
-                await voirAdminStatistiques();
-                await voirStatsTicket();
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        [
-            currentPage,
-            selectedStatus,
-            voirAdminStatistiques,
-            voirStatsTicket,
-            voirToutTicket
-        ]
-    );
+  // ADMIN STATS
+  const voirAdminStatistiques = useCallback(async () => {
+    try {
+      const token = localStorage.getItem("token");
 
-    const value = useMemo(
-        () => ({
-            tickets,
-            ticket,
-            totalTickets,
-            stats,
-            adminStats,
-            currentPage,
-            setCurrentPage,
-            selectedStatus,
-            setSelectedStatus,
-            voirTicket,
-            voirToutTicket,
-            VoirUnTicketContext: voirUnTicketContext,
-            voirUnTicketContext,
-            voirStatsTicket,
-            voirAdminStatistiques,
-            ajoutTicket,
-            supprimerTicket,
-            modifierTickets
-        }),
-        [
-            adminStats,
-            ajoutTicket,
-            currentPage,
-            modifierTickets,
-            selectedStatus,
-            stats,
-            supprimerTicket,
-            ticket,
-            tickets,
-            totalTickets,
-            voirAdminStatistiques,
-            voirStatsTicket,
-            voirTicket,
-            voirToutTicket,
-            voirUnTicketContext
-        ]
-    );
+      const data = await voirAdminStats(token);
 
-    return (
-        <TicketContext.Provider value={value}>
-            {children}
-        </TicketContext.Provider>
-    );
+      setAdminStats(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  // AJOUT
+  const ajoutTicket = useCallback(
+    async (type, titre, description, priority = "faible") => {
+      try {
+        const token = localStorage.getItem("token");
+
+        await ajoutTickets(type, titre, description, priority, token);
+
+        await voirTicket(currentPage, selectedStatus);
+
+        await voirStatsTicket();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [currentPage, selectedStatus, voirStatsTicket, voirTicket],
+  );
+
+  // DELETE
+  const supprimerTicket = useCallback(
+    async (id) => {
+      try {
+        const token = localStorage.getItem("token");
+
+        await supprimerTickets(id, token);
+
+        await voirToutTicket(currentPage, selectedStatus);
+        await voirTicket(currentPage, selectedStatus);
+
+        await voirAdminStatistiques();
+        await voirStatsTicket();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [
+      currentPage,
+      selectedStatus,
+      voirAdminStatistiques,
+      voirStatsTicket,
+      voirToutTicket,
+    ],
+  );
+
+  // UPDATE
+  const modifierTickets = useCallback(
+    async (id, updates) => {
+      try {
+        const token = localStorage.getItem("token");
+
+        const updatedTicket = await modifierTicket(
+          id,
+
+          token,
+
+          updates,
+        );
+
+        setTicket(updatedTicket);
+
+        await voirToutTicket(
+          currentPage,
+
+          statusFilter,
+
+          categoryFilter,
+
+          priorityFilter,
+
+          sortFilter,
+        );
+        await voirTicket(
+          currentPage,statusFilter,categoryFilter,priorityFilter,sortFilter
+        );
+
+        await voirStatsTicket();
+
+        await voirAdminStatistiques();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    [
+      currentPage,
+      voirAdminStatistiques,
+      voirStatsTicket,
+      voirToutTicket,
+      statusFilter,
+      categoryFilter,
+      priorityFilter,
+      sortFilter,
+    ],
+  );
+
+  const value = useMemo(
+    () => ({
+      tickets,
+      ticket,
+      totalTickets,
+      stats,
+      adminStats,
+      currentPage,
+      setCurrentPage,
+      selectedStatus,
+      setSelectedStatus,
+      voirTicket,
+      voirToutTicket,
+      VoirUnTicketContext: voirUnTicketContext,
+      voirUnTicketContext,
+      voirStatsTicket,
+      voirAdminStatistiques,
+      ajoutTicket,
+      supprimerTicket,
+      modifierTickets,
+      setStatusFilter,
+      statusFilter,
+      filteredTickets,
+      priorityFilter,
+      categoryFilter,
+      setCategoryFilter,
+      setPriorityFilter,
+      sortFilter,
+      setSortFilter,
+      search
+    }),
+    [
+      adminStats,
+      ajoutTicket,
+      currentPage,
+      modifierTickets,
+      selectedStatus,
+      stats,
+      supprimerTicket,
+      ticket,
+      tickets,
+      totalTickets,
+      voirAdminStatistiques,
+      voirStatsTicket,
+      voirTicket,
+      voirToutTicket,
+      voirUnTicketContext,
+      setStatusFilter,
+      statusFilter,
+      filteredTickets,
+      setCategoryFilter,
+      setPriorityFilter,
+      priorityFilter,
+      categoryFilter,
+      setSortFilter,
+      sortFilter,
+      search
+    ],
+  );
+
+  return (
+    <TicketContext.Provider value={value}>{children}</TicketContext.Provider>
+  );
 }

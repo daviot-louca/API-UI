@@ -44,7 +44,7 @@ function UserDashboard() {
       setEmail={setEmail}
       setIsProfileModalOpen={setIsProfileModalOpen}
     >
-      <div className="flex flex-col gap-6 w-full bg-slate-100 min-h-screen">
+      <div className="flex flex-col gap-10 bg-slate-100">
         {/* TOP */}
         {/*DÉBUT DU TABLEAU DE BORD */}
         <CardStats stats={stats} />

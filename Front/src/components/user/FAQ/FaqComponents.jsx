@@ -26,7 +26,7 @@ const faqItems = [
     answer:
       "Pour créer un nouveau ticket, cliquez sur le bouton Ajouter un Ticket dans votre espace, remplissez le formulaire avec les détails de votre demande, puis validez. Vous recevrez un accusé de réception par email.",
     Icon: Ticket,
-    iconClassName: "bg-violet-100 text-violet-700"
+    iconClassName: "bg-violet-100 text-[#303030]"
   },
   {
     question: "Comment suivre l'avancement de mon ticket ?",
@@ -126,7 +126,7 @@ export default function FaqComponents() {
           {/* Recherche */}
           <section className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-wrap items-center justify-between gap-5">
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-full bg-violet-100 text-violet-700 flex items-center justify-center">
+              <div className="w-14 h-14 rounded-full text-[#303030] flex items-center justify-center">
                 <Search size={28} />
               </div>
               <div>
@@ -193,7 +193,7 @@ export default function FaqComponents() {
                           </span>
                           {isOpen ? (
                             <ChevronUp
-                              className="text-violet-700 shrink-0"
+                              className="text-[#303030] shrink-0"
                               size={18}
                             />
                           ) : (
@@ -226,9 +226,9 @@ export default function FaqComponents() {
 
         <aside className="flex flex-col gap-6 min-w-0">
           {/* Besoin d'aide */}
-          <section className="rounded-2xl border border-violet-100 bg-violet-50 p-5 shadow-sm">
+          <section className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-full bg-violet-100 text-violet-700 flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-[#E0E0E0] text-[#303030] flex items-center justify-center">
                 <Headset size={34} />
               </div>
               <div>
@@ -244,7 +244,7 @@ export default function FaqComponents() {
             <div className="flex flex-col gap-3 mt-6">
               <Link
                 to="/user/tickets"
-                className="bg-violet-700 hover:bg-violet-800 text-white rounded-xl py-3 px-4 font-semibold flex items-center justify-center gap-3 transition"
+                className="bg-[#303030] hover:bg-[#505050] text-white rounded-xl py-3 px-4 font-semibold flex items-center justify-center gap-3 transition"
               >
                 <Ticket size={18} />
                 Créer un ticket
@@ -261,7 +261,7 @@ export default function FaqComponents() {
           </section>
 
           {/* Conseils rapides */}
-          <section className="rounded-2xl border border-amber-100 bg-amber-50 p-5 shadow-sm">
+          <section className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
             <div className="flex items-center gap-3 mb-5">
               <span className="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center">
                 <Lightbulb size={22} />

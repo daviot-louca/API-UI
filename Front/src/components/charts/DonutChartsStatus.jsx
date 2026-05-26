@@ -19,7 +19,7 @@ import {
   
       <div className="bg-white p-4 rounded-xl shadow-sm">
   
-        <h2 className="text-xl font-semibold mb-4">
+        <h2 className="text-2xl font-bold mb-4">
           Statut de mes tickets
         </h2>
   

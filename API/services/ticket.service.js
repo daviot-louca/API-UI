@@ -6,18 +6,21 @@ const seeAllService = async ({
     pageNumber = 1,
     limitNumber = 10,
     status = "all",
-    type = "all"
+    type = "all",
+    priority = "all",
+    sort = "recent"
 }) => {
 
-    const limit = limitNumber || 10;
+    const limit = Number(limitNumber) || 10;
 
     const offset =
         (pageNumber - 1) * limit;
 
-    // FILTER
-    const whereCondition = {};
+    // FILTERS
+    const whereCondition = {
+    };
 
-    // STATUS FILTER
+    // STATUS
     if (
         status &&
         status !== "all"
@@ -26,7 +29,7 @@ const seeAllService = async ({
         whereCondition.status = status;
     }
 
-    // TYPE FILTER
+    // TYPE
     if (
         type &&
         type !== "all"
@@ -35,11 +38,38 @@ const seeAllService = async ({
         whereCondition.type = type;
     }
 
+    // PRIORITY
+    if (
+        priority &&
+        priority !== "all"
+    ) {
+
+        whereCondition.priority = priority;
+    }
+
+    // SORT
+    let order = [["updatedAt", "DESC"]];
+
+    if (sort === "oldest") {
+
+        order = [["updatedAt", "ASC"]];
+    }
+
+    if (sort === "az") {
+
+        order = [["title", "ASC"]];
+    }
+
+    if (sort === "za") {
+
+        order = [["title", "DESC"]];
+    }
+
     const data = await Ticket.findAndCountAll({
 
         where: whereCondition,
 
-        order: [["updatedAt", "DESC"]],
+        order,
 
         limit,
 
@@ -51,26 +81,29 @@ const seeAllService = async ({
     return data;
 };
 
+
 // SEE USER TICKETS
 const seeTicketService = async ({
     id,
     pageNumber = 1,
     limitNumber = 10,
     status = "all",
-    type = "all"
+    type = "all",
+    priority = "all",
+    sort = "recent"
 }) => {
 
-    const limit = limitNumber || 10;
+    const limit = Number(limitNumber) || 10;
 
     const offset =
         (pageNumber - 1) * limit;
 
-    // FILTER
+    // FILTERS
     const whereCondition = {
         userId: id
     };
 
-    // STATUS FILTER
+    // STATUS
     if (
         status &&
         status !== "all"
@@ -79,7 +112,7 @@ const seeTicketService = async ({
         whereCondition.status = status;
     }
 
-    // TYPE FILTER
+    // TYPE
     if (
         type &&
         type !== "all"
@@ -88,10 +121,38 @@ const seeTicketService = async ({
         whereCondition.type = type;
     }
 
+    // PRIORITY
+    if (
+        priority &&
+        priority !== "all"
+    ) {
+
+        whereCondition.priority = priority;
+    }
+
+    // SORT
+    let order = [["updatedAt", "DESC"]];
+
+    if (sort === "oldest") {
+
+        order = [["updatedAt", "ASC"]];
+    }
+
+    if (sort === "az") {
+
+        order = [["title", "ASC"]];
+    }
+
+    if (sort === "za") {
+
+        order = [["title", "DESC"]];
+    }
+
     const data = await Ticket.findAndCountAll({
 
         where: whereCondition,
-        order: [["updatedAt", "DESC"]],
+
+        order,
 
         limit,
 

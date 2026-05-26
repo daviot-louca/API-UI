@@ -5,21 +5,31 @@ const url = "http://localhost:3030";
 // VOIR TICKETS USER
 export const voirTickets = async (
     token,
-    page = 1,
-    status = "all",
-    type = "all"
+    page,
+    status,
+    type,
+    priority,
+    sort,
+    search
 ) => {
-    const params = new URLSearchParams({
-        page,
-        status,
-        type
-    });
 
     const reponse = await axios.get(
-        `${url}/tickets?${params}`,
+
+        `${url}/tickets`,
+
         {
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization:
+                    `Bearer ${token}`
+            },
+
+            params: {
+                page,
+                status,
+                type,
+                priority,
+                sort,
+                search
             }
         }
     );

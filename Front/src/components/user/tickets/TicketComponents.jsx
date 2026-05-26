@@ -6,15 +6,25 @@ import ProfilModal from "../../shared/modals/ProfilModal";
 import ModalNouveauTypeTicket from "../../shared/modals/ModalNouveauTypeTicket";
 import ModalNouveauTicket from "../../shared/modals/ModalNouveauTicket";
 import TicketList from "./TicketListUser";
+import TicketDetailModal from "../../shared/modals/TicketDetailModal";
 export default function TicketComponents() {
   const { handleLogout, username, role, avatar, email, setUsername, setEmail } =
     useContext(AuthContext);
+  const [selectedTicket, setSelectedTicket] = useState(null);
   const {
     ajoutTicket,
     currentPage,
-    selectedStatus,
-    voirStatsTicket,
     voirTicket,
+    statusFilter,
+    setStatusFilter,
+    priorityFilter,
+    modifierTickets,
+    supprimerTicket,
+    setPriorityFilter,
+    categoryFilter,
+    setCategoryFilter,
+    sortFilter,
+    setSortFilter,
   } = useContext(TicketContext);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isTicketModalOpen, setIsTicketModalOpen] = useState(false);
@@ -23,7 +33,8 @@ export default function TicketComponents() {
   const [titre, setTitre] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("faible");
-
+  const [isShowTicketOpen, setIsShowTicketOpen] = useState(false);
+  const [search,setSearch] =useState("");
   const handleSelectType = (selectedType) => {
     setType(selectedType);
     setIsTypeModalOpen(false);
@@ -43,10 +54,21 @@ export default function TicketComponents() {
   };
 
   useEffect(() => {
-    voirTicket(currentPage, selectedStatus);
-
-    voirStatsTicket();
-  }, [currentPage, selectedStatus, voirStatsTicket, voirTicket]);
+    voirTicket(
+      currentPage,
+      statusFilter,
+      categoryFilter,
+      priorityFilter,
+      sortFilter,
+    );
+  }, [
+    currentPage,
+    statusFilter,
+    categoryFilter,
+    priorityFilter,
+    sortFilter,
+    voirTicket,
+  ]);
 
   return (
     <DashboardLayoutUser
@@ -64,36 +86,56 @@ export default function TicketComponents() {
           <div className="flex flex-wrap gap-4">
             <select
               className="h-11 rounded-xl bg-white border border-slate-200 px-4"
-              name=""
-              id=""
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+            >
+              {console.log(categoryFilter)}
+              <option value="">Toutes les catégories</option>
+              <option value="Poste de travail">Poste de travail</option>
+              <option value="Téléphonie">Téléphonie</option>
+              <option value="Compte d'accès">Compte d'accès</option>
+              <option value="Messagerie">Messagerie</option>
+              <option value="Autres">Autres</option>
+            </select>
+            <select
+              className="h-11 rounded-xl bg-white border border-slate-200 px-4"
+              value={priorityFilter}
+              onChange={(e) => setPriorityFilter(e.target.value)}
+            >
+              <option value="">Tous les priorités</option>
+              <option value="faible">Faible</option>
+              <option value="moyenne">Moyenne</option>
+              <option value="haute">Haute</option>
+              <option value="urgente">Urgente</option>
+            </select>
+            <select
+              className="h-11 rounded-xl bg-white border border-slate-200 px-4"
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
             >
               <option value="">Tous les statuts</option>
-              <option value="">Remis</option>
-              <option value="">en cours</option>
-              <option value="">Résolus</option>
+              <option value="remis">Remis</option>
+              <option value="en cours">en cours</option>
+              <option value="résolu">Résolus</option>
             </select>
-            <select className="h-11 rounded-xl bg-white border border-slate-200 px-4" name="" id="">
-              <option value="">Toutes les catégories</option>
-              <option value="">Poste de travail</option>
-              <option value="">Télephonie</option>
-              <option value="">Compte d'accès</option>
-              <option value="">Messagerie</option>
-              <option value="">Autres</option>
-            </select>
-            <select className="h-11 rounded-xl bg-white border border-slate-200 px-4" name="" id="">
-              <option value="">Tous les priorités</option>
-              <option value="">Faible</option>
-              <option value="">Moyenne</option>
-              <option value="">Forte</option>
-              <option value="">Urgente</option>
-            </select>
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-150 bg-white px-4 border rounded-xl"
+              placeholder="Rechercher un ticket..."
+            />
           </div>
           <div className="flex flex-wrap gap-4">
-            <select className="h-11 rounded-xl bg-white border border-slate-200 px-4" name="" id="">
-              <option value="">Plus récent</option>
-              <option value="">Plus ancien</option>
-              <option value="">A à Z</option>
-              <option value="">Z à A</option>
+            <select
+              className="h-11 rounded-xl bg-white border border-slate-200 px-4"
+              value={sortFilter}
+              onChange={(e) => setSortFilter(e.target.value)}
+            >
+              <option value="recent">Plus récent</option>
+              <option value="oldest">Plus ancien</option>
+              <option value="az">A à Z</option>
+              <option value="za">Z à A</option>
             </select>
             <button
               className="bg-[#303030] p-2.5 rounded-xl text-slate-100 hover:bg-[#505050]"
@@ -103,7 +145,10 @@ export default function TicketComponents() {
             </button>
           </div>
         </div>
-        <TicketList />
+        <TicketList
+          setIsShowTicketOpen={setIsShowTicketOpen}
+          setSelectedTicket={setSelectedTicket}
+        />
       </div>
       {isProfileModalOpen && (
         <ProfilModal
@@ -133,6 +178,15 @@ export default function TicketComponents() {
           priority={priority}
           setPriority={setPriority}
           handleAjoutTicket={handleAjoutTicket}
+        />
+      )}
+      {isShowTicketOpen && (
+        <TicketDetailModal
+          selectedTicket={selectedTicket}
+          setSelectedTicket={setSelectedTicket}
+          setIsShowTicketOpen={setIsShowTicketOpen}
+          modifierTickets={modifierTickets}
+          supprimerTicket={supprimerTicket}
         />
       )}
     </DashboardLayoutUser>

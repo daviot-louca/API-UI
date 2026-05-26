@@ -15,8 +15,8 @@ export default function RecentTicketTable() {
     <div>
       {/*header */}
       <div className="flex justify-between p-3">
-        <h2 className="text-xl font-semibold">Vos tickets récents</h2>
-        <Link to={"/user/tickets"} className="text-[#303030] underline">
+        <h2 className="text-2xl font-bold">Vos tickets récents</h2>
+        <Link to={"/user/tickets"} className="text-[#303030] underline text-lg">
           Voir tous →
         </Link>
       </div>
