@@ -26,7 +26,7 @@ db.sequelize.authenticate()
     .then(()=>console.log("connexion réussie"))
     .catch((error)=>console.error(error,"erreur de connexion via la BDD"))
 
-db.sequelize.sync()
+db.sequelize.sync({alter:true})
     .then(()=>console.log("aucun problème avec les tables"))
     .catch((error)=>console.error("problème avec les tables de la BDD",error))
 

@@ -135,10 +135,7 @@ const deleteTicket = async (req, res) => {
   try {
     const ticketId = req.params.id;
 
-    const id = req.user.id;
-
-    const role = req.user.role;
-
+    const {id,role} = req.user;
     const info = await deleteTicketService({
       ticketId,
       id,

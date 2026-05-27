@@ -21,3 +21,4 @@ Thumbs.db
 
 # IDE
 .idea
+API/config/db.config.js

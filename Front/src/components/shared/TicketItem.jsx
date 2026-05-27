@@ -11,7 +11,7 @@ import StatusBadge from "./StatusBadge";
 function TicketItem({ ticket, setIsShowTicketOpen, setSelectedTicket }) {
   const { role } = useContext(AuthContext);
 
-  const { supprimerTicket, modifierTickets } = useContext(TicketContext);
+  const { supprimerTicket} = useContext(TicketContext);
 
   return (
     <div className="hover:bg-gray-100">

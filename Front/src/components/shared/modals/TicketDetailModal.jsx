@@ -1,12 +1,10 @@
 import TicketTypeIcon from "../TicketTypeIcon";
-import PriorityBadge from "../PriorityBadge";
-import StatusBadge from "../StatusBadge";
+
 export default function TicketDetailModal({
   selectedTicket,
   setSelectedTicket,
   modifierTickets,
   setIsShowTicketOpen,
-  supprimerTicket,
 }) {
   return (
     <div
@@ -26,7 +24,7 @@ export default function TicketDetailModal({
               </h2>
             </div>
             <div
-              onClick={(e) => setIsShowTicketOpen(false)}
+              onClick={() => setIsShowTicketOpen(false)}
               className="cursor-pointer"
             >
               <p className="text-2xl rounded-full bg-[#303030] w-10 h-10 flex items-center justify-center text-white pb-1 my-3">

@@ -10,7 +10,7 @@ router.get("/",authJwt,seeTicket)
 router.get("/stats",authJwt,statsTickets)
 router.get("/:id",seeTheTicket)
 router.post("/",authJwt,TicketMiddleware,createTicket)
-router.put("/:id",authJwt,updateTicket)
+router.put("/:id",authJwt,MiddlewarePermissions,updateTicket)
 router.delete("/:id",authJwt,deleteTicket)
 router.get("/admin/stats",authJwt,MiddlewarePermissions,adminStats);
 

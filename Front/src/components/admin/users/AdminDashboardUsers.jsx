@@ -10,7 +10,7 @@ import Profile from "../../shared/Profile";
 function AdminDashboard() {
   const { voirToutUser, deleteAll, users, rechercheUserContext } =
     useContext(AdminContext);
-  const { handleLogout, username, role, avatar } = useContext(AuthContext);
+  const { handleLogout, username, role, avatar,setUsername,email,setEmail } = useContext(AuthContext);
   const [recherche, setRecherche] = useState("");
   useEffect(() => {
     if (recherche === "") {

@@ -10,7 +10,7 @@ export const voirToutTickets = async (
   sort,
   search
 ) => {
-  const reponse = await axios.get(`${url}/admin/tickets`, {
+  const reponse = await axios.get(`${url}/tickets/admin/tickets`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

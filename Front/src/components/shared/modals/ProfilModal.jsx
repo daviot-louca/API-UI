@@ -35,7 +35,7 @@ export default function ProfilModal({
       <div className="flex min-h-full items-center justify-center">
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-[36rem] rounded-[1.75rem] bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.25)]"
+          className="w-full max-w-xl rounded-[1.75rem] bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.25)]"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex items-start justify-between gap-4">
