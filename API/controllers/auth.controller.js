@@ -15,7 +15,7 @@ const createAuth = async (req, res) => {
 //problème dans le log 
 const loginController = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password} = req.body;
         const info = await loginService({ email, password })
         res.json(info)
     } catch (error) {

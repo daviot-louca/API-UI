@@ -7,7 +7,7 @@ import {
 import DashboardLayout
     from "../layout/DashboardLayout";
 
-function AdminReports() {
+export default function AdminDashboard() {
 
     const {
         adminStats,
@@ -496,4 +496,3 @@ function AdminReports() {
     );
 }
 
-export default AdminReports;

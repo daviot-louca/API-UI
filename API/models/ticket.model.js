@@ -9,7 +9,7 @@ const ticket = db.define("ticket", {
     },
     type:{
         allowNull:false,
-        type:DataTypes.ENUM("Poste de travail","Téléphonie","Compte d'accès","Messagerie","Autres")
+        type:DataTypes.TEXT
     },
     title: {
         allowNull: false,
@@ -36,6 +36,9 @@ const ticket = db.define("ticket", {
         type:DataTypes.DATE,
         allowNull:true
     }
-});
+    
+},{
+        timestamps:true
+    });
 
 module.exports = ticket;

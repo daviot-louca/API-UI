@@ -7,7 +7,9 @@ import {
 /* PAGES ADMIN*/
 import AdminPageTickets from "./pages/admin/AdminPageTickets";
 import AdminPageUsers from "./pages/admin/AdminPageUsers";
-import AdminPageReports from "./pages/admin/AdminPageReports";
+import AdminPageDashboard from './pages/admin/AdminPageDashboard'
+import AdminPageCategories from "./pages/admin/AdminPageCategories";
+import AdminPageMessagerie from "./pages/admin/AdminPageMessagerie";
 
 /* PAGES SHARED*/
 import LoginPage from "./pages/shared/LoginPage";
@@ -53,35 +55,53 @@ function App() {
 
         {/* ADMIN ROUTES */}
         <Route
-          path="/admin"
+          path="/admin/ticket"
           element={
-            <ProtectedRoute allowedRole="admin">
+            <ProtectedRoute allowedRole="administrateur">
               <AdminPageTickets />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/users"
+          path="/admin/users"
           element={
-            <ProtectedRoute allowedRole="admin">
+            <ProtectedRoute allowedRole="administrateur">
               <AdminPageUsers />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/admin/reports"
+          path="/admin/dashboard"
           element={
-            <ProtectedRoute allowedRole="admin">
-              <AdminPageReports />
+            <ProtectedRoute allowedRole="administrateur">
+              <AdminPageDashboard />
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/admin/messagerie"
+          element={
+            <ProtectedRoute allowedRole="administrateur">
+              <AdminPageMessagerie />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/catégories"
+          element={
+            <ProtectedRoute allowedRole="administrateur">
+              <AdminPageCategories />
+            </ProtectedRoute>
+          }
+        />
+
+
 
         {/* USER ROUTES */}
         <Route
           path="/user/dashboard"
           element={
-            <ProtectedRoute allowedRole="user">
+            <ProtectedRoute allowedRole="utilisateur">
               <UserPage />
             </ProtectedRoute>
           }
@@ -89,7 +109,7 @@ function App() {
         <Route
           path="/user/tickets"
           element={
-            <ProtectedRoute allowedRole="user">
+            <ProtectedRoute allowedRole="utilisateur">
               <TicketPage />
             </ProtectedRoute>
           }
@@ -97,7 +117,7 @@ function App() {
         <Route
           path="/user/message"
           element={
-            <ProtectedRoute allowedRole="user">
+            <ProtectedRoute allowedRole="utilisateur">
               <Message />
             </ProtectedRoute>
           }
@@ -105,7 +125,7 @@ function App() {
         <Route
           path="/user/faq"
           element={
-            <ProtectedRoute allowedRole="user">
+            <ProtectedRoute allowedRole="utilisateur">
               <FAQ />
             </ProtectedRoute>
           }

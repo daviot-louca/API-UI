@@ -8,6 +8,7 @@ export const voirToutTickets = async (
   type,
   priority,
   sort,
+  search
 ) => {
   const reponse = await axios.get(`${url}/admin/tickets`, {
     headers: {
@@ -19,6 +20,7 @@ export const voirToutTickets = async (
       type,
       priority,
       sort,
+      search
     },
   });
   return reponse.data;

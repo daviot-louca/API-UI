@@ -14,17 +14,13 @@ function TicketList({setSelectedTicket,setIsShowTicketOpen}) {
 
 
   return (
-    <div className="ml-0 overflow-x-auto">
+    <div className="m-3 p-3 overflow-x-auto bg-white rounded-2xl">
 
-      <div className="px-4 py-3 grid grid-cols-[2.5rem_minmax(8rem,1fr)_minmax(11rem,1.4fr)_minmax(9rem,1fr)_8rem_9rem_8rem_10rem] gap-3 text-sm">
+      <div className="px-6 py-4.5 grid grid-cols-[50px_150px_230px_150px_150px_200px_150px_150px] gap-3 items-center font-semibold">
         <div className="">
           <h3>ID</h3>
         </div>
         <div>
-          <h3>type</h3>
-        </div>
-
-        <div className="">
           <h3>Titre</h3>
         </div>
 
@@ -33,18 +29,22 @@ function TicketList({setSelectedTicket,setIsShowTicketOpen}) {
         </div>
 
         <div className="">
-          <h3>Status</h3>
+          <h3>Catégorie</h3>
         </div>
 
         <div className="">
-          <h3>Priorité</h3>
+          <h3>Propriété</h3>
         </div>
 
         <div className="">
-          <h3>Date de création</h3>
+          <h3>Statut</h3>
+        </div>
+
+        <div className="">
+          <h3>Dernière mise à jour</h3>
         </div>
         <div className="">
-          <h3>gestion du tickets</h3>
+          <h3>Actions</h3>
         </div>
       </div>
 

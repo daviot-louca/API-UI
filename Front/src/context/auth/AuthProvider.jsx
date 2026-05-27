@@ -68,8 +68,8 @@ export function AuthProvider({ children }) {
 
                 applyAuthSession(reponse);
 
-                if (reponse.role === "admin") {
-                    navigate("/admin");
+                if (reponse.role === "administrateur") {
+                    navigate("/admin/dashboard");
                 } else {
                     navigate("/user/dashboard");
                 }
@@ -101,10 +101,10 @@ export function AuthProvider({ children }) {
 
                 applyAuthSession(reponse);
 
-                if (reponse.role === "admin") {
-                    navigate("/admin");
+                if (reponse.role === "administrateur") {
+                    navigate("/admin/dashboard");
                 } else {
-                    navigate("/dashboard");
+                    navigate("/user/dashboard");
                 }
 
                 setPassword("");
@@ -190,7 +190,7 @@ export function AuthProvider({ children }) {
             handleSubmit,
             handleRegister,
             handleLogout,
-            handleModifierProfil
+            handleModifierProfil,
         }),
         [
             avatar,

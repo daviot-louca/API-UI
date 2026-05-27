@@ -1,4 +1,4 @@
-const authSchema = require("../schemas/auth.schema");
+const authSchema = require("../../schemas/auth.schema");
 // vérifie si les données sont ok
 const AuthValidation = (req,res,next) => {
     const verification = authSchema.safeParse(req.body)

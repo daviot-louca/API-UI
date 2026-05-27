@@ -48,8 +48,51 @@ export default function TicketDetailModal({
                 <p className="text-lg font-semibold">{selectedTicket.type}</p>
               </div>
               <div className="flex gap-3 my-2">
-                <PriorityBadge priority={selectedTicket.priority} />
-                <StatusBadge status={selectedTicket.status} />
+                <select
+                  value={selectedTicket?.priority}
+                  onChange={(e) => {
+                    modifierTickets(
+                      selectedTicket.id,
+
+                      {
+                        priority: e.target.value,
+                      },
+                    );
+                    setSelectedTicket((prev) => ({
+                      ...prev,
+
+                      priority: e.target.value,
+                    }));
+                  }}
+                  className="bg-slate-100 rounded-xl px-4 py-2 outline-none"
+                >
+                  <option value="faible">Faible</option>
+                  <option value="moyenne">Moyenne</option>
+                  <option value="haute">Haute</option>
+                  <option value="urgente">Urgente</option>
+                </select>
+                                <select
+                  value={selectedTicket?.status}
+                  onChange={(e) => {
+                    modifierTickets(
+                      selectedTicket.id,
+
+                      {
+                        status: e.target.value,
+                      },
+                    );
+                    setSelectedTicket((prev) => ({
+                      ...prev,
+
+                      status: e.target.value,
+                    }));
+                  }}
+                  className="bg-slate-100 rounded-xl px-4 py-2 outline-none"
+                >
+                  <option value="remis">remis</option>
+                  <option value="en cours">en cours</option>
+                  <option value="résolu">résolu</option>
+                </select>
                 <button className="p-2 border rounded-xl bg-gray-200">
                   Crée le :
                   {new Date(selectedTicket.createdAt).toLocaleDateString()} à{" "}

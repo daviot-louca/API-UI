@@ -14,22 +14,18 @@ function TicketItem({ ticket, setIsShowTicketOpen, setSelectedTicket }) {
   const { supprimerTicket, modifierTickets } = useContext(TicketContext);
 
   return (
-    <div>
-      {role === "admin" ? (
-        <div className="px-4 py-3 grid grid-cols-[2.5rem_minmax(8rem,1fr)_minmax(11rem,1.4fr)_minmax(9rem,1fr)_8rem_9rem_8rem_10rem] gap-3 items-center text-sm">
+    <div className="hover:bg-gray-100">
+      <hr className="text-gray-400" />
+      {role === "administrateur" ? (
+        <div className="px-6 py-4 grid grid-cols-[50px_150px_230px_150px_150px_200px_150px_150px] gap-3 items-center">
           {/* ID */}
           <div>
             <p className="font-semibold text-[#303030]">#{ticket.id}</p>
           </div>
-          <div>
-            <TicketTypeIcon type={ticket?.type} showLabel />
-          </div>
-
           {/* TITLE */}
           <div>
-            <p className="font-semibold text-[#303030]">{ticket.title}</p>
+            <p className="font-bold text-[#303030]">{ticket.title}</p>
           </div>
-
           {/* USER */}
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-[#303030] text-slate-100 flex items-center justify-center font-bold">
@@ -42,42 +38,24 @@ function TicketItem({ ticket, setIsShowTicketOpen, setSelectedTicket }) {
               </p>
             </div>
           </div>
-
-          {/* STATUS */}
-          <div className="">
-            <select
-              className="bg-slate-100 text-[#303030] rounded-xl px-4 py-2 outline-none border-none"
-              value={ticket.status}
-              onChange={(e) => modifierTickets(ticket.id, e.target.value)}
-            >
-              <option value="remis">remis</option>
-
-              <option value="en cours">en cours</option>
-
-              <option value="résolu">résolu</option>
-            </select>
-          </div>
-
-          {/* PRIORITY */}
           <div>
-            <select
-              className="bg-slate-100 text-[#303030] rounded-xl px-4 py-2 outline-none border-none"
-              value={ticket.priority ?? "faible"}
-              onChange={(e) =>
-                modifierTickets(ticket.id, { priority: e.target.value })
-              }
-            >
-              <option value="faible">faible</option>
-              <option value="moyenne">moyenne</option>
-              <option value="haute">haute</option>
-              <option value="urgente">urgente</option>
-            </select>
+            <TicketTypeIcon type={ticket?.type} showLabel />
           </div>
+            {/* PRIORITY */}
+          <div>
+            <PriorityBadge priority={ticket?.priority}/>
+          </div>
+          {/* STATUS */}
+          <div className="w-28">
+            <StatusBadge status={ticket?.status}/>
+          </div>
+
+
 
           {/* DATE */}
           <div>
             <p className="text-[#303030] font-medium">
-              {new Date(ticket.createdAt).toLocaleDateString()}
+              {new Date(ticket.updatedAt).toLocaleDateString()} à {new Date (ticket.updatedAt).toLocaleTimeString("fr-FR",{hour:"numeric",minute:'numeric'})}
             </p>
           </div>
 

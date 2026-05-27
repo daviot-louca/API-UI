@@ -72,9 +72,9 @@ export function AdminProvider({ children }) {
                 const token =
                     localStorage.getItem("token");
                 const newRole =
-                    currentRole === "admin"
-                        ? "user"
-                        : "admin";
+                    currentRole === "administrateur"
+                        ? "utilisateur"
+                        : "administrateur";
 
                 await modifierRoleUser(
                     id,

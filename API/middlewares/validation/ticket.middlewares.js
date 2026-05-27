@@ -1,4 +1,4 @@
-const TicketSchema = require("../schemas/ticket.schema");
+const TicketSchema = require("../../schemas/ticket.schema");
 //verifie les donnes du ticket pour savoir s'il est correct ou non
 const TicketMiddleware = (req,res,next)=>{
     const verification = TicketSchema.safeParse(req.body)

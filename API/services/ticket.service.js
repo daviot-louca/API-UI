@@ -1,439 +1,400 @@
 const Ticket = require("../models/ticket.model");
 const User = require("../models/user.model");
+const { Op } = require("sequelize");
 
 // SEE ALL ADMIN
 const seeAllService = async ({
-    pageNumber = 1,
-    limitNumber = 10,
-    status = "all",
-    type = "all",
-    priority = "all",
-    sort = "recent"
+  pageNumber = 1,
+  limitNumber = 10,
+  status = "all",
+  type = "all",
+  priority = "all",
+  sort = "recent",
+  search = "",
 }) => {
+  const limit = Number(limitNumber) || 10;
 
-    const limit = Number(limitNumber) || 10;
+  const offset = (pageNumber - 1) * limit;
 
-    const offset =
-        (pageNumber - 1) * limit;
+  // FILTERS
+  const whereCondition = {};
 
-    // FILTERS
-    const whereCondition = {
-    };
+  // STATUS
+  if (status && status !== "all") {
+    whereCondition.status = status;
+  }
 
-    // STATUS
-    if (
-        status &&
-        status !== "all"
-    ) {
+  // TYPE
+  if (type && type !== "all") {
+    whereCondition.type = type;
+  }
 
-        whereCondition.status = status;
-    }
+  // PRIORITY
+  if (priority && priority !== "all") {
+    whereCondition.priority = priority;
+  }
 
-    // TYPE
-    if (
-        type &&
-        type !== "all"
-    ) {
+  if (search) {
+    whereCondition[Op.or] = [
+      {
+        title: {
+          [Op.like]: `%${search}%`,
+        },
+      },
 
-        whereCondition.type = type;
-    }
+      {
+        description: {
+          [Op.like]: `%${search}%`,
+        },
+      },
+    ];
+  }
 
-    // PRIORITY
-    if (
-        priority &&
-        priority !== "all"
-    ) {
+  // SORT
+  let order = [["updatedAt", "DESC"]];
 
-        whereCondition.priority = priority;
-    }
+  if (sort === "oldest") {
+    order = [["updatedAt", "ASC"]];
+  }
 
-    // SORT
-    let order = [["updatedAt", "DESC"]];
+  if (sort === "az") {
+    order = [["title", "ASC"]];
+  }
 
-    if (sort === "oldest") {
+  if (sort === "za") {
+    order = [["title", "DESC"]];
+  }
 
-        order = [["updatedAt", "ASC"]];
-    }
+  const data = await Ticket.findAndCountAll({
+    where: whereCondition,
 
-    if (sort === "az") {
+    order,
 
-        order = [["title", "ASC"]];
-    }
+    limit,
 
-    if (sort === "za") {
+    offset,
 
-        order = [["title", "DESC"]];
-    }
+    include: User,
+  });
 
-    const data = await Ticket.findAndCountAll({
-
-        where: whereCondition,
-
-        order,
-
-        limit,
-
-        offset,
-
-        include: User
-    });
-
-    return data;
+  return data;
 };
-
 
 // SEE USER TICKETS
 const seeTicketService = async ({
-    id,
-    pageNumber = 1,
-    limitNumber = 10,
-    status = "all",
-    type = "all",
-    priority = "all",
-    sort = "recent"
+  id,
+  pageNumber = 1,
+  limitNumber = 10,
+  status = "all",
+  type = "all",
+  priority = "all",
+  sort = "recent",
+  search = "",
 }) => {
+  const limit = Number(limitNumber) || 10;
 
-    const limit = Number(limitNumber) || 10;
+  const offset = (pageNumber - 1) * limit;
 
-    const offset =
-        (pageNumber - 1) * limit;
+  // FILTERS
+  const whereCondition = {
+    userId: id,
+  };
 
-    // FILTERS
-    const whereCondition = {
-        userId: id
-    };
+  // STATUS
+  if (status && status !== "all") {
+    whereCondition.status = status;
+  }
 
-    // STATUS
-    if (
-        status &&
-        status !== "all"
-    ) {
+  // TYPE
+  if (type && type !== "all") {
+    whereCondition.type = type;
+  }
 
-        whereCondition.status = status;
-    }
+  // PRIORITY
+  if (priority && priority !== "all") {
+    whereCondition.priority = priority;
+  }
 
-    // TYPE
-    if (
-        type &&
-        type !== "all"
-    ) {
+  // SORT
+  let order = [["updatedAt", "DESC"]];
 
-        whereCondition.type = type;
-    }
+  if (sort === "oldest") {
+    order = [["updatedAt", "ASC"]];
+  }
 
-    // PRIORITY
-    if (
-        priority &&
-        priority !== "all"
-    ) {
+  if (sort === "az") {
+    order = [["title", "ASC"]];
+  }
 
-        whereCondition.priority = priority;
-    }
+  if (sort === "za") {
+    order = [["title", "DESC"]];
+  }
 
-    // SORT
-    let order = [["updatedAt", "DESC"]];
+  if (search) {
+    whereCondition[Op.or] = [
+      {
+        title: {
+          [Op.like]: `%${search}%`,
+        },
+      },
 
-    if (sort === "oldest") {
+      {
+        description: {
+          [Op.like]: `%${search}%`,
+        },
+      },
+    ];
+  }
 
-        order = [["updatedAt", "ASC"]];
-    }
+  const data = await Ticket.findAndCountAll({
+    where: whereCondition,
 
-    if (sort === "az") {
+    order,
 
-        order = [["title", "ASC"]];
-    }
+    limit,
 
-    if (sort === "za") {
+    offset,
 
-        order = [["title", "DESC"]];
-    }
+    include: User,
+  });
 
-    const data = await Ticket.findAndCountAll({
-
-        where: whereCondition,
-
-        order,
-
-        limit,
-
-        offset,
-
-        include: User
-    });
-
-    return data;
+  return data;
 };
 
 // SEE ONE
 const seeTheTicketService = async (id) => {
+  const data = await Ticket.findByPk(id, {
+    include: [User],
+  });
 
-    const data = await Ticket.findByPk(id, {
-        include: [User]
-    });
-
-    return data;
+  return data;
 };
 
 // CREATE
 const createTicketService = async ({
-    id,
-    type,
-    title,
-    description,
-    status,
-    priority
+  id,
+  type,
+  title,
+  description,
+  status,
+  priority,
 }) => {
+  const envoie = await Ticket.create({
+    userId: id,
 
-    const envoie = await Ticket.create({
+    type,
 
-        userId: id,
+    title,
 
-        type,
+    description,
 
-        title,
+    status,
 
-        description,
+    priority,
+  });
 
-        status,
-
-        priority
-    });
-
-    return envoie;
+  return envoie;
 };
 
 // UPDATE
 const updateTicketService = async ({
-    id,
-    role,
-    ticketId,
-    type,
-    title,
-    description,
-    status,
-    priority
+  id,
+  role,
+  ticketId,
+  type,
+  title,
+  description,
+  status,
+  priority,
 }) => {
+  const ticket = await Ticket.findByPk(ticketId);
 
-    const ticket =
-        await Ticket.findByPk(ticketId);
+  if (!ticket) {
+    return "ticket introuvable";
+  }
 
-    if (!ticket) {
+  if (role !== "administrateur" && ticket.userId !== id) {
+    return "accès interdit";
+  }
 
-        return "ticket introuvable";
-    }
+  // TYPE
+  if (type !== undefined) {
+    ticket.type = type;
+  }
 
-    if (
-        role !== "admin" &&
-        ticket.userId !== id
-    ) {
+  // TITLE
+  if (title !== undefined) {
+    ticket.title = title;
+  }
 
-        return "accès interdit";
-    }
+  // DESCRIPTION
+  if (description !== undefined) {
+    ticket.description = description;
+  }
 
-    // TYPE
-    if (type !== undefined) {
+  // STATUS
+  if (status !== undefined) {
+    ticket.status = status;
+  }
 
-        ticket.type = type;
-    }
+  // PRIORITY
+  if (priority !== undefined) {
+    ticket.priority = priority;
+  }
 
-    // TITLE
-    if (title !== undefined) {
+  await ticket.save();
 
-        ticket.title = title;
-    }
-
-    // DESCRIPTION
-    if (description !== undefined) {
-
-        ticket.description = description;
-    }
-
-    // STATUS
-    if (status !== undefined) {
-
-        ticket.status = status;
-    }
-
-    // PRIORITY
-    if (priority !== undefined) {
-
-        ticket.priority = priority;
-    }
-
-    await ticket.save();
-
-    return ticket;
+  return ticket;
 };
 
 // DELETE
-const deleteTicketService = async ({
-    ticketId,
-    id,
-    role
-}) => {
+const deleteTicketService = async ({ ticketId, id, role }) => {
+  const whereCondition =
+    role === "administrateur"
+      ? { id: ticketId }
+      : {
+          id: ticketId,
+          userId: id,
+        };
 
-    const whereCondition =
+  const supprimer = await Ticket.destroy({
+    where: whereCondition,
+  });
 
-        role === "admin"
-
-            ? { id: ticketId }
-
-            : {
-                id: ticketId,
-                userId: id
-            };
-
-    const supprimer = await Ticket.destroy({
-        where: whereCondition
-    });
-
-    return supprimer;
+  return supprimer;
 };
 
 // STATS
 const statsTicketService = async (id) => {
+  const total = await Ticket.count({
+    where: {
+      userId: id,
+    },
+  });
 
-    const total = await Ticket.count({
-        where: {
-            userId: id
-        }
-    });
+  const remis = await Ticket.count({
+    where: {
+      userId: id,
+      status: "remis",
+    },
+  });
 
-    const remis = await Ticket.count({
-        where: {
-            userId: id,
-            status: "remis"
-        }
-    });
+  const ouvert = await Ticket.count({
+    where: {
+      userId: id,
+      status: "ouvert",
+    },
+  });
 
-    const ouvert = await Ticket.count({
-        where: {
-            userId: id,
-            status: "ouvert"
-        }
-    });
+  const enCours = await Ticket.count({
+    where: {
+      userId: id,
+      status: "en cours",
+    },
+  });
 
-    const enCours = await Ticket.count({
-        where: {
-            userId: id,
-            status: "en cours"
-        }
-    });
+  const resolu = await Ticket.count({
+    where: {
+      userId: id,
+      status: "résolu",
+    },
+  });
 
-    const resolu = await Ticket.count({
-        where: {
-            userId: id,
-            status: "résolu"
-        }
-    });
-
-    return {
-        total,
-        remis,
-        ouvert,
-        enCours,
-        resolu
-    };
+  return {
+    total,
+    remis,
+    ouvert,
+    enCours,
+    resolu,
+  };
 };
 
 const adminStatsService = async () => {
+  const total = await Ticket.count();
 
-    const total =
-        await Ticket.count();
+  // STATUS
+  const remis = await Ticket.count({
+    where: {
+      status: "remis",
+    },
+  });
 
-    // STATUS
-    const remis =
-        await Ticket.count({
-            where: {
-                status: "remis"
-            }
-        });
+  const ouvert = await Ticket.count({
+    where: {
+      status: "ouvert",
+    },
+  });
 
-    const ouvert =
-        await Ticket.count({
-            where: {
-                status: "ouvert"
-            }
-        });
+  const enCours = await Ticket.count({
+    where: {
+      status: "en cours",
+    },
+  });
 
-    const enCours =
-        await Ticket.count({
-            where: {
-                status: "en cours"
-            }
-        });
+  const resolu = await Ticket.count({
+    where: {
+      status: "résolu",
+    },
+  });
 
-    const resolu =
-        await Ticket.count({
-            where: {
-                status: "résolu"
-            }
-        });
+  // TYPES
+  const posteTravail = await Ticket.count({
+    where: {
+      type: "Poste de travail",
+    },
+  });
 
-    // TYPES
-    const posteTravail =
-        await Ticket.count({
-            where: {
-                type: "Poste de travail"
-            }
-        });
+  const telephonie = await Ticket.count({
+    where: {
+      type: "Téléphonie",
+    },
+  });
 
-    const telephonie =
-        await Ticket.count({
-            where: {
-                type: "Téléphonie"
-            }
-        });
+  const compteAcces = await Ticket.count({
+    where: {
+      type: "Compte d'accès",
+    },
+  });
 
-    const compteAcces =
-        await Ticket.count({
-            where: {
-                type: "Compte d'accès"
-            }
-        });
+  const messagerie = await Ticket.count({
+    where: {
+      type: "Messagerie",
+    },
+  });
 
-    const messagerie =
-        await Ticket.count({
-            where: {
-                type: "Messagerie"
-            }
-        });
+  const autres = await Ticket.count({
+    where: {
+      type: "Autres",
+    },
+  });
 
-    const autres =
-        await Ticket.count({
-            where: {
-                type: "Autres"
-            }
-        });
+  return {
+    total,
 
-    return {
+    status: {
+      remis,
+      ouvert,
+      enCours,
+      resolu,
+    },
 
-        total,
-
-        status: {
-            remis,
-            ouvert,
-            enCours,
-            resolu
-        },
-
-        types: {
-            posteTravail,
-            telephonie,
-            compteAcces,
-            messagerie,
-            autres
-        }
-    };
+    types: {
+      posteTravail,
+      telephonie,
+      compteAcces,
+      messagerie,
+      autres,
+    },
+  };
 };
 
 module.exports = {
-    seeTicketService,
-    createTicketService,
-    updateTicketService,
-    deleteTicketService,
-    seeAllService,
-    seeTheTicketService,
-    statsTicketService,
-    adminStatsService
+  seeTicketService,
+  createTicketService,
+  updateTicketService,
+  deleteTicketService,
+  seeAllService,
+  seeTheTicketService,
+  statsTicketService,
+  adminStatsService,
 };

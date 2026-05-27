@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-
+import {LayoutDashboard,Ticket,User2,MessageCircle,Layers} from "lucide-react"
 function Sidebar() {
     return (
 
@@ -28,14 +28,16 @@ function Sidebar() {
 
                         <li>
                             <NavLink
-                                to="/admin"
+                                to="/admin/dashboard"
                                 className={({ isActive }) =>
                                     `flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200  hover:px-5 ${isActive
                                         ? "bg-[#266fdb] text-white px-5"
                                         : "text-slate-400 hover:bg-indigo-900"
                                     }`
                                 }
-                            >
+                            ><span>
+                                <LayoutDashboard size={18}/>
+                            </span>
                                 <span>
                                     Dashboard
                                 </span>
@@ -43,11 +45,9 @@ function Sidebar() {
                             </NavLink>
 
                         </li>
-
                         <li>
-
                             <NavLink
-                                to="/users"
+                                to="/admin/ticket"
                                 className={({ isActive }) =>
                                     `flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200  hover:px-5 ${isActive
                                         ? "bg-[#266fdb] text-white px-5"
@@ -56,7 +56,32 @@ function Sidebar() {
                                 }
                             >
                                 <span>
-                                    Utilisateurs
+                                <Ticket size={18}/>
+                                </span>
+                                <span>
+                                    Gestion des tickets
+                                </span>
+
+                            </NavLink>
+
+                        </li>
+
+                        <li>
+
+                            <NavLink
+                                to="/admin/users"
+                                className={({ isActive }) =>
+                                    `flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200  hover:px-5 ${isActive
+                                        ? "bg-[#266fdb] text-white px-5"
+                                        : "text-slate-400 hover:bg-indigo-900"
+                                    }`
+                                }
+                            >
+                                <span>
+                                    <User2 size={18}/>
+                                </span>
+                                <span>
+                                    Gestion des utilisateurs
                                 </span>
 
                             </NavLink>
@@ -65,7 +90,7 @@ function Sidebar() {
                         <li>
 
                             <NavLink
-                                to="/admin/reports"
+                                to="/admin/messagerie"
                                 className={({ isActive }) =>
                                     `flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200  hover:px-5 ${isActive
                                         ? "bg-[#266fdb] text-white px-5"
@@ -74,7 +99,31 @@ function Sidebar() {
                                 }
                             >
                                 <span>
-                                    Reports
+                                <MessageCircle size={18}/>
+                                </span>
+                                <span>
+                                    Messagerie
+                                </span>
+
+                            </NavLink>
+
+                        </li>
+                        <li>
+
+                            <NavLink
+                                to="/admin/catégories"
+                                className={({ isActive }) =>
+                                    `flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200  hover:px-5 ${isActive
+                                        ? "bg-[#266fdb] text-white px-5"
+                                        : "text-slate-400 hover:bg-indigo-900"
+                                    }`
+                                }
+                            >
+                                <span>
+                                    <Layers size={18}/>
+                                </span>
+                                <span>
+                                    Gestion des catégories
                                 </span>
 
                             </NavLink>

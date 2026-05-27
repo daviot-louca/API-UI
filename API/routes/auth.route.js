@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const AuthValidation = require("../middlewares/validation.middleware")
+const AuthValidation = require("../middlewares/validation/validation.middleware")
 const { loginController, createAuth, allUsers, deleteAll, deleteUser, updateUsers,rechercheUsers,modifierUsers } = require('../controllers/auth.controller');
 const MiddlewarePermissions = require('../middlewares/permissions.middlewares');
 const authJwt = require('../middlewares/JWT.middlewares');

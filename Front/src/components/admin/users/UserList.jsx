@@ -15,14 +15,9 @@ function UserList() {
         <div className="flex flex-col gap-4">
 
             {/* HEADER */}
-            <div className="grid grid-cols-5 text-white rounded-2xl px-6 py-4 font-semibold shadow-sm">
-
+            <div className="grid grid-cols-[150px_300px_300px_300px_300px] items-center rounded-2xl px-6 py-4 font-semibold">
                 <div>
-                    ID
-                </div>
-
-                <div>
-                    Utilisateur
+                    Nom
                 </div>
 
                 <div>
@@ -30,9 +25,12 @@ function UserList() {
                 </div>
 
                 <div>
-                    Role
+                    Rôle
                 </div>
 
+                <div>
+                    Dernière connexion 
+                </div>
                 <div>
                     Actions
                 </div>
@@ -45,23 +43,14 @@ function UserList() {
 
                     <div
                         key={user.id}
-                        className="grid grid-cols-5 items-center bg-white rounded-2xl shadow-sm px-6 py-5 hover:shadow-md transition"
+                        className="grid grid-cols-[150px_300px_300px_300px_300px] items-center px-6 py-5"
                     >
-
-                        {/* ID */}
-                        <div>
-
-                            <p className="font-semibold text-gray-800">
-                                {user.id}
-                            </p>
-
-                        </div>
 
                         {/* USERNAME */}
                         <div className="flex items-center gap-3">
 
                             {/* AVATAR */}
-                            <div className="w-11 h-11 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">
+                            <div className="w-11 h-11 rounded-full bg-[#303030] text-slate-100 flex items-center justify-center font-bold">
 
                                 {user.username.slice(0, 2)}
 
@@ -69,7 +58,7 @@ function UserList() {
 
                             <div>
 
-                                <p className="font-medium text-gray-800">
+                                <p className="font-medium text-[#303030]">
 
                                     {user.username}
 
@@ -82,7 +71,7 @@ function UserList() {
                         {/* EMAIL */}
                         <div>
 
-                            <p className="text-gray-500">
+                            <p className="text-lg">
 
                                 {user.email}
 
@@ -95,12 +84,7 @@ function UserList() {
 
                             <span
                                 className={`
-                                    px-4 py-2 rounded-xl text-sm font-medium
-
-                                    ${user.role === "admin"
-                                        ? "bg-indigo-100 text-indigo-700"
-                                        : "bg-gray-100 text-gray-700"
-                                    }
+                                    font-semibold text-lg
                                 `}
                             >
 
@@ -109,21 +93,24 @@ function UserList() {
                             </span>
 
                         </div>
+                        <div>
+                            <span className="font-semibold">{new Date (user.lastLoginAt).toLocaleDateString()} à {new Date(user.lastLoginAt).toLocaleTimeString({"fr-FR":{hour:"2-digit",minute:"2-digit"}})}</span> 
+                        </div>
 
                         {/* ACTIONS */}
-                        <div>
+                        <div className="flex gap-3">
 
                         <button onClick={() => modifierRole(user.id,user.role)}>
                                         {
-                                            user.role === "admin"
+                                            user.role === "administrateur"
 
-                                                ? "Passer user"
+                                                ? "Passer utilisateur"
 
-                                                : "Passer admin"
+                                                : "Passer administrateur"
                                         }
                                     </button>
                         {
-                            user.role === "user" && (
+                            user.role === "utilisateur" && (
 
                                 <div>
 

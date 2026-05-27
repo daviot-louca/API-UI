@@ -5,13 +5,15 @@ const app = express();
 const db = require("./models/index")
 const route  = require("./routes/ticket.route")
 const routeAuth  = require("./routes/auth.route")
+const routeCategories = require("./routes/categories.routes")
 const LoggerMiddlewares = require("./middlewares/logger.middlewares")
 
 app.use(cors())
 app.use(express.json())
 app.use(LoggerMiddlewares)
-app.use(route)
+app.use("/tickets",route)
 app.use(routeAuth)
+app.use("/categories",routeCategories)
 //vérifie que le serveur tourne vraiment
 app.get("/healthz", (req,res)=>{
     res.json({

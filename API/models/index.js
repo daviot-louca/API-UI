@@ -1,15 +1,12 @@
-const sequelize =
-    require("../config/db.config");
+const sequelize = require("../config/db.config");
 
-const User =
-    require("./user.model");
+const User = require("./user.model");
 
-const Ticket =
-    require("./ticket.model");
+const Ticket = require("./ticket.model");
 
-const Message =
-    require("./message.model");
+const Message = require("./message.model");
 
+const Categories = require("./categories.model");
 const db = {};
 
 /* CONNEXION */
@@ -24,56 +21,45 @@ db.ticket = Ticket;
 
 db.message = Message;
 
+db.categories = Categories;
+
 /* RELATIONS USER ↔ TICKET */
 
-db.user.hasMany(
-    db.ticket,
-    {
-        foreignKey: "userId",
-        onDelete: "CASCADE"
-    }
-);
+db.user.hasMany(db.ticket, {
+  foreignKey: "userId",
+  onDelete: "CASCADE",
+});
 
-db.ticket.belongsTo(
-    db.user,
-    {
-        foreignKey: "userId"
-    }
-);
+db.ticket.belongsTo(db.user, {
+  foreignKey: "userId",
+});
 
 /* RELATIONS USER ↔ MESSAGE */
 
-db.user.hasMany(
-    db.message,
-    {
-        foreignKey: "userId",
-        onDelete:"NO ACTION"
-    }
-);
+db.user.hasMany(db.message, {
+  foreignKey: "userId",
+  onDelete: "NO ACTION",
+});
 
-db.message.belongsTo(
-    db.user,
-    {
-        foreignKey: "userId",
-        onDelete:"NO ACTION"
-    }
-);
+db.message.belongsTo(db.user, {
+  foreignKey: "userId",
+  onDelete: "NO ACTION",
+});
 
 /* RELATIONS TICKET ↔ MESSAGE */
 
-db.ticket.hasMany(
-    db.message,
-    {
-        foreignKey: "ticketId",
-        onDelete: "CASCADE"
-    }
-);
+db.ticket.hasMany(db.message, {
+  foreignKey: "ticketId",
+  onDelete: "CASCADE",
+});
 
-db.message.belongsTo(
-    db.ticket,
-    {
-        foreignKey: "ticketId"
-    }
-);
+db.message.belongsTo(db.ticket, {
+  foreignKey: "ticketId",
+});
+
+/*Relations Tickets <=> Categories */
+
+db.ticket.belongsTo(db.categories, { foreignKey: "CategoryId" });
+db.categories.hasMany(db.ticket,{foreignKey:"CategoryId"})
 
 module.exports = db;

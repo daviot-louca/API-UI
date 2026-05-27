@@ -12,7 +12,7 @@ const {
 // SEE ALL ADMIN
 const seeAll = async (req, res) => {
   try {
-    const { page, limit, status, type, priority, sort } = req.query;
+    const { page, limit, status, type, priority, sort,search } = req.query;
 
     const pageNumber = Number(page) || 1;
 
@@ -25,6 +25,7 @@ const seeAll = async (req, res) => {
       type,
       priority,
       sort,
+      search
     });
 
     res.json(informations);
@@ -39,17 +40,18 @@ const seeAll = async (req, res) => {
 const seeTicket = async (req, res) => {
   try {
     const id = req.user.id;
-    const { page, limit, status, type, priority, sort } = req.query;
+    const { page, limit, status, type, priority, sort,search } = req.query;
     const pageNumber = Number(page) || 1;
     const limitNumber = Number(limit) || 10;
     const informations = await seeTicketService({
-      id: req.user.id,
+      id,
       pageNumber,
       limitNumber,
       status,
       type,
       priority,
       sort,
+      search
     });
     res.json(informations);
   } catch (error) {
