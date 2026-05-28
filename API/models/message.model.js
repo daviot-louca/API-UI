@@ -1,35 +1,54 @@
-const {
-    DataTypes
-} = require("sequelize");
+const { DataTypes } = require("sequelize");
+const db = require("../config/db.config");
 
-const db =
-    require("../config/db.config");
+const messages = db.define(
 
-const Message =
-    db.define("message", {
+   "messages",
 
-        id: {
+   {
 
-            type: DataTypes.INTEGER,
+      id:{
 
-            primaryKey: true,
+         primaryKey:true,
 
-            autoIncrement: true
-        },
+         autoIncrement:true,
 
-        content: {
+         type:DataTypes.INTEGER
+      },
 
-            type: DataTypes.TEXT,
+      message:{
 
-            allowNull: false
-        },
+         type:DataTypes.TEXT,
 
-        isRead: {
+         allowNull:false
+      },
 
-            type: DataTypes.BOOLEAN,
+      ticketId:{
 
-            defaultValue: false
-        }
-    });
+         type:DataTypes.INTEGER,
 
-module.exports = Message;
+         allowNull:false
+      },
+
+      userId:{
+
+         type:DataTypes.INTEGER,
+
+         allowNull:false
+      },
+
+      isRead:{
+
+         type:DataTypes.BOOLEAN,
+
+         defaultValue:false
+      }
+   },
+
+   {
+
+      timestamps:true
+   }
+);
+
+module.exports = messages;

@@ -6,7 +6,7 @@ const Ticket = require("./ticket.model");
 
 const Message = require("./message.model");
 
-const Categories = require("./categories.model");
+const category = require("./categories.model");
 const db = {};
 
 /* CONNEXION */
@@ -21,7 +21,7 @@ db.ticket = Ticket;
 
 db.message = Message;
 
-db.categories = Categories;
+db.categories = category;
 
 /* RELATIONS USER ↔ TICKET */
 
@@ -59,7 +59,10 @@ db.message.belongsTo(db.ticket, {
 
 /*Relations Tickets <=> Categories */
 
-db.ticket.belongsTo(db.categories, { foreignKey: "CategoryId" });
-db.categories.hasMany(db.ticket,{foreignKey:"CategoryId"})
+db.ticket.belongsTo(db.categories, {
+  foreignKey: "categoryId",
+  as: "category",
+});
+db.categories.hasMany(db.ticket, { foreignKey: "categoryId" });
 
 module.exports = db;

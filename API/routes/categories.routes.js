@@ -6,7 +6,7 @@ const {allCategories,ajoutCategories,modifierCategories,supprimerCategories} = r
 const router = express.Router();
 
 router.get("/",authJwt,MiddlewarePermissions,allCategories);
-router.post("/",authJwt,MiddlewarePermissions,ajoutCategories);
+router.post("/",authJwt,MiddlewarePermissions,categoriesMiddlewares,ajoutCategories);
 router.put("/:id",authJwt,MiddlewarePermissions,modifierCategories);
 router.delete("/:id",authJwt,MiddlewarePermissions,supprimerCategories);
 
