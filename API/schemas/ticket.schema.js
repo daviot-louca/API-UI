@@ -1,10 +1,11 @@
 const {z} = require("zod");
 
 const TicketSchema = z.object({
-    type:z
-        .enum([
-          "Poste de travail","Téléphonie","Compte d'accès","Messagerie","Autres"
-        ]),
+    categoryId: z
+        .coerce
+        .number()
+        .int({message:"La catégorie est invalide"})
+        .positive({message:"Veuillez sélectionner une catégorie"}),
     title: z
         .string()
         .trim()

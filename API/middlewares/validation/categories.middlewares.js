@@ -1,4 +1,4 @@
-const categorieSchema = require("../../schemas/categories.schema");
+const {categorieSchema} = require("../../schemas/categories.schema");
 //verifie les donnes du ticket pour savoir s'il est correct ou non
 const categoriesMiddlewares = (req,res,next)=>{
     const verification = categorieSchema.safeParse(req.body)

@@ -34,7 +34,7 @@ export function TicketProvider({ children }) {
 
   // USER TICKETS
   const voirTicket = useCallback(
-    async (page, status, type, priority, sort, search) => {
+    async (page, status, categoryId, priority, sort, search) => {
       try {
         const token = localStorage.getItem("token");
 
@@ -45,7 +45,7 @@ export function TicketProvider({ children }) {
 
           status,
 
-          type,
+          categoryId,
 
           priority,
 
@@ -67,7 +67,7 @@ export function TicketProvider({ children }) {
 
   // ADMIN TICKETS
   const voirToutTicket = useCallback(
-    async (page, status = "all", type, priority, sort, search) => {
+    async (page, status = "all", categoryId, priority, sort, search) => {
       try {
         const token = localStorage.getItem("token");
 
@@ -75,7 +75,7 @@ export function TicketProvider({ children }) {
           token,
           page,
           status,
-          type,
+          categoryId,
           priority,
           sort,
           search,
@@ -132,20 +132,48 @@ export function TicketProvider({ children }) {
 
   // AJOUT
   const ajoutTicket = useCallback(
-    async (type, titre, description, priority = "faible") => {
+    async ({
+      categoryId,
+      titre,
+      description,
+      priority = "faible",
+    }) => {
       try {
         const token = localStorage.getItem("token");
 
-        await ajoutTickets(type, titre, description, priority, token);
+        await ajoutTickets({
+          categoryId,
+          titre,
+          description,
+          priority,
+          token,
+        });
 
-        await voirTicket(currentPage, selectedStatus);
+        await voirTicket(
+          currentPage,
+          statusFilter,
+          categoryFilter,
+          priorityFilter,
+          sortFilter,
+          search
+        );
 
         await voirStatsTicket();
       } catch (error) {
         console.log(error);
+        throw error;
       }
     },
-    [currentPage, selectedStatus, voirStatsTicket, voirTicket],
+    [
+      categoryFilter,
+      currentPage,
+      priorityFilter,
+      search,
+      sortFilter,
+      statusFilter,
+      voirStatsTicket,
+      voirTicket,
+    ],
   );
 
   // DELETE
@@ -170,6 +198,7 @@ export function TicketProvider({ children }) {
       selectedStatus,
       voirAdminStatistiques,
       voirStatsTicket,
+      voirTicket,
       voirToutTicket,
     ],
   );

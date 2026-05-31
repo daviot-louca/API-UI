@@ -177,7 +177,7 @@ export default function FaqComponents() {
                           : faqItems.indexOf(item)
                       )
                     }
-                    className={`${isOpen ? "bg-violet-50" : "bg-white"} w-full text-left p-4 border-b border-slate-100 last:border-b-0 transition`}
+                    className={`${isOpen ? "bg-[#F0F0F0]" : "bg-white"} w-full text-left p-4 border-b border-slate-100 last:border-b-0 transition`}
                   >
                     <div className="flex items-start gap-4">
                       <span

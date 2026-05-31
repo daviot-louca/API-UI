@@ -10,8 +10,9 @@ import DashboardLayout
 export default function AdminDashboard() {
 
     const {
+        tickets,
         adminStats,
-        voirAdminStatistiques
+        voirAdminStatistiques,
     } = useContext(TicketContext);
 
     useEffect(() => {
@@ -21,472 +22,115 @@ export default function AdminDashboard() {
     }, [voirAdminStatistiques]);
 
     return (
-
         <DashboardLayout>
 
-            <div className="bg-[#F5F7FB] min-h-screen p-8">
+            <div className="mb-10">
+                <h1 className="text-4xl font-bold text-slate-800">
+                    Dashboard Administrateur
+                </h1>
 
-                {/* HEADER */}
-                <div className="mb-10">
+                <p className="text-slate-500 mt-2">
+                    Vue d'ensemble de l'activité du support.
+                </p>
+            </div>
 
-                    <h1 className="text-4xl font-bold text-slate-800">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                        Rapports & Statistiques
-
-                    </h1>
-
-                    <p className="text-slate-500 mt-2 text-lg">
-
-                        Vue globale des tickets utilisateurs
-
+                <div className="bg-white rounded-3xl p-6 shadow-sm">
+                    <p className="text-slate-500">
+                        Total tickets
                     </p>
 
-                </div>
-
-                {/* TOP STATS */}
-                <div className="grid grid-cols-4 gap-6">
-
-                    {/* TOTAL */}
-                    <div className="bg-white rounded-3xl p-6 shadow-sm">
-
-                        <div className="flex items-center justify-between">
-
-                            <div>
-
-                                <p className="text-slate-500">
-
-                                    Total tickets
-
-                                </p>
-
-                                <h1 className="text-5xl font-bold text-slate-800 mt-3">
-
-                                    {adminStats?.total}
-
-                                </h1>
-
-                            </div>
-
-                            <div className="w-16 h-16 rounded-2xl bg-indigo-100 flex items-center justify-center text-3xl">
-
-                                🎫
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    {/* REMIS */}
-                    <div className="bg-white rounded-3xl p-6 shadow-sm">
-
-                        <div className="flex items-center justify-between">
-
-                            <div>
-
-                                <p className="text-slate-500">
-
-                                    Remis
-
-                                </p>
-
-                                <h1 className="text-5xl font-bold text-slate-800 mt-3">
-
-                                    {
-                                        adminStats?.status
-                                            ?.remis
-                                    }
-
-                                </h1>
-
-                            </div>
-
-                            <div className="w-16 h-16 rounded-2xl bg-orange-100 flex items-center justify-center text-3xl">
-
-                                📥
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    {/* OUVERT */}
-                    <div className="bg-white rounded-3xl p-6 shadow-sm">
-
-                        <div className="flex items-center justify-between">
-
-                            <div>
-
-                                <p className="text-slate-500">
-
-                                    Ouverts
-
-                                </p>
-
-                                <h1 className="text-5xl font-bold text-slate-800 mt-3">
-
-                                    {
-                                        adminStats?.status
-                                            ?.ouvert
-                                    }
-
-                                </h1>
-
-                            </div>
-
-                            <div className="w-16 h-16 rounded-2xl bg-blue-100 flex items-center justify-center text-3xl">
-
-                                📂
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    {/* RESOLU */}
-                    <div className="bg-white rounded-3xl p-6 shadow-sm">
-
-                        <div className="flex items-center justify-between">
-
-                            <div>
-
-                                <p className="text-slate-500">
-
-                                    Résolus
-
-                                </p>
-
-                                <h1 className="text-5xl font-bold text-slate-800 mt-3">
-
-                                    {
-                                        adminStats?.status
-                                            ?.resolu
-                                    }
-
-                                </h1>
-
-                            </div>
-
-                            <div className="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center text-3xl">
-
-                                ✅
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                {/* TYPES */}
-                <div className="mt-10">
-
-                    <div className="flex items-center justify-between mb-6">
-
-                        <h2 className="text-3xl font-bold text-slate-800">
-
-                            Répartition des types
-
-                        </h2>
-
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-6">
-
-                        {/* POSTE */}
-                        <div className="bg-white rounded-3xl p-8 shadow-sm">
-
-                            <div className="flex items-center justify-between">
-
-                                <div>
-
-                                    <p className="text-slate-500 text-lg">
-
-                                        Poste de travail
-
-                                    </p>
-
-                                    <h1 className="text-6xl font-bold mt-5 text-slate-800">
-
-                                        {
-                                            adminStats?.types
-                                                ?.posteTravail
-                                        }
-
-                                    </h1>
-
-                                </div>
-
-                                <div className="text-7xl">
-
-                                    💻
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        {/* TELEPHONIE */}
-                        <div className="bg-white rounded-3xl p-8 shadow-sm">
-
-                            <div className="flex items-center justify-between">
-
-                                <div>
-
-                                    <p className="text-slate-500 text-lg">
-
-                                        Téléphonie
-
-                                    </p>
-
-                                    <h1 className="text-6xl font-bold mt-5 text-slate-800">
-
-                                        {
-                                            adminStats?.types
-                                                ?.telephonie
-                                        }
-
-                                    </h1>
-
-                                </div>
-
-                                <div className="text-7xl">
-
-                                    📞
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        {/* MESSAGERIE */}
-                        <div className="bg-white rounded-3xl p-8 shadow-sm">
-
-                            <div className="flex items-center justify-between">
-
-                                <div>
-
-                                    <p className="text-slate-500 text-lg">
-
-                                        Messagerie
-
-                                    </p>
-
-                                    <h1 className="text-6xl font-bold mt-5 text-slate-800">
-
-                                        {
-                                            adminStats?.types
-                                                ?.messagerie
-                                        }
-
-                                    </h1>
-
-                                </div>
-
-                                <div className="text-7xl">
-
-                                    ✉️
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        {/* COMPTE */}
-                        <div className="bg-white rounded-3xl p-8 shadow-sm">
-
-                            <div className="flex items-center justify-between">
-
-                                <div>
-
-                                    <p className="text-slate-500 text-lg">
-
-                                        Comptes d'accès
-
-                                    </p>
-
-                                    <h1 className="text-6xl font-bold mt-5 text-slate-800">
-
-                                        {
-                                            adminStats?.types
-                                                ?.compteAcces
-                                        }
-
-                                    </h1>
-
-                                </div>
-
-                                <div className="text-7xl">
-
-                                    🔐
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        {/* AUTRES */}
-                        <div className="bg-white rounded-3xl p-8 shadow-sm">
-
-                            <div className="flex items-center justify-between">
-
-                                <div>
-
-                                    <p className="text-slate-500 text-lg">
-
-                                        Autres
-
-                                    </p>
-
-                                    <h1 className="text-6xl font-bold mt-5 text-slate-800">
-
-                                        {
-                                            adminStats?.types
-                                                ?.autres
-                                        }
-
-                                    </h1>
-
-                                </div>
-
-                                <div className="text-7xl">
-
-                                    ❔
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                {/* STATUS DETAIL */}
-                <div className="mt-10 bg-white rounded-3xl p-8 shadow-sm">
-
-                    <h2 className="text-3xl font-bold text-slate-800 mb-8">
-
-                        Répartition des statuts
-
+                    <h2 className="text-4xl font-bold mt-2">
+                        {adminStats?.totalTickets || 0}
                     </h2>
+                </div>
 
-                    <div className="space-y-6">
+                <div className="bg-white rounded-3xl p-6 shadow-sm">
+                    <p className="text-slate-500">
+                        Tickets ouverts
+                    </p>
 
-                        {/* REMIS */}
-                        <div>
+                    <h2 className="text-4xl font-bold mt-2 text-blue-600">
+                        {adminStats?.ticketsOuverts || 0}
+                    </h2>
+                </div>
 
-                            <div className="flex justify-between mb-2">
+                <div className="bg-white rounded-3xl p-6 shadow-sm">
+                    <p className="text-slate-500">
+                        Tickets résolus
+                    </p>
 
-                                <p className="font-semibold text-slate-700">
+                    <h2 className="text-4xl font-bold mt-2 text-green-600">
+                        {adminStats?.ticketsResolus || 0}
+                    </h2>
+                </div>
 
-                                    Remis
+            </div>
 
-                                </p>
+            <div className="mt-10">
 
-                                <p className="font-bold">
+                <h2 className="text-3xl font-bold text-slate-800 mb-6">
+                    Derniers tickets
+                </h2>
 
-                                    {
-                                        adminStats?.status
-                                            ?.remis
-                                    }
+                <div className="space-y-4">
 
-                                </p>
+                    {tickets?.slice(0, 5).map((ticket) => (
+
+                        <div
+                            key={ticket.id}
+                            className="bg-white rounded-3xl p-6 shadow-sm hover:shadow-md transition-all duration-300"
+                        >
+
+                            <div className="flex items-center justify-between">
+
+                                <div>
+
+                                    <h3 className="text-xl font-bold text-slate-800">
+                                        {ticket.title}
+                                    </h3>
+
+                                    <p className="text-slate-500 mt-1">
+                                        {ticket.User?.username}
+                                    </p>
+
+                                </div>
+
+                                <div
+                                    className={`
+                                        px-4 py-2 rounded-full font-semibold
+                                        ${
+                                            ticket.status === "ouvert"
+                                                ? "bg-blue-100 text-blue-700"
+                                                : ticket.status === "resolu"
+                                                ? "bg-green-100 text-green-700"
+                                                : "bg-orange-100 text-orange-700"
+                                        }
+                                    `}
+                                >
+                                    {ticket.status}
+                                </div>
 
                             </div>
 
-                            <div className="w-full h-4 bg-slate-200 rounded-full overflow-hidden">
+                            <div className="flex items-center justify-between mt-5">
 
-                                <div
-                                    className="h-full bg-orange-400 rounded-full"
-                                    style={{
-                                        width: `${(adminStats?.status?.remis / adminStats?.total) * 100 || 0}%`
-                                    }}
-                                />
+                                <p className="text-slate-400">
+                                    #{ticket.id}
+                                </p>
+
+                                <p className="text-slate-400">
+                                    {new Date(
+                                        ticket.createdAt
+                                    ).toLocaleDateString()}
+                                </p>
 
                             </div>
 
                         </div>
 
-                        {/* OUVERT */}
-                        <div>
-
-                            <div className="flex justify-between mb-2">
-
-                                <p className="font-semibold text-slate-700">
-
-                                    Ouverts
-
-                                </p>
-
-                                <p className="font-bold">
-
-                                    {
-                                        adminStats?.status
-                                            ?.ouvert
-                                    }
-
-                                </p>
-
-                            </div>
-
-                            <div className="w-full h-4 bg-slate-200 rounded-full overflow-hidden">
-
-                                <div
-                                    className="h-full bg-blue-500 rounded-full"
-                                    style={{
-                                        width: `${(adminStats?.status?.ouvert / adminStats?.total) * 100 || 0}%`
-                                    }}
-                                />
-
-                            </div>
-
-                        </div>
-
-                        {/* RESOLU */}
-                        <div>
-
-                            <div className="flex justify-between mb-2">
-
-                                <p className="font-semibold text-slate-700">
-
-                                    Résolus
-
-                                </p>
-
-                                <p className="font-bold">
-
-                                    {
-                                        adminStats?.status
-                                            ?.resolu
-                                    }
-
-                                </p>
-
-                            </div>
-
-                            <div className="w-full h-4 bg-slate-200 rounded-full overflow-hidden">
-
-                                <div
-                                    className="h-full bg-green-500 rounded-full"
-                                    style={{
-                                        width: `${(adminStats?.status?.resolu / adminStats?.total) * 100 || 0}%`
-                                    }}
-                                />
-
-                            </div>
-
-                        </div>
-
-                    </div>
+                    ))}
 
                 </div>
 
@@ -495,4 +139,3 @@ export default function AdminDashboard() {
         </DashboardLayout>
     );
 }
-

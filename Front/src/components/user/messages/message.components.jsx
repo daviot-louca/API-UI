@@ -3,6 +3,7 @@ import { io } from "socket.io-client";
 import DashboardLayoutUser from "../layout/DashboardLayoutUser";
 import ProfilModal from "../../shared/modals/ProfilModal";
 import { AuthContext } from "../../../context/auth/AuthContext";
+import { getMessages } from "../../../services/messages.service"; 
 const socket = io("http://localhost:3030");
 export default function MessageComponents() {
   const {
@@ -15,20 +16,21 @@ export default function MessageComponents() {
     setEmail,
     id,
   } = useContext(AuthContext);
-
+  const ticketId = 2;
+  const userId = 2;
   useEffect(() => {
     //emit sert à envoyer
     socket.emit("join_ticket", ticketId);
     //on sert à recevoir
     socket.on("receive_message", (data) => {
+      // eslint-disable-next-line react-hooks/immutability
       setMessages(prev => [...prev,data])
     });
     return ()=>{
         socket.off("receive_message")
     }
   }, []);
-  const ticketId = 2;
-  const userId = 2;
+
   const [message, setMessage] = useState("");
   const [messages,setMessages] = useState([])
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);

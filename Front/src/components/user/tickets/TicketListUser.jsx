@@ -1,11 +1,11 @@
-import { useContext, useEffect } from "react";
+import { useContext} from "react";
 
 import TicketItem from "../../shared/TicketItem";
 
 import { TicketContext } from "../../../context/ticket/TicketContext";
 
 function TicketList({ setIsShowTicketOpen,setSelectedTicket }) {
-  const { currentPage, setCurrentPage, tickets, stats, totalTickets } =
+  const { currentPage, setCurrentPage, tickets,totalTickets } =
     useContext(TicketContext);
 
   return (

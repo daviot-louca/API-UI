@@ -3,8 +3,6 @@ import DashboardLayoutUser from "../layout/DashboardLayoutUser";
 import { AuthContext } from "../../../context/auth/AuthContext";
 import { TicketContext } from "../../../context/ticket/TicketContext";
 import ProfilModal from "../../shared/modals/ProfilModal";
-import ModalNouveauTypeTicket from "../../shared/modals/ModalNouveauTypeTicket";
-import ModalNouveauTicket from "../../shared/modals/ModalNouveauTicket";
 import TicketList from "./TicketListUser";
 import TicketDetailModal from "../../shared/modals/TicketDetailModal";
 import BarreFiltresFunction from "../../shared/BarreFiltresTickets";
@@ -13,7 +11,6 @@ export default function TicketComponents() {
     useContext(AuthContext);
   const [selectedTicket, setSelectedTicket] = useState(null);
   const {
-    ajoutTicket,
     currentPage,
     voirTicket,
     statusFilter,
@@ -25,30 +22,7 @@ export default function TicketComponents() {
     search,
   } = useContext(TicketContext);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-  const [isTicketModalOpen, setIsTicketModalOpen] = useState(false);
-  const [isTypeModalOpen, setIsTypeModalOpen] = useState(false);
-  const [type, setType] = useState("");
-  const [titre, setTitre] = useState("");
-  const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState("faible");
   const [isShowTicketOpen, setIsShowTicketOpen] = useState(false);
-  const handleSelectType = (selectedType) => {
-    setType(selectedType);
-    setIsTypeModalOpen(false);
-    setIsTicketModalOpen(true);
-  };
-
-  const handleAjoutTicket = async (e) => {
-    e.preventDefault();
-
-    await ajoutTicket(type, titre, description, priority);
-
-    setType("");
-    setTitre("");
-    setDescription("");
-    setPriority("faible");
-    setIsTicketModalOpen(false);
-  };
 
   useEffect(() => {
     voirTicket(
@@ -95,26 +69,6 @@ export default function TicketComponents() {
           setUsername={setUsername}
           setEmail={setEmail}
           setIsProfileModalOpen={setIsProfileModalOpen}
-        />
-      )}
-      {isTypeModalOpen && (
-        <ModalNouveauTypeTicket
-          setIsTypeModalOpen={setIsTypeModalOpen}
-          handleSelectType={handleSelectType}
-        />
-      )}
-      {isTicketModalOpen && (
-        <ModalNouveauTicket
-          setIsTicketModalOpen={setIsTicketModalOpen}
-          setIsTypeModalOpen={setIsTypeModalOpen}
-          type={type}
-          titre={titre}
-          setTitre={setTitre}
-          description={description}
-          setDescription={setDescription}
-          priority={priority}
-          setPriority={setPriority}
-          handleAjoutTicket={handleAjoutTicket}
         />
       )}
       {isShowTicketOpen && (

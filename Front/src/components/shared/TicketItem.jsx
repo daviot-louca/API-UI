@@ -12,6 +12,7 @@ function TicketItem({ ticket, setIsShowTicketOpen, setSelectedTicket }) {
   const { role } = useContext(AuthContext);
 
   const { supprimerTicket} = useContext(TicketContext);
+  const categoryName = ticket?.category?.name ?? ticket?.type;
 
   return (
     <div className="hover:bg-gray-100">
@@ -39,7 +40,11 @@ function TicketItem({ ticket, setIsShowTicketOpen, setSelectedTicket }) {
             </div>
           </div>
           <div>
-            <TicketTypeIcon type={ticket?.type} showLabel />
+            <TicketTypeIcon
+              type={categoryName}
+              category={ticket?.category}
+              showLabel
+            />
           </div>
             {/* PRIORITY */}
           <div>
@@ -85,14 +90,20 @@ function TicketItem({ ticket, setIsShowTicketOpen, setSelectedTicket }) {
         <div>
           <div className="p-4 grid grid-cols-[100px_250px_200px_200px_200px_150px_220px] gap-3 items-center text-sm hover:bg-slate-50">
             <div className="mx-8">
-              <TicketTypeIcon type={ticket?.type} />
+              <TicketTypeIcon
+                type={categoryName}
+                category={ticket?.category}
+              />
             </div>
             <div>
               <h2 className="font-bold text-lg">{ticket.title}</h2>
               <p>ticket #{ticket.id}</p>
             </div>
             <div>
-              <TicketTypeBadge type={ticket?.type} />
+              <TicketTypeBadge
+                type={categoryName}
+                category={ticket?.category}
+              />
             </div>
             <div>
               <PriorityBadge priority={ticket?.priority} />

@@ -1,5 +1,5 @@
 const { z } = require("zod");
-const categorySchema = z.object({
+const categorieSchema = z.object({
   name: z
     .string()
     .min(2, "minimum 2 caractères")
@@ -8,3 +8,7 @@ const categorySchema = z.object({
   icon: z.string().min(2).max(30),
   color: z.string().min(2).max(30),
 });
+
+module.exports = {
+  categorieSchema,
+};

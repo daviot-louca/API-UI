@@ -5,7 +5,7 @@ export const voirToutTickets = async (
   token,
   page,
   status,
-  type,
+  categoryId,
   priority,
   sort,
   search
@@ -17,7 +17,7 @@ export const voirToutTickets = async (
     params: {
       page,
       status,
-      type,
+      categoryId,
       priority,
       sort,
       search

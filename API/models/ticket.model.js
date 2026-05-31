@@ -30,7 +30,7 @@ const ticket = db.define("ticket", {
     },
     categoryId:{
         type:DataTypes.INTEGER,
-        allowNull:true
+        allowNull:false
     },
     priority:{
         type:DataTypes.ENUM("faible","moyenne","haute","urgente"),

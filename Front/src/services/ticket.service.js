@@ -7,7 +7,7 @@ export const voirTickets = async (
     token,
     page,
     status,
-    type,
+    categoryId,
     priority,
     sort,
     search
@@ -26,7 +26,7 @@ export const voirTickets = async (
             params: {
                 page,
                 status,
-                type,
+                categoryId,
                 priority,
                 sort,
                 search
@@ -57,28 +57,25 @@ export const voirUnTicket = async (
 
 // AJOUT
 export const ajoutTickets = async (
-    type,
-    titre,
-    description,
-    priority,
-    token
+    {
+        categoryId,
+        titre,
+        description,
+        priority = "faible",
+        token
+    }
 ) => {
-    const ticketPriority =
-        token ? priority : "faible";
-    const authToken =
-        token ?? priority;
-
     const reponse = await axios.post(
         `${url}/tickets`,
         {
-            type,
+            categoryId,
             title: titre,
             description,
-            priority: ticketPriority
+            priority
         },
         {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                Authorization: `Bearer ${token}`
             }
         }
     );

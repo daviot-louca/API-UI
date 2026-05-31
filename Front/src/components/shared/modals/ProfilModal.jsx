@@ -1,10 +1,8 @@
 import { useContext } from "react";
 import {
-  Camera,
   ChevronRight,
   Lock,
   Mail,
-  Save,
   User,
   X
 } from "lucide-react";
@@ -18,8 +16,8 @@ export default function ProfilModal({
   setUsername,
   setEmail,
 }) {
-  const { handleModifierProfil, id, avatar } = useContext(AuthContext);
-  const initials = (username || "MA").slice(0, 2).toUpperCase();
+  const { handleModifierProfil, id,} = useContext(AuthContext);
+  const initials = (username).slice(0, 2).toUpperCase();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -61,37 +59,9 @@ export default function ProfilModal({
             <div className="flex flex-col items-center">
               <div className="relative">
                 <div className="flex h-28 w-28 items-center justify-center overflow-hidden rounded-full bg-[#303030] text-3xl font-bold text-white shadow-lg">
-                  {avatar ? (
-                    <img
-                      src={avatar}
-                      alt=""
-                      className="h-full w-full object-cover"
-                    />
-                  ) : (
-                    initials
-                  )}
+                  {initials}
                 </div>
-                <span className="absolute -bottom-1 -right-1 flex h-9 w-9 items-center justify-center rounded-full border-4 border-white bg-violet-700 text-white shadow-md">
-                  <Camera size={17} />
-                </span>
               </div>
-
-              <label
-                htmlFor="profile-photo"
-                className="mt-5 inline-flex cursor-pointer items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 font-semibold text-slate-700 shadow-sm transition hover:border-violet-200 hover:text-violet-700"
-              >
-                <Camera size={18} />
-                Modifier la photo
-              </label>
-              <input
-                id="profile-photo"
-                type="file"
-                accept="image/jpeg,image/png,image/gif"
-                className="hidden"
-              />
-              <p className="mt-3 text-sm text-slate-500">
-                JPG, PNG ou GIF. Max 5MB.
-              </p>
             </div>
 
             <div className="mt-8 space-y-5">
@@ -113,7 +83,7 @@ export default function ProfilModal({
                     value={username ?? ""}
                     onChange={(e) => setUsername(e.target.value)}
                     autoComplete="username"
-                    className="w-full rounded-xl border border-slate-200 bg-white py-3.5 pl-12 pr-4 font-semibold text-slate-950 outline-none transition focus:border-violet-500 focus:ring-4 focus:ring-violet-100"
+                    className="w-full rounded-xl border border-slate-200 bg-white py-3.5 pl-12 pr-4 font-semibold text-slate-950 outline-none transition focus:border-[#303030] focus:ring-4 focus:ring-gray-100"
                   />
                 </div>
               </div>
@@ -136,17 +106,17 @@ export default function ProfilModal({
                     value={email ?? ""}
                     onChange={(e) => setEmail(e.target.value)}
                     autoComplete="email"
-                    className="w-full rounded-xl border border-slate-200 bg-white py-3.5 pl-12 pr-4 font-semibold text-slate-950 outline-none transition focus:border-violet-500 focus:ring-4 focus:ring-violet-100"
+                    className="w-full rounded-xl border border-slate-200 bg-white py-3.5 pl-12 pr-4 font-semibold text-slate-950 outline-none transition focus:border-[#303030] focus:ring-4 focus:ring-gray-100"
                   />
                 </div>
               </div>
 
               <button
                 type="button"
-                className="flex w-full items-center justify-between gap-4 rounded-xl border border-violet-100 bg-violet-50 px-4 py-4 text-left transition hover:border-violet-200 hover:bg-violet-100"
+                className="flex w-full items-center justify-between gap-4 rounded-xl border border-gray-100 bg-gray-50 px-4 py-4 text-left transition hover:border-gray-200 hover:bg-gray-100"
               >
                 <span className="flex items-center gap-4">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-violet-700 shadow-sm">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-[#303030] shadow-sm">
                     <Lock size={22} />
                   </span>
                   <span>
@@ -158,7 +128,7 @@ export default function ProfilModal({
                     </span>
                   </span>
                 </span>
-                <ChevronRight className="text-violet-700" size={22} />
+                <ChevronRight className="text-[#303030]" size={22} />
               </button>
             </div>
 
@@ -172,9 +142,8 @@ export default function ProfilModal({
               </button>
               <button
                 type="submit"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-violet-700 px-6 py-3 font-semibold text-white shadow-lg shadow-violet-200 transition hover:bg-violet-800"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#303030] px-6 py-3 font-semibold text-white shadow-lg shadow-gray-200 transition hover:bg-[#505050]"
               >
-                <Save size={18} />
                 Enregistrer les modifications
               </button>
             </div>

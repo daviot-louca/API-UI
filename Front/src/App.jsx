@@ -1,13 +1,10 @@
 /* ROUTER */
-import {
-  Routes,
-  Route
-} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 /* PAGES ADMIN*/
 import AdminPageTickets from "./pages/admin/AdminPageTickets";
 import AdminPageUsers from "./pages/admin/AdminPageUsers";
-import AdminPageDashboard from './pages/admin/AdminPageDashboard'
+import AdminPageDashboard from "./pages/admin/AdminPageDashboard";
 import AdminPageCategories from "./pages/admin/AdminPageCategories";
 import AdminPageMessagerie from "./pages/admin/AdminPageMessagerie";
 
@@ -18,7 +15,7 @@ import HomePage from "./pages/shared/HomePage";
 
 /* PAGES USER*/
 import UserPage from "./pages/user/UserPage";
-import Message from "./pages/user/Message"
+import Message from "./pages/user/Message";
 import TicketPage from "./pages/user/TicketPage";
 import FAQ from "./pages/user/FAQ";
 
@@ -27,31 +24,16 @@ import ProtectedRoute from "./components/shared/ProtectedRoute";
 
 function App() {
   return (
-
     <div>
       <Routes>
-
         {/* HOME */}
-        <Route
-          path="/"
-          element={<HomePage />}
-        />
+        <Route path="/" element={<HomePage />} />
 
         {/* REGISTER */}
-        <Route
-          path="/register"
-          element={
-            <RegisterPage />
-          }
-        />
+        <Route path="/register" element={<RegisterPage />} />
 
         {/* LOGIN */}
-        <Route
-          path="/login"
-          element={
-            <LoginPage />
-          }
-        />
+        <Route path="/login" element={<LoginPage />} />
 
         {/* ADMIN ROUTES */}
         <Route
@@ -87,15 +69,13 @@ function App() {
           }
         />
         <Route
-          path="/admin/catégories"
+          path="/admin/categories"
           element={
             <ProtectedRoute allowedRole="administrateur">
               <AdminPageCategories />
             </ProtectedRoute>
           }
         />
-
-
 
         {/* USER ROUTES */}
         <Route

@@ -1,5 +1,6 @@
 const Ticket = require("../models/ticket.model");
 const User = require("../models/user.model");
+const Category = require("../models/categories.model");
 const { Op } = require("sequelize");
 
 // SEE ALL ADMIN
@@ -7,7 +8,7 @@ const seeAllService = async ({
   pageNumber = 1,
   limitNumber = 10,
   status = "all",
-  type = "all",
+  categoryId = "all",
   priority = "all",
   sort = "recent",
   search = "",
@@ -24,9 +25,9 @@ const seeAllService = async ({
     whereCondition.status = status;
   }
 
-  // TYPE
-  if (type && type !== "all") {
-    whereCondition.type = type;
+  // CATEGORY
+  if (categoryId && categoryId !== "all") {
+    whereCondition.categoryId = categoryId;
   }
 
   // PRIORITY
@@ -74,7 +75,13 @@ const seeAllService = async ({
 
     offset,
 
-    include: User,
+    include: [
+      User,
+      {
+        model: Category,
+        as: "category",
+      },
+    ],
   });
 
   return data;
@@ -86,7 +93,7 @@ const seeTicketService = async ({
   pageNumber = 1,
   limitNumber = 10,
   status = "all",
-  type = "all",
+  categoryId = "all",
   priority = "all",
   sort = "recent",
   search = "",
@@ -105,9 +112,9 @@ const seeTicketService = async ({
     whereCondition.status = status;
   }
 
-  // TYPE
-  if (type && type !== "all") {
-    whereCondition.type = type;
+  // CATEGORY
+  if (categoryId && categoryId !== "all") {
+    whereCondition.categoryId = categoryId;
   }
 
   // PRIORITY
@@ -155,7 +162,13 @@ const seeTicketService = async ({
 
     offset,
 
-    include: User,
+    include: [
+      User,
+      {
+        model: Category,
+        as: "category",
+      },
+    ],
   });
 
   return data;
@@ -164,7 +177,13 @@ const seeTicketService = async ({
 // SEE ONE
 const seeTheTicketService = async (id) => {
   const data = await Ticket.findByPk(id, {
-    include: [User],
+    include: [
+      User,
+      {
+        model: Category,
+        as: "category",
+      },
+    ],
   });
 
   return data;
@@ -173,16 +192,24 @@ const seeTheTicketService = async (id) => {
 // CREATE
 const createTicketService = async ({
   id,
-  type,
+  categoryId,
   title,
   description,
   status,
   priority,
 }) => {
+  const category = await Category.findByPk(categoryId);
+
+  if (!category) {
+    throw new Error("catégorie introuvable");
+  }
+
   const envoie = await Ticket.create({
     userId: id,
 
-    type,
+    categoryId,
+
+    type: category.name,
 
     title,
 

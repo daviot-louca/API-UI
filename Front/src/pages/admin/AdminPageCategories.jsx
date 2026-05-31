@@ -1,4 +1,4 @@
-import AdminCategories from "../../components/admin/catégories/AdminCategories"
+import AdminCategories from "../../components/admin/categories/AdminCategories"
 export default function AdminPageCategories() {
     return <AdminCategories />
 }

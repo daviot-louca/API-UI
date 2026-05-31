@@ -1,10 +1,10 @@
 # connexion
 API/.env
-API/config
+API/config/
 
 # NODE MODULES
-API/node_modules
-Front/node_modules
+API/node_modules/
+Front/node_modules/
 
 # BUILD
 Front/dist
@@ -21,4 +21,5 @@ Thumbs.db
 
 # IDE
 .idea
-API/config/db.config.js
+.VSCodeCounter/
+.vsCodeCounter/
