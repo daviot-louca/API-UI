@@ -11,3 +11,17 @@
 body {
   overflow-x: hidden;
 }
+/* Chrome, Edge, Safari */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox */
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+
+/* IE */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+}

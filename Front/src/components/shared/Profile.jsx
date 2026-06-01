@@ -17,7 +17,7 @@ export default function Profile({ username, handleLogout,role,avatar,setIsProfil
 
                     <p className="font-semibold text-gray-800">
 
-                        {username}
+                        {username.slice(0,1).toUpperCase()}{username.slice(1)}
 
                     </p>
 

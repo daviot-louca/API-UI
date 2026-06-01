@@ -1,24 +1,41 @@
-import { Pencil, Trash2 } from "lucide-react";
-
+import { Pencil, Trash2, Plus } from "lucide-react";
 import TicketTypeIcon from "../../shared/TicketTypeIcon";
 import { getCategoryId, INITIAL_CATEGORY_FORM } from "./categoryAdmin.helpers";
+import { useAdminCategories } from "../../../hooks/category/useAdminCategories";
+import CategoryModal from "./CategoryModal";
+export default function CategoryTable({ categories, onDelete, onEdit }) {
+  const {
+    closeModal,
+    formData,
+    formError,
+    handleDelete,
+    handleFormChange,
+    handleSubmit,
+    isModalOpen,
+    isSubmitting,
+    openEditModal,
+    selectedCategory,deletingCategoryId, openCreateModal } = useAdminCategories();
 
-export default function CategoryTable({
-  categories,
-  deletingCategoryId,
-  onDelete,
-  onEdit,
-}) {
   return (
     <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
-      <div className="flex flex-col gap-1 border-b border-slate-200 px-5 py-4 sm:px-6">
-        <h2 className="text-xl font-bold text-[#303030]">
-          Liste des categories
-        </h2>
-        <p className="text-sm text-slate-500">
-          {categories.length} catégorie{categories.length > 1 ? "s" : ""}{" "}
-          enregistrée{categories.length > 1 ? "s" : ""}
-        </p>
+      <div className="flex justify-between gap-1 border-b border-slate-200 px-5 py-4 sm:px-6">
+        <div>
+          <h2 className="text-xl font-bold text-[#303030]">
+            Liste des categories
+          </h2>
+          <p className="text-sm text-slate-500">
+            {categories.length} catégorie{categories.length > 1 ? "s" : ""}{" "}
+            enregistrée{categories.length > 1 ? "s" : ""}
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={openCreateModal}
+          className="inline-flex h-11 w-fit items-center justify-center gap-2 rounded-lg bg-[#303030] px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-[#505050] focus:outline-none focus:ring-2 focus:ring-[#266fdb] focus:ring-offset-2"
+        >
+          <Plus size={18} />
+          Ajouter une catégorie
+        </button>
       </div>
 
       <div className="overflow-x-auto">
@@ -128,6 +145,17 @@ export default function CategoryTable({
           </tbody>
         </table>
       </div>
+      {isModalOpen && (
+        <CategoryModal
+          formData={formData}
+          formError={formError}
+          isEditing={Boolean(selectedCategory)}
+          isSubmitting={isSubmitting}
+          onChange={handleFormChange}
+          onClose={closeModal}
+          onSubmit={handleSubmit}
+        />
+      )}
     </div>
   );
 }

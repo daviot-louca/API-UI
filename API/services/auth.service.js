@@ -40,7 +40,7 @@ const loginService = async ({ email, password }) => {
   const passwordDB = user.password;
   const result = await compare(password, passwordDB);
   if (result === true) {
-    await user.update({ lastLoginAt: Sequelize.literal("NOW()") });
+    await user.update({ lastLoginAt: Sequelize.literal("GETDATE()") });
     console.log("mot de passe correct");
     const updatedUser = await auth.findByPk(user.id);
     return {

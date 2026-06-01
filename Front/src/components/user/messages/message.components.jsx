@@ -1,78 +1,137 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
-import DashboardLayoutUser from "../layout/DashboardLayoutUser";
-import ProfilModal from "../../shared/modals/ProfilModal";
 import { AuthContext } from "../../../context/auth/AuthContext";
-import { getMessages } from "../../../services/messages.service"; 
+import { getMessages } from "../../../services/messages.service";
+import { useParams } from "react-router-dom";
+import ListeMessageComponents from "./ListeMessageComponents";
 const socket = io("http://localhost:3030");
 export default function MessageComponents() {
-  const {
-    handleLogout,
-    username,
-    role,
-    avatar,
-    email,
-    setUsername,
-    setEmail,
-    id,
-  } = useContext(AuthContext);
-  const ticketId = 2;
-  const userId = 2;
+  const messageEndRef = useRef(null);
+  const { id } = useContext(AuthContext);
+  const { ticketId } = useParams();
+  const token = localStorage.getItem("token");
   useEffect(() => {
     //emit sert à envoyer
     socket.emit("join_ticket", ticketId);
     //on sert à recevoir
     socket.on("receive_message", (data) => {
-      // eslint-disable-next-line react-hooks/immutability
-      setMessages(prev => [...prev,data])
+      console.log(data);
+      setMessages((prev) => [...prev, data]);
     });
-    return ()=>{
-        socket.off("receive_message")
-    }
-  }, []);
-
+    return () => {
+      socket.off("receive_message");
+    };
+  }, [ticketId]);
   const [message, setMessage] = useState("");
-  const [messages,setMessages] = useState([])
-  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-  return (
-    <DashboardLayoutUser
-      username={username}
-      handleLogout={handleLogout}
-      role={role}
-      avatar={avatar}
-      email={email}
-      setUsername={setUsername}
-      setEmail={setEmail}
-      setIsProfileModalOpen={setIsProfileModalOpen}
-    >
-        <div>
-            {messages.map((msg)=>(
-                <div key={msg.id}>
-                    <p>{msg.message}</p>
-                </div>
-            ))}
-        </div>
-        <form
-          action=""
-          onSubmit={(e) => {
-            e.preventDefault()
-            socket.emit("send_message", ticketId, message, userId)
-          }}
-        >
-          <input type="text" onChange={(e) => setMessage(e.target.value)} />
-          <button type="submit">essaie</button>
-        </form>
+  const [messages, setMessages] = useState([]);
+  useEffect(() => {
+    console.log("chargement message");
+    const ancienmessages = async () => {
+      const reponse = await getMessages(ticketId, token);
+      setMessages(reponse);
+      return reponse;
+    };
+    ancienmessages();
+  }, [ticketId, token]);
 
-      {isProfileModalOpen && (
-        <ProfilModal
-          avatar={avatar}
-          username={username}
-          email={email}
-          setUsername={setUsername}
-          setEmail={setEmail}
-          setIsProfileModalOpen={setIsProfileModalOpen}
-        />
-      )}
-    </DashboardLayoutUser>
+  useEffect(() => {
+    messageEndRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [messages]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    socket.emit("send_message", ticketId, message, id);
+
+    setMessage("");
+    if (!message.trim()) return;
+
+    envoyerMessage();
+  };
+  return (
+    <ListeMessageComponents>
+      <div className="flex h-[calc(100vh-100px)] flex-col rounded-2xl bg-white shadow-sm">
+        {/* Header */}
+        <div className="flex items-center justify-between border-b px-6 py-4">
+          <div>
+            <h2 className="text-xl font-bold text-slate-900">
+              Ticket #{ticketId}
+            </h2>
+          </div>
+
+          <button className="rounded-lg border px-4 py-2 text-sm font-medium hover:bg-slate-50">
+            Supprimer
+          </button>
+        </div>
+
+        {/* Messages */}
+        <div className="flex-1 overflow-y-auto px-6 py-4 hide-scrollbar">
+          {messages.map((msg) => (
+            <div key={msg.id}>
+              {msg.userId == id && (
+                <div className="flex items-end justify-end">
+                  <div>
+                    <div className="flex text-xs px-3">
+                      <p>
+                        Vous •{" "}
+                        {new Date(msg.createdAt).toLocaleTimeString("fr-FR", {
+                          hour: "numeric",
+                          minute: "2-digit",
+                        })}
+                      </p>
+                    </div>
+                    <div className="px-3 py-1 mb-5 bg-blue-300 min-w-0 max-w-170 rounded-xl">
+                      {msg.message}
+                    </div>
+                    <div ref={messageEndRef}></div>
+                  </div>
+                </div>
+              )}
+              {msg.userId != id && (
+                <div className="flex my-1">
+                  <div>
+                    <div className="flex text-xs px-3">
+                      <p>
+                        Support •{" "}
+                        {new Date(msg.createdAt).toLocaleTimeString("fr-FR", {
+                          hour: "numeric",
+                          minute: "2-digit",
+                        })}
+                      </p>
+                    </div>
+                    <div className="px-3 py-1 mt-3 bg-gray-300 min-w-0 max-w-150 rounded-xl">
+                      {msg.message}
+                    </div>
+                    <div ref={messageEndRef}></div>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Formulaire */}
+        <div className="border-t p-4">
+          <form className="flex gap-3" onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Écrire un message..."
+              className="flex-1 rounded-xl border px-4 py-3 outline-none"
+              onChange={(e) => setMessage(e.target.value)}
+              value={message}
+            />
+            <button
+              disabled={!message.trim()}
+              type="submit"
+              className="rounded-xl bg-[#303030] px-6 py-3 font-medium text-white"
+            >
+              Envoyer
+            </button>
+          </form>
+        </div>
+      </div>
+    </ListeMessageComponents>
   );
 }

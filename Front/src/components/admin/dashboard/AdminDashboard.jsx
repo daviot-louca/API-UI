@@ -24,15 +24,6 @@ export default function AdminDashboard() {
     return (
         <DashboardLayout>
 
-            <div className="mb-10">
-                <h1 className="text-4xl font-bold text-slate-800">
-                    Dashboard Administrateur
-                </h1>
-
-                <p className="text-slate-500 mt-2">
-                    Vue d'ensemble de l'activité du support.
-                </p>
-            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 

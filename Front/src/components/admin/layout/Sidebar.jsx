@@ -35,7 +35,7 @@ function Sidebar() {
                 <span>
                   <LayoutDashboard size={18} />
                 </span>
-                <span>Dashboard</span>
+                <span>Tableau de bord</span>
               </NavLink>
             </li>
             <li>

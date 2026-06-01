@@ -16,7 +16,7 @@ export default function ProfilModal({
   setUsername,
   setEmail,
 }) {
-  const { handleModifierProfil, id,} = useContext(AuthContext);
+  const { handleModifierProfil, id} = useContext(AuthContext);
   const initials = (username).slice(0, 2).toUpperCase();
 
   const handleSubmit = (event) => {

@@ -1,10 +1,21 @@
+const {voirMessagesService,envoyerMessagesService} = require("../services/messages.service")
+
 const voirMessages = async (req, res) => {
   try {
     const { ticketId } = req.params;
-    const infos = await voirMessagesService({ ticketId });
+
+    const infos = await voirMessagesService({
+      ticketId,
+      userId: req.user.id,
+      role: req.user.role,
+    });
+
     res.json(infos);
   } catch (error) {
-    console.log(error)
+    console.log(error);
+    res.status(403).json({
+      message: error.message,
+    });
   }
 };
 const envoyerMessages = async (req, res) => {

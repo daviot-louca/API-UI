@@ -1,7 +1,7 @@
 # connexion
 API/.env
 API/config/
-
+API/config/db.config
 # NODE MODULES
 API/node_modules/
 Front/node_modules/

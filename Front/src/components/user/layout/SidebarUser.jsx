@@ -10,7 +10,7 @@ import {
 function Sidebar() {
   const { setSelectedStatus, stats } = useContext(TicketContext);
   return (
-    <aside className="min-h-screen bg-[#303030] text-[#F0F0F0] flex flex-col justify-between p-6">
+    <aside className=" bg-[#303030] min-h-screen text-[#F0F0F0] flex flex-col justify-between p-6">
       {/* TOP */}
       <div>
         {/* LOGO */}
@@ -38,7 +38,7 @@ function Sidebar() {
                 <span>
                   <LayoutDashboard size={20} />
                 </span>
-                <span>tableau de bord</span>
+                <span>Tableau de bord</span>
               </NavLink>
             </li>
             <li>

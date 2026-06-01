@@ -17,7 +17,7 @@ export default function TicketDetailModal({
       className="fixed inset-0 bg-black/50 z-50"
       onClick={() => setIsShowTicketOpen(false)}
     >
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center ">
         <div
           className="bg-white rounded-3xl px-8 py-4 w-175"
           onClick={(e) => e.stopPropagation()}

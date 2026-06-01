@@ -23,30 +23,7 @@ function AdminDashboard() {
 
   return (
     <DashboardLayout>
-      <div className="flex flex-col gap-8 p-8 w-full bg-[#F5F7FB] min-h-screen">
-        {/* HEADER */}
-        <div className="flex items-center justify-between">
-          {/* LEFT */}
-          <div>
-            <h1 className="text-4xl font-bold text-[#303030]">
-              Gestion des utilisateurs
-            </h1>
-
-            <p className="text-gray-500 mt-2 text-lg">
-              Administration complète des comptes utilisateurs
-            </p>
-          </div>
-
-          {/* RIGHT */}
-          <Profile
-            username={username}
-            handleLogout={handleLogout}
-            role={role}
-            avatar={avatar}
-            setIsProfileModalOpen={setIsProfileModalOpen}
-          />
-        </div>
-
+      <div className="flex flex-col gap-8 p-8 w-full bg-[#F5F7FB]" >
         {/* STATS */}
         <div className="grid grid-cols-3 gap-6">
           {/* CARD 1 */}
@@ -121,16 +98,6 @@ function AdminDashboard() {
           <UserList />
         </div>
       </div>
-      {isProfileModalOpen && (
-        <ProfilModal
-          avatar={avatar}
-          username={username}
-          email={email}
-          setUsername={setUsername}
-          setEmail={setEmail}
-          setIsProfileModalOpen={setIsProfileModalOpen}
-        />
-      )}
     </DashboardLayout>
   );
 }

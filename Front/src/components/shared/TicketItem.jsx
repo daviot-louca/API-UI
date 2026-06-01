@@ -1,5 +1,5 @@
 import { useContext } from "react";
-
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth/AuthContext";
 import { TicketContext } from "../../context/ticket/TicketContext";
 
@@ -10,8 +10,8 @@ import StatusBadge from "./StatusBadge";
 
 function TicketItem({ ticket, setIsShowTicketOpen, setSelectedTicket }) {
   const { role } = useContext(AuthContext);
-
-  const { supprimerTicket} = useContext(TicketContext);
+  const navigate = useNavigate()
+  const { supprimerTicket } = useContext(TicketContext);
   const categoryName = ticket?.category?.name ?? ticket?.type;
 
   return (
@@ -46,21 +46,23 @@ function TicketItem({ ticket, setIsShowTicketOpen, setSelectedTicket }) {
               showLabel
             />
           </div>
-            {/* PRIORITY */}
+          {/* PRIORITY */}
           <div>
-            <PriorityBadge priority={ticket?.priority}/>
+            <PriorityBadge priority={ticket?.priority} />
           </div>
           {/* STATUS */}
           <div className="w-28">
-            <StatusBadge status={ticket?.status}/>
+            <StatusBadge status={ticket?.status} />
           </div>
-
-
 
           {/* DATE */}
           <div>
             <p className="text-[#303030] font-medium">
-              {new Date(ticket.updatedAt).toLocaleDateString()} à {new Date (ticket.updatedAt).toLocaleTimeString("fr-FR",{hour:"numeric",minute:'numeric'})}
+              {new Date(ticket.updatedAt).toLocaleDateString()} à{" "}
+              {new Date(ticket.updatedAt).toLocaleTimeString("fr-FR", {
+                hour: "numeric",
+                minute: "numeric",
+              })}
             </p>
           </div>
 
@@ -80,9 +82,17 @@ function TicketItem({ ticket, setIsShowTicketOpen, setSelectedTicket }) {
             {/* DELETE */}
             <button
               onClick={() => supprimerTicket(ticket.id)}
-              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-[5px] font-medium transition"
+              className="bg-[#AA0000] hover:bg-[#DD0000] text-white px-4 py-2 rounded-[5px] font-medium transition"
             >
               Supprimer
+            </button>
+            <button
+              className="bg-[#00AA] hover:bg-[#0000DD] text-white px-4 py-2 rounded-[5px] font-medium transition"
+              onClick={() => {
+                  navigate(`/admin/messagerie/${ticket.id}`);
+                }}
+            >
+              messagerie
             </button>
           </div>
         </div>
@@ -90,10 +100,7 @@ function TicketItem({ ticket, setIsShowTicketOpen, setSelectedTicket }) {
         <div>
           <div className="p-4 grid grid-cols-[100px_250px_200px_200px_200px_150px_220px] gap-3 items-center text-sm hover:bg-slate-50">
             <div className="mx-8">
-              <TicketTypeIcon
-                type={categoryName}
-                category={ticket?.category}
-              />
+              <TicketTypeIcon type={categoryName} category={ticket?.category} />
             </div>
             <div>
               <h2 className="font-bold text-lg">{ticket.title}</h2>
@@ -113,22 +120,41 @@ function TicketItem({ ticket, setIsShowTicketOpen, setSelectedTicket }) {
             </div>
             <div>
               <div>
-                <p>{new Date(ticket?.updatedAt).toLocaleDateString("fr-FR",{day:"2-digit",month:"long",year:"numeric"})}</p>
+                <p>
+                  {new Date(ticket?.updatedAt).toLocaleDateString("fr-FR", {
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </p>
               </div>
               <div>
-                <p>{new Date(ticket?.updatedAt).toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}</p>
+                <p>
+                  {new Date(ticket?.updatedAt).toLocaleTimeString("fr-FR", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </p>
               </div>
             </div>
-            <div>
+            <div className="flex gap-4">
               <button
-              onClick={() => {
-                setSelectedTicket(ticket);
-                setIsShowTicketOpen(true);
-              }}
-              className="bg-[#303030] hover:bg-[#505050] text-slate-100 px-4 py-2 rounded-[5px] font-medium transition"
-            >
-              Voir
-            </button>
+                onClick={() => {
+                  setSelectedTicket(ticket);
+                  setIsShowTicketOpen(true);
+                }}
+                className="bg-[#303030] hover:bg-[#505050] text-slate-100 px-4 py-2 rounded-[5px] font-medium transition"
+              >
+                Voir
+              </button>
+              <button
+                onClick={() => {
+                  navigate(`/user/message/${ticket.id}`);
+                }}
+                className="bg-[#303030] hover:bg-[#505050] text-slate-100 px-4 py-2 rounded-[5px] font-medium transition"
+              >
+                Messagerie
+              </button>
             </div>
           </div>
           <hr className="w-full text-slate-300" />

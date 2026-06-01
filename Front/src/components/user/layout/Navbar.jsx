@@ -1,5 +1,3 @@
-import { Search } from "lucide-react";
-
 import Profile from "../../shared/Profile";
 
 export default function DashboardNavbar({
@@ -28,7 +26,7 @@ export default function DashboardNavbar({
     : "";
   const titre =
   location.pathname === "/user/dashboard"
-    ? `Bonjour, ${username}`
+    ? `Bonjour, ${username.slice(0,1).toUpperCase()}${username.slice(1)}`
 
     : location.pathname === "/user/tickets"
     ? "Mes tickets"
@@ -37,6 +35,8 @@ export default function DashboardNavbar({
     ? "Aide & FAQ"
 
     : location.pathname === "/user/message"
+    ? "Messagerie"
+    : location.pathname === "/user/message/4"
     ? "Messagerie"
 
     : "";

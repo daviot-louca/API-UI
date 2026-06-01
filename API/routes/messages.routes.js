@@ -4,7 +4,7 @@ const {voirMessages,envoyerMessages} = require("../controllers/messages.controll
 const messagesMiddlewares = require("../middlewares/validation/messages.middlewares");
 const authJWT = require("../middlewares/JWT.middlewares")
 
-router.get("/:tickedId",authJWT,voirMessages)
+router.get("/:ticketId",authJWT,voirMessages)
 router.post("/:ticketId",authJWT,messagesMiddlewares,envoyerMessages)
 
 module.exports = router;
