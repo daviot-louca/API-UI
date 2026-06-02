@@ -10,6 +10,10 @@ import {
   voirStatsTickets,
 } from "../../services/ticket.service";
 import { voirToutTickets, voirAdminStats } from "../../services/admin.service";
+import {
+  voirTicketsMessagerie,
+  voirToutTicketsMessagerie,
+} from "../../services/messages.service";
 
 const INITIAL_STATS = {
   total: 0,
@@ -31,6 +35,8 @@ export function TicketProvider({ children }) {
   const [categoryFilter, setCategoryFilter] = useState("");
   const [sortFilter, setSortFilter] = useState("");
   const [search, setSearch] = useState("");
+  const [ticketsMessagerie, setTicketsMessagerie] = useState([]);
+  const [toutTicketsMessagerie, setToutTicketsMessagerie] = useState([]);
 
   // USER TICKETS
   const voirTicket = useCallback(
@@ -54,7 +60,6 @@ export function TicketProvider({ children }) {
         );
 
         setTickets(data.rows);
-        console.log(data.rows)
 
         setTotalTickets(data.count);
       } catch (error) {
@@ -83,7 +88,6 @@ export function TicketProvider({ children }) {
 
         setTickets(data.rows);
         setTotalTickets(data.count);
-        console.log(data.rows)
       } catch (error) {
         console.log(error);
       }
@@ -132,12 +136,7 @@ export function TicketProvider({ children }) {
 
   // AJOUT
   const ajoutTicket = useCallback(
-    async ({
-      categoryId,
-      titre,
-      description,
-      priority = "faible",
-    }) => {
+    async ({ categoryId, titre, description, priority = "faible" }) => {
       try {
         const token = localStorage.getItem("token");
 
@@ -155,7 +154,7 @@ export function TicketProvider({ children }) {
           categoryFilter,
           priorityFilter,
           sortFilter,
-          search
+          search,
         );
 
         await voirStatsTicket();
@@ -203,61 +202,75 @@ export function TicketProvider({ children }) {
     ],
   );
 
-  // UPDATE
-  const modifierTickets = useCallback(
-  async (id, updates) => {
+  const voirTicketsMessagerieContext = useCallback(async () => {
     try {
-      const token =
-        localStorage.getItem("token");
-      const updatedTicket =
-        await modifierTicket(
-          id,
-          token,
-          updates
-        );
+      const token = localStorage.getItem("token");
 
-      setTicket(updatedTicket);
-      // reset pagination
-      setCurrentPage(1);
-      // USER REFRESH
-      await voirTicket(
-        1,
-        statusFilter,
-        categoryFilter,
-        priorityFilter,
-        sortFilter,
-        search
-      );
+      const data = await voirTicketsMessagerie(token);
 
-      // ADMIN REFRESH
-      await voirToutTicket(
-        1,
-        statusFilter,
-        categoryFilter,
-        priorityFilter,
-        sortFilter,
-        search
-      );
-      await voirStatsTicket();
-      await voirAdminStatistiques();
+      setTicketsMessagerie(data);
     } catch (error) {
       console.log(error);
     }
+  }, []);
 
-  },
+const voirToutTicketsMessagerieContext = useCallback(async () => {
+  try {
+    const token = localStorage.getItem("token");
+    const data = await voirToutTicketsMessagerie(token);
+    setToutTicketsMessagerie(data);
+  } catch (error) {
+    console.log(error);
+  }
+}, []);
+  // UPDATE
+  const modifierTickets = useCallback(
+    async (id, updates) => {
+      try {
+        const token = localStorage.getItem("token");
+        const updatedTicket = await modifierTicket(id, token, updates);
 
-  [
-    voirAdminStatistiques,
-    voirStatsTicket,
-    voirToutTicket,
-    voirTicket,
-    statusFilter,
-    categoryFilter,
-    priorityFilter,
-    sortFilter,
-    search
-  ]
-);
+        setTicket(updatedTicket);
+        // reset pagination
+        setCurrentPage(1);
+        // USER REFRESH
+        await voirTicket(
+          1,
+          statusFilter,
+          categoryFilter,
+          priorityFilter,
+          sortFilter,
+          search,
+        );
+
+        // ADMIN REFRESH
+        await voirToutTicket(
+          1,
+          statusFilter,
+          categoryFilter,
+          priorityFilter,
+          sortFilter,
+          search,
+        );
+        await voirStatsTicket();
+        await voirAdminStatistiques();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    [
+      voirAdminStatistiques,
+      voirStatsTicket,
+      voirToutTicket,
+      voirTicket,
+      statusFilter,
+      categoryFilter,
+      priorityFilter,
+      sortFilter,
+      search,
+    ],
+  );
 
   const value = useMemo(
     () => ({
@@ -289,6 +302,10 @@ export function TicketProvider({ children }) {
       setSortFilter,
       search,
       setSearch,
+      ticketsMessagerie,
+      voirTicketsMessagerieContext,
+      toutTicketsMessagerie,
+      voirToutTicketsMessagerieContext
     }),
     [
       adminStats,
@@ -316,6 +333,10 @@ export function TicketProvider({ children }) {
       sortFilter,
       search,
       setSearch,
+      ticketsMessagerie,
+      voirTicketsMessagerieContext,
+      toutTicketsMessagerie,
+      voirToutTicketsMessagerieContext,
     ],
   );
 

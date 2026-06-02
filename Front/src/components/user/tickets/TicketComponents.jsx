@@ -20,6 +20,7 @@ export default function TicketComponents() {
     categoryFilter,
     sortFilter,
     search,
+    voirStatsTicket
   } = useContext(TicketContext);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isShowTicketOpen, setIsShowTicketOpen] = useState(false);
@@ -31,8 +32,9 @@ export default function TicketComponents() {
       categoryFilter,
       priorityFilter,
       sortFilter,
-      search
+      search,
     );
+    voirStatsTicket();
   }, [
     currentPage,
     statusFilter,

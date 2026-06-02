@@ -1,6 +1,7 @@
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import { io } from "socket.io-client";
 import { AuthContext } from "../../../context/auth/AuthContext";
+import { TicketContext } from "../../../context/ticket/TicketContext";
 import { getMessages } from "../../../services/messages.service";
 import { useParams } from "react-router-dom";
 import ListeMessageComponents from "./ListeMessageComponents";
@@ -10,12 +11,14 @@ export default function MessageComponents() {
   const { id } = useContext(AuthContext);
   const { ticketId } = useParams();
   const token = localStorage.getItem("token");
+  const { voirTicketsMessagerieContext, ticket, voirUnTicketContext } =
+    useContext(TicketContext);
+
   useEffect(() => {
     //emit sert à envoyer
     socket.emit("join_ticket", ticketId);
     //on sert à recevoir
     socket.on("receive_message", (data) => {
-      console.log(data);
       setMessages((prev) => [...prev, data]);
     });
     return () => {
@@ -33,7 +36,6 @@ export default function MessageComponents() {
     };
     ancienmessages();
   }, [ticketId, token]);
-
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -47,9 +49,12 @@ export default function MessageComponents() {
 
     setMessage("");
     if (!message.trim()) return;
-
-    envoyerMessage();
+    voirTicketsMessagerieContext();
   };
+  useEffect(() => {
+    voirUnTicketContext(ticketId);
+  }, [ticketId]);
+  //mettre les minutes, heures,jour avec le remis et le lu
   return (
     <ListeMessageComponents>
       <div className="flex h-[calc(100vh-100px)] flex-col rounded-2xl bg-white shadow-sm">
@@ -57,10 +62,9 @@ export default function MessageComponents() {
         <div className="flex items-center justify-between border-b px-6 py-4">
           <div>
             <h2 className="text-xl font-bold text-slate-900">
-              Ticket #{ticketId}
+              Ticket #{ticketId} - {ticket?.title}
             </h2>
           </div>
-
           <button className="rounded-lg border px-4 py-2 text-sm font-medium hover:bg-slate-50">
             Supprimer
           </button>
@@ -70,18 +74,9 @@ export default function MessageComponents() {
         <div className="flex-1 overflow-y-auto px-6 py-4 hide-scrollbar">
           {messages.map((msg) => (
             <div key={msg.id}>
-              {msg.userId == id && (
+              {msg.userId === Number(id) && (
                 <div className="flex items-end justify-end">
                   <div>
-                    <div className="flex text-xs px-3">
-                      <p>
-                        Vous •{" "}
-                        {new Date(msg.createdAt).toLocaleTimeString("fr-FR", {
-                          hour: "numeric",
-                          minute: "2-digit",
-                        })}
-                      </p>
-                    </div>
                     <div className="px-3 py-1 mb-5 bg-blue-300 min-w-0 max-w-170 rounded-xl">
                       {msg.message}
                     </div>
@@ -89,18 +84,9 @@ export default function MessageComponents() {
                   </div>
                 </div>
               )}
-              {msg.userId != id && (
+              {msg.userId !== Number(id) && (
                 <div className="flex my-1">
                   <div>
-                    <div className="flex text-xs px-3">
-                      <p>
-                        Support •{" "}
-                        {new Date(msg.createdAt).toLocaleTimeString("fr-FR", {
-                          hour: "numeric",
-                          minute: "2-digit",
-                        })}
-                      </p>
-                    </div>
                     <div className="px-3 py-1 mt-3 bg-gray-300 min-w-0 max-w-150 rounded-xl">
                       {msg.message}
                     </div>

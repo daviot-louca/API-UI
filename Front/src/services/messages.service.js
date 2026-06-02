@@ -26,7 +26,7 @@ export const sendMessage = async (token, ticketId, message) => {
         headers: {
           authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     return response.data;
@@ -34,4 +34,40 @@ export const sendMessage = async (token, ticketId, message) => {
     console.error("Error sending message:", error);
     throw error;
   }
+};
+
+export const voirTicketsMessagerie = async (token) => {
+  const response = await axios.get(`${url}/tickets`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+};
+
+export const voirToutTicketsMessagerie = async (token) => {
+  const reponse = await axios.get(`${url}/admin/tickets`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+  return reponse.data;
+};
+
+export const marquerMessagesLus = async (
+  ticketId,
+  token
+) => {
+  const response = await axios.patch(
+    `${url}/${ticketId}/read`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return response.data;
 };

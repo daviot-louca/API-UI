@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from "react";
+import { useContext, useMemo, useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Archive,
@@ -19,6 +19,7 @@ import {
 import DashboardLayoutUser from "../layout/DashboardLayoutUser";
 import { AuthContext } from "../../../context/auth/AuthContext";
 import ProfilModal from "../../shared/modals/ProfilModal";
+import { TicketContext } from "../../../context/ticket/TicketContext";
 
 const faqItems = [
   {
@@ -96,6 +97,7 @@ export default function FaqComponents() {
     setUsername,
     setEmail
   } = useContext(AuthContext);
+  const{voirStatsTicket} = useContext(TicketContext)
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [activeQuestion, setActiveQuestion] = useState(0);
   const [search, setSearch] = useState("");
@@ -109,7 +111,9 @@ export default function FaqComponents() {
       ),
     [search]
   );
-
+  useEffect (()=>{
+    voirStatsTicket();
+  },[])
   return (
     <DashboardLayoutUser
       username={username}

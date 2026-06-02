@@ -13,26 +13,25 @@ import RecentActivity from "./RecentActivity";
 import ProfilModal from "../../shared/modals/ProfilModal";
 //function
 function UserDashboard() {
-  const { voirTicket, currentPage, selectedStatus, voirStatsTicket, stats } =
+  const { voirTicket, currentPage, selectedStatus, voirStatsTicket, stats,voirTicketsMessagerieContext } =
     useContext(TicketContext);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const data =
     stats.total === 0
       ? [{ name: "Aucun ticket", value: 100 }]
       : [
-        { name: "remis", value: stats.remis },
-        { name: "enCours", value: stats.enCours },
+          { name: "remis", value: stats.remis },
+          { name: "en cours", value: stats.enCours },
           { name: "resolu", value: stats.resolu },
         ];
-  const { username, avatar, email,role,handleLogout, setEmail, setUsername } =
+  const { username, avatar, email, role, handleLogout, setEmail, setUsername } =
     useContext(AuthContext);
 
   useEffect(() => {
     voirTicket(currentPage, selectedStatus);
-
+    voirTicketsMessagerieContext();
     voirStatsTicket();
   }, [currentPage, selectedStatus, voirStatsTicket, voirTicket]);
-
   return (
     <DashboardLayoutUser
       username={username}

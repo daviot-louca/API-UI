@@ -80,7 +80,6 @@ export const modifierRoleUser = async (id, role, token) => {
 };
 
 export const rechercheUser = async (token, recherche) => {
-  console.log(recherche);
   const params = new URLSearchParams({
     recherche,
   });

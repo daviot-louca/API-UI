@@ -64,7 +64,7 @@ function UserList() {
 
           {/* ACTIONS */}
           <div className="flex gap-3">
-            <button onClick={() => modifierRole(user.id, user.role)}>
+            <button onClick={() => modifierRole(user.id, user.role)} className="bg-[#303030] font-semibold p-2 rounded-xl text-white">
               {user.role === "administrateur"
                 ? "Passer utilisateur"
                 : "Passer administrateur"}

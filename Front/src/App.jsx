@@ -7,7 +7,7 @@ import AdminPageUsers from "./pages/admin/AdminPageUsers";
 import AdminPageDashboard from "./pages/admin/AdminPageDashboard";
 import AdminPageCategories from "./pages/admin/AdminPageCategories";
 import AdminPageMessagerie from "./pages/admin/AdminPageMessagerie";
-import AdminPageListeMessages from "./pages/admin/AdminPageListeMessages";
+import AdminMessagerieVide from "./components/admin/messagerie/AdminMessagerieVide";
 /* PAGES SHARED*/
 import LoginPage from "./pages/shared/LoginPage";
 import RegisterPage from "./pages/shared/RegisterPage";
@@ -18,10 +18,10 @@ import UserPage from "./pages/user/UserPage";
 import Message from "./pages/user/Message";
 import TicketPage from "./pages/user/TicketPage";
 import FAQ from "./pages/user/FAQ";
-import ListeMessages from "./pages/user/ListeMessages"
 
 /* PROTECTED ROUTES */
 import ProtectedRoute from "./components/shared/ProtectedRoute";
+import MessageVide from "./components/user/messages/MessageVide";
 
 function App() {
   return (
@@ -74,7 +74,7 @@ function App() {
           path="/admin/messagerie"
           element={
             <ProtectedRoute allowedRole="administrateur">
-              <AdminPageListeMessages />
+              <AdminMessagerieVide/>
             </ProtectedRoute>
           }
         />
@@ -108,7 +108,7 @@ function App() {
           path="/user/message"
           element={
             <ProtectedRoute allowedRole="utilisateur">
-              <ListeMessages />
+              <MessageVide />
             </ProtectedRoute>
           }
         />

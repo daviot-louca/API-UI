@@ -22,6 +22,8 @@ export default function DashboardNavbar({
 
     : location.pathname === "/user/message"
     ? "Consultez vos échanges liés aux tickets."
+    : location.pathname.startsWith("/user/message/")
+    ? "Consultez vos échanges liés aux tickets."
 
     : "";
   const titre =
@@ -36,8 +38,8 @@ export default function DashboardNavbar({
 
     : location.pathname === "/user/message"
     ? "Messagerie"
-    : location.pathname === "/user/message/4"
-    ? "Messagerie"
+    : location.pathname.startsWith("/user/message/")
+    ? "Conversation"
 
     : "";
   return (

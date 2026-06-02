@@ -8,6 +8,7 @@ const messageSchema = z.object({
          required_error:
             "message obligatoire"
       })
+      .trim()
 
       .min(
          1,
@@ -19,7 +20,6 @@ const messageSchema = z.object({
          "message trop long"
       )
 
-      .trim()
 });
 
 module.exports = messageSchema;
