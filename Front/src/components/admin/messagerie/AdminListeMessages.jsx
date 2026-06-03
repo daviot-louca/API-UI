@@ -13,7 +13,6 @@ export default function AdminListeMessages({ children }) {
     email,
     setUsername,
     setEmail,
-    id,
   } = useContext(AuthContext);
   const {
     toutTicketsMessagerie,
@@ -53,7 +52,8 @@ export default function AdminListeMessages({ children }) {
     const minutes = secondes /60
     const heures = minutes / 60
     const jours = heures / 24
-    const durée = jours.floor<1?
+    const durée = jours > 1 ? Math.floor(jours) : heures >1? Math.floor(heures) : minutes>1? Math.floor(minutes) : Math.floor(secondes)
+    return `${durée} ${jours > 1 ? "jours" : heures >1? "heures" : minutes>1? "minutes" : "secondes"}`
   };
 
   return (
