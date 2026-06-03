@@ -1,6 +1,7 @@
 const auth = require("../models/user.model");
 const { hash, compare } = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { errorMonitor } = require("node:events");
 require("dotenv").config();
 const { Op } = require("sequelize");
 const Sequelize = require("sequelize");
@@ -123,6 +124,22 @@ const modifierUsersService = async ({ id, email, username }) => {
   return user;
 };
 
+const modifierMotDePasseService = async ({oldPassword,newPassword,id})=>{
+  const user = await auth.findByPk(id)
+  if(!user){
+    throw new Error("utilisateur introuvable")
+  }
+  const result = await compare(oldPassword,user.password) 
+  if(result !==true){
+    throw new Error("ancien mot de passe incorrect")
+  }else{
+    const newPasswordcrypt = await hash(newPassword, 10);
+    user.password = newPasswordcrypt
+    await user.save();
+    return user
+  }
+}
+
 module.exports = {
   authService,
   loginService,
@@ -132,4 +149,5 @@ module.exports = {
   updateUserService,
   rechercheUsersService,
   modifierUsersService,
+  modifierMotDePasseService
 };

@@ -7,6 +7,7 @@ const Ticket = require("./ticket.model");
 const Message = require("./message.model");
 
 const category = require("./categories.model");
+const activites = require("./activite.model");
 const db = {};
 
 /* CONNEXION */
@@ -22,6 +23,8 @@ db.ticket = Ticket;
 db.message = Message;
 
 db.categories = category;
+
+db.activites = activites;
 
 /* RELATIONS USER ↔ TICKET */
 
@@ -64,5 +67,17 @@ db.ticket.belongsTo(db.categories, {
   as: "category",
 });
 db.categories.hasMany(db.ticket, { foreignKey: "categoryId" });
+
+/*Relations activite <=> user */
+
+db.user.hasMany(db.activites, {foreignKey:"userId"})
+
+db.activites.belongsTo(db.user, {foreignKey:"userId"})
+
+/*Relations ticket <=> activite */
+
+db.ticket.hasMany(db.activites, {foreignKey:"ticketId"})
+
+db.activites.belongsTo(db.ticket, {foreignKey:"ticketId"})
 
 module.exports = db;

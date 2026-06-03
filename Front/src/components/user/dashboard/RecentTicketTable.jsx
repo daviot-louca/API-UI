@@ -22,7 +22,7 @@ export default function RecentTicketTable() {
       </div>
       <hr className="text-[#E5E7EB]" />
       {/*table */}
-      {tickets.slice(0, 5).map((ticket) => {
+      {tickets.slice(0, 10).map((ticket) => {
         const categoryName = ticket?.category?.name ?? ticket.type;
 
         return (

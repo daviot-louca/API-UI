@@ -2,7 +2,7 @@ import { useContext, useState, useRef, useEffect } from "react";
 import { io } from "socket.io-client";
 import { AuthContext } from "../../../context/auth/AuthContext";
 import { TicketContext } from "../../../context/ticket/TicketContext";
-import { getMessages } from "../../../services/messages.service";
+import { getMessages,marquerMessagesLus } from "../../../services/messages.service";
 import { useParams } from "react-router-dom";
 import ListeMessageComponents from "./ListeMessageComponents";
 const socket = io("http://localhost:3030");
@@ -53,8 +53,11 @@ export default function MessageComponents() {
   };
   useEffect(() => {
     voirUnTicketContext(ticketId);
+    if (!ticketId) return;
+
+    marquerMessagesLus(ticketId, token);
   }, [ticketId]);
-  //mettre les minutes, heures,jour avec le remis et le lu
+
   return (
     <ListeMessageComponents>
       <div className="flex h-[calc(100vh-100px)] flex-col rounded-2xl bg-white shadow-sm">

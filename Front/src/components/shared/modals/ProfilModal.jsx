@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext,useState } from "react";
 import {
   ChevronRight,
   Lock,
@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 
 import { AuthContext } from "../../../context/auth/AuthContext";
+import NouveauMotDePasse from "./NouveauMotDePasse";
 
 export default function ProfilModal({
   username,
@@ -15,10 +16,10 @@ export default function ProfilModal({
   setIsProfileModalOpen,
   setUsername,
   setEmail,
+  setIsPassword
 }) {
   const { handleModifierProfil, id} = useContext(AuthContext);
   const initials = (username).slice(0, 2).toUpperCase();
-
   const handleSubmit = (event) => {
     event.preventDefault();
     handleModifierProfil(id, email ?? "", username ?? "");
@@ -38,7 +39,7 @@ export default function ProfilModal({
         >
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h2 className="text-2xl font-bold text-slate-950">
+              <h2 className="text-2xl font-bold text-[#303030]">
                 Modifier le profil
               </h2>
               <p className="mt-1 text-slate-500">
@@ -114,6 +115,7 @@ export default function ProfilModal({
               <button
                 type="button"
                 className="flex w-full items-center justify-between gap-4 rounded-xl border border-gray-100 bg-gray-50 px-4 py-4 text-left transition hover:border-gray-200 hover:bg-gray-100"
+                onClick={()=>(setIsPassword(true),setIsProfileModalOpen(false))}
               >
                 <span className="flex items-center gap-4">
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-[#303030] shadow-sm">

@@ -9,7 +9,7 @@ export default function ModalNouveauTypeTicket({setIsTypeModalOpen,handleSelectT
                 setIsTypeModalOpen(false)
             }
         >
-            <div className="flex items-center justify-center >
+            <div className="flex items-center justify-center" >
 
                 <div
                     className="bg-white rounded-3xl p-6 w-full max-w-2xl"
