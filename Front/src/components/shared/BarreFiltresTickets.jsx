@@ -99,14 +99,12 @@ export default function BarreFiltresFunction() {
           <option value="az">A à Z</option>
           <option value="za">Z à A</option>
         </select>
-        {role === "utilisateur" && (
           <button
             className="bg-[#303030] p-2.5 rounded-xl text-slate-100 hover:bg-[#505050]"
             onClick={() => setIsTicketModalOpen(true)}
           >
             + Ajouter un Ticket
           </button>
-        )}
       </div>
       {isTicketModalOpen && (
         <ModalNouveauTicket

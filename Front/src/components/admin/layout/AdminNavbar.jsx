@@ -1,11 +1,13 @@
 import Profile from "../../shared/Profile";
 import ProfilModal from "../../shared/modals/ProfilModal";
+import NouveauMotDePasse from "../../shared/modals/NouveauMotDePasse";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../context/auth/AuthContext";
 export default function AdminNavbar() {
   const { handleLogout, username, role, avatar, email, setEmail, setUsername } =
     useContext(AuthContext);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [isPassword, setIsPassword] = useState(false);
   const titre =
     location.pathname === "/admin/dashboard"
       ? `Bonjour, ${username.slice(0, 1).toUpperCase()}${username.slice(1)}`
@@ -65,6 +67,12 @@ export default function AdminNavbar() {
           setUsername={setUsername}
           setEmail={setEmail}
           setIsProfileModalOpen={setIsProfileModalOpen}
+          setIsPassword={setIsPassword}
+        />
+      )}
+      {isPassword&&(
+        <NouveauMotDePasse
+        setIsPassword={setIsPassword}
         />
       )}
     </div>

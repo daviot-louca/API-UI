@@ -11,7 +11,7 @@ import StatusBadge from "./StatusBadge";
 function TicketItem({ ticket, setIsShowTicketOpen, setSelectedTicket }) {
   const { role } = useContext(AuthContext);
   const navigate = useNavigate()
-  const { supprimerTicket } = useContext(TicketContext);
+  const { supprimerTicketAdmin } = useContext(TicketContext);
   const categoryName = ticket?.category?.name ?? ticket?.type;
 
   return (
@@ -81,7 +81,7 @@ function TicketItem({ ticket, setIsShowTicketOpen, setSelectedTicket }) {
 
             {/* DELETE */}
             <button
-              onClick={() => supprimerTicket(ticket.id)}
+              onClick={() => supprimerTicketAdmin(ticket.id)}
               className="bg-[#AA0000] hover:bg-[#DD0000] text-white px-4 py-2 rounded-[5px] font-medium transition"
             >
               Supprimer

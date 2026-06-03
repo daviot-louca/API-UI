@@ -1,6 +1,7 @@
 const Ticket = require("../models/ticket.model");
 const User = require("../models/user.model");
 const Category = require("../models/categories.model");
+const activites = require("../models/activite.model");
 const { Op } = require("sequelize");
 
 // SEE ALL ADMIN
@@ -219,6 +220,12 @@ const createTicketService = async ({
 
     priority,
   });
+  await activites.create({
+    action: "ticket créé",
+    description: `création du ticket ${title}`,
+    userId: id,
+    ticketId: envoie.id,
+  });
 
   return envoie;
 };
@@ -235,7 +242,9 @@ const updateTicketService = async ({
   priority,
 }) => {
   const ticket = await Ticket.findByPk(ticketId);
-
+  const ancienStatus = ticket.status;
+  const anciennePriorite = ticket.priority;
+  
   if (!ticket) {
     return "ticket introuvable";
   }
@@ -268,8 +277,24 @@ const updateTicketService = async ({
   if (priority !== undefined) {
     ticket.priority = priority;
   }
-
   await ticket.save();
+  if (ancienStatus !== ticket.status) {
+    await activites.create({
+    action: "Statut modifié",
+    description: `Ticket passé de ${ancienStatus} à ${status}`,
+    userId: id,
+    ticketId: ticket.id,
+  });
+}
+
+if (anciennePriorite !== ticket.priority) {
+    await activites.create({
+    action: "Priorité modifiée",
+    description: `Ticket passé de ${anciennePriorite} à ${priority}`,
+    userId: id,
+    ticketId: ticket.id,
+  });
+}
 
   return ticket;
 };

@@ -47,6 +47,7 @@ export default function AdminListeMessages({ children }) {
 
   const tempsEcoule = (date) => {
     const dateNow = new Date();
+<<<<<<< HEAD
     const ecart = dateNow - new Date(date)
     const secondes = ecart / 1000
     const minutes = secondes /60
@@ -54,8 +55,39 @@ export default function AdminListeMessages({ children }) {
     const jours = heures / 24
     const durée = jours > 1 ? Math.floor(jours) : heures >1? Math.floor(heures) : minutes>1? Math.floor(minutes) : Math.floor(secondes)
     return `${durée} ${jours > 1 ? "jours" : heures >1? "heures" : minutes>1? "minutes" : "secondes"}`
+=======
+    const ecart = dateNow - new Date(date);
+    const secondes = ecart / 1000;
+    const minutes = secondes / 60;
+    const heures = minutes / 60;
+    const jours = heures / 24;
+    const duree =
+      jours >= 1
+        ? (Math.floor(jours) + " j")
+        : heures >= 1
+          ? (Math.floor(heures)+ " h")
+          : minutes >= 1
+            ? (Math.floor(minutes)+ " min")
+            : (Math.floor(secondes)+ " s");
+            return duree
+>>>>>>> f1c4b64175fe99ba738132c06c374e59a4f58bc7
   };
-
+  const statusConversation = (ticket) =>{
+    if(ticket.userId===id){
+      if(ticket.isRead===true){
+        return "ouvert "
+      }else{
+        return "remis "
+      }
+    }else{
+      if(ticket.isRead===true){
+        return "reçu "
+      }
+      else{
+        return "nouveau message "
+      }
+    }
+  }
   return (
     <div>
       <DashboardLayout
@@ -83,9 +115,7 @@ export default function AdminListeMessages({ children }) {
                     </div>
                     <div className="flex font-bold text-lg items-center gap-2">
                       <PriorityBadge priority={ticket?.priority} /> {"• "}
-                      {ticket.messages.at(-1).isRead
-                        ? "lu il y'a :"
-                        : "Remis il y'a :"}
+                      {statusConversation(ticket.messages.at(-1))}
                       {tempsEcoule(ticket.messages.at(-1).updatedAt)}
                     </div>
                   </div>

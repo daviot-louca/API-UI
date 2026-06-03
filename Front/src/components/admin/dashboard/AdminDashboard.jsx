@@ -33,7 +33,7 @@ export default function AdminDashboard() {
                     </p>
 
                     <h2 className="text-4xl font-bold mt-2">
-                        {adminStats?.totalTickets || 0}
+                        {adminStats.totalTickets}
                     </h2>
                 </div>
 

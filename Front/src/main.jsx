@@ -7,6 +7,7 @@ import { CategoryProvider } from "./context/categories/CategoriesProvider.jsx";
 import App from "./App.jsx";
 import { AdminProvider } from "./context/admin/AdminProvider.jsx";
 import "./index.css";
+import { ActivitesProvider } from "./context/activites/activitesProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -15,7 +16,9 @@ createRoot(document.getElementById("root")).render(
         <TicketProvider>
           <AdminProvider>
             <CategoryProvider>
-              <App />
+              <ActivitesProvider>
+                <App />
+              </ActivitesProvider>
             </CategoryProvider>
           </AdminProvider>
         </TicketProvider>

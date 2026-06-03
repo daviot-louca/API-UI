@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { TicketContext } from "../../../context/ticket/TicketContext";
 import PriorityBadge from "../../shared/PriorityBadge";
 export default function ListeMessageComponents({ children }) {
-  const { handleLogout, username, role, avatar, email, setUsername, setEmail } =
+  const { handleLogout, username, role, avatar, email, setUsername, setEmail,id } =
     useContext(AuthContext);
   const { ticketsMessagerie, voirTicketsMessagerieContext, voirStatsTicket } =
     useContext(TicketContext);
@@ -33,6 +33,40 @@ export default function ListeMessageComponents({ children }) {
         ticket.description.toLowerCase().includes(search.toLowerCase()) ||
         ticket.title.toLowerCase().includes(search.toLowerCase()),
     );
+
+  const tempsEcoule = (date) => {
+    const dateNow = new Date();
+    const ecart = dateNow - new Date(date);
+    const secondes = ecart / 1000;
+    const minutes = secondes / 60;
+    const heures = minutes / 60;
+    const jours = heures / 24;
+    const duree =
+      jours >= 1
+        ? Math.floor(jours) + " j"
+        : heures >= 1
+          ? Math.floor(heures) + " h"
+          : minutes >= 1
+            ? Math.floor(minutes) + " min"
+            : Math.floor(secondes) + " s";
+    return duree;
+  };
+    const statusConversation = (ticket) =>{
+    if(ticket.userId===id){
+      if(ticket.isRead===true){
+        return "ouvert "
+      }else{
+        return "remis "
+      }
+    }else{
+      if(ticket.isRead===true){
+        return "reçu "
+      }
+      else{
+        return "nouveau message "
+      }
+    }
+  }
   return (
     <div>
       <DashboardLayoutUser
@@ -58,8 +92,10 @@ export default function ListeMessageComponents({ children }) {
                     <div className="flex font-semibold mb-2">
                       Ticket #{ticket.id} • {ticket.title}
                     </div>
-                    <div className="flex font-bold text-lg">
-                      <PriorityBadge priority={ticket?.priority} />
+                    <div className="flex font-bold text-lg items-center gap-2">
+                      <PriorityBadge priority={ticket?.priority} /> {"• "}
+                      {statusConversation(ticket.messages.at(-1))}
+                      {tempsEcoule(ticket.messages.at(-1).updatedAt)}
                     </div>
                   </div>
                 </button>

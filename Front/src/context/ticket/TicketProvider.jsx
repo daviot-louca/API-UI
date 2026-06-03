@@ -176,7 +176,7 @@ export function TicketProvider({ children }) {
   );
 
   // DELETE
-  const supprimerTicket = useCallback(
+  const supprimerTicketAdmin = useCallback(
     async (id) => {
       try {
         const token = localStorage.getItem("token");
@@ -184,7 +184,6 @@ export function TicketProvider({ children }) {
         await supprimerTickets(id, token);
 
         await voirToutTicket(currentPage, selectedStatus);
-        await voirTicket(currentPage, selectedStatus);
 
         await voirAdminStatistiques();
         await voirStatsTicket();
@@ -196,9 +195,29 @@ export function TicketProvider({ children }) {
       currentPage,
       selectedStatus,
       voirAdminStatistiques,
+      voirToutTicket,
+    ],
+  );
+  const supprimerTicket = useCallback(
+    async (id) => {
+      try {
+        const token = localStorage.getItem("token");
+
+        await supprimerTickets(id, token);
+
+        await voirTicket(currentPage, selectedStatus);
+
+        await voirAdminStatistiques();
+        await voirStatsTicket();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [
+      currentPage,
+      selectedStatus,
       voirStatsTicket,
       voirTicket,
-      voirToutTicket,
     ],
   );
 
@@ -291,6 +310,7 @@ const voirToutTicketsMessagerieContext = useCallback(async () => {
       voirAdminStatistiques,
       ajoutTicket,
       supprimerTicket,
+      supprimerTicketAdmin,
       modifierTickets,
       setStatusFilter,
       statusFilter,
@@ -315,6 +335,7 @@ const voirToutTicketsMessagerieContext = useCallback(async () => {
       selectedStatus,
       stats,
       supprimerTicket,
+      supprimerTicketAdmin,
       ticket,
       tickets,
       totalTickets,
