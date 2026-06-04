@@ -13,7 +13,6 @@ export default function AdminListeMessages({ children }) {
     email,
     setUsername,
     setEmail,
-    id,
   } = useContext(AuthContext);
   const {
     toutTicketsMessagerie,
@@ -48,6 +47,15 @@ export default function AdminListeMessages({ children }) {
 
   const tempsEcoule = (date) => {
     const dateNow = new Date();
+<<<<<<< HEAD
+    const ecart = dateNow - new Date(date)
+    const secondes = ecart / 1000
+    const minutes = secondes /60
+    const heures = minutes / 60
+    const jours = heures / 24
+    const durée = jours > 1 ? Math.floor(jours) : heures >1? Math.floor(heures) : minutes>1? Math.floor(minutes) : Math.floor(secondes)
+    return `${durée} ${jours > 1 ? "jours" : heures >1? "heures" : minutes>1? "minutes" : "secondes"}`
+=======
     const ecart = dateNow - new Date(date);
     const secondes = ecart / 1000;
     const minutes = secondes / 60;
@@ -62,6 +70,7 @@ export default function AdminListeMessages({ children }) {
             ? (Math.floor(minutes)+ " min")
             : (Math.floor(secondes)+ " s");
             return duree
+>>>>>>> f1c4b64175fe99ba738132c06c374e59a4f58bc7
   };
   const statusConversation = (ticket) =>{
     if(ticket.userId===Number(id)){

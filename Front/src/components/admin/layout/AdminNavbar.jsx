@@ -3,7 +3,7 @@ import ProfilModal from "../../shared/modals/ProfilModal";
 import NouveauMotDePasse from "../../shared/modals/NouveauMotDePasse";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../context/auth/AuthContext";
-export default function AdminNavbar({}) {
+export default function AdminNavbar() {
   const { handleLogout, username, role, avatar, email, setEmail, setUsername } =
     useContext(AuthContext);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
