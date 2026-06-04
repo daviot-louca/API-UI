@@ -1,10 +1,6 @@
 import Sidebar from "./Sidebar";
 import AdminNavbar from "./AdminNavbar";
-import { useContext,useState } from "react";
-import { AuthContext } from "../../../context/auth/AuthContext";
-function DashboardLayout({ children, handleLogout }) {
-  const { username, role, avatar, email, setEmail, setUsername } =
-    useContext(AuthContext);
+function DashboardLayout({ children}) {
   return (
     <div className="flex min-h-screen bg-slate-100 overflow-x-hidden">
       {/* SIDEBAR */}

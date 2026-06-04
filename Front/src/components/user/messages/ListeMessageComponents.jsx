@@ -5,8 +5,16 @@ import { useNavigate } from "react-router-dom";
 import { TicketContext } from "../../../context/ticket/TicketContext";
 import PriorityBadge from "../../shared/PriorityBadge";
 export default function ListeMessageComponents({ children }) {
-  const { handleLogout, username, role, avatar, email, setUsername, setEmail,id } =
-    useContext(AuthContext);
+  const {
+    handleLogout,
+    username,
+    role,
+    avatar,
+    email,
+    setUsername,
+    setEmail,
+    id,
+  } = useContext(AuthContext);
   const { ticketsMessagerie, voirTicketsMessagerieContext, voirStatsTicket } =
     useContext(TicketContext);
 
@@ -51,22 +59,22 @@ export default function ListeMessageComponents({ children }) {
             : Math.floor(secondes) + " s";
     return duree;
   };
-    const statusConversation = (ticket) =>{
-    if(ticket.userId===id){
-      if(ticket.isRead===true){
-        return "ouvert "
-      }else{
-        return "remis "
+  const statusConversation = (message) => {
+    if (message.userId === Number(id)) {
+      if (message.isRead === true) {
+        return "lu ";
+      } else {
+        return "remis ";
       }
-    }else{
-      if(ticket.isRead===true){
-        return "reçu "
-      }
-      else{
-        return "nouveau message "
+    } else {
+      if (message.isRead === true) {
+        return "reçu ";
+      } else {
+        return "nouveau message ";
       }
     }
-  }
+  };
+
   return (
     <div>
       <DashboardLayoutUser

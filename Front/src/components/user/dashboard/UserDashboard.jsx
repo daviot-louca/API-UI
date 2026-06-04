@@ -13,8 +13,14 @@ import RecentActivity from "./RecentActivity";
 import ProfilModal from "../../shared/modals/ProfilModal";
 //function
 function UserDashboard() {
-  const { voirTicket, currentPage, selectedStatus, voirStatsTicket, stats,voirTicketsMessagerieContext } =
-    useContext(TicketContext);
+  const {
+    voirTicket,
+    currentPage,
+    selectedStatus,
+    voirStatsTicket,
+    stats,
+    voirTicketsMessagerieContext,
+  } = useContext(TicketContext);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const data =
     stats.total === 0
@@ -50,8 +56,10 @@ function UserDashboard() {
         {/*TICKETS RECENTS + STATUS + ACTIVITé */}
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
           {/*TICKETS RECENTS */}
-          <div className="bg-white p-4 rounded-xl shadow-sm xl:col-span-2 min-w-0">
-            <RecentTicketTable />
+          <div className=" xl:col-span-2 ">
+            <div className="bg-white p-4 rounded-xl shadow-sm min-w-0">
+              <RecentTicketTable />
+            </div>
           </div>
           {/*STATUS + ACTIVITE*/}
           <div className="flex flex-col gap-4 min-w-0">

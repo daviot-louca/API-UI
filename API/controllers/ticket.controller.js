@@ -7,6 +7,7 @@ const {
   seeTheTicketService,
   statsTicketService,
   adminStatsService,
+  adminStatsEvolutionService
 } = require("../services/ticket.service");
 
 // SEE ALL ADMIN
@@ -177,6 +178,15 @@ const adminStats = async (req, res) => {
   }
 };
 
+const adminStatsEvolution = async (req,res) => {
+  try {
+    const informations = await adminStatsEvolutionService();
+    res.json(informations)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   seeTicket,
   createTicket,
@@ -186,4 +196,5 @@ module.exports = {
   seeTheTicket,
   statsTickets,
   adminStats,
+  adminStatsEvolution
 };

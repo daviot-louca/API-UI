@@ -16,7 +16,7 @@ export function ActivitesProvider({ children }) {
     } catch (error) {
       console.log(error);
     }
-  });
+  },[]);
   const handleVoirActiviteAdmin = useCallback(async () => {
     try {
       const token = localStorage.getItem("token");
@@ -25,7 +25,7 @@ export function ActivitesProvider({ children }) {
     } catch (error) {
       console.log(error);
     }
-  });
+  },[]);
 
   const value = useMemo(
     () => ({

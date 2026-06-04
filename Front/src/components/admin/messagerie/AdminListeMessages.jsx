@@ -64,7 +64,7 @@ export default function AdminListeMessages({ children }) {
             return duree
   };
   const statusConversation = (ticket) =>{
-    if(ticket.userId===id){
+    if(ticket.userId===Number(id)){
       if(ticket.isRead===true){
         return "ouvert "
       }else{

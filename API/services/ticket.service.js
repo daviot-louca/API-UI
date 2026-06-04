@@ -244,7 +244,7 @@ const updateTicketService = async ({
   const ticket = await Ticket.findByPk(ticketId);
   const ancienStatus = ticket.status;
   const anciennePriorite = ticket.priority;
-  
+
   if (!ticket) {
     return "ticket introuvable";
   }
@@ -280,21 +280,21 @@ const updateTicketService = async ({
   await ticket.save();
   if (ancienStatus !== ticket.status) {
     await activites.create({
-    action: "Statut modifié",
-    description: `Ticket passé de ${ancienStatus} à ${status}`,
-    userId: id,
-    ticketId: ticket.id,
-  });
-}
+      action: "Statut modifié",
+      description: `Ticket passé de ${ancienStatus} à ${status}`,
+      userId: id,
+      ticketId: ticket.id,
+    });
+  }
 
-if (anciennePriorite !== ticket.priority) {
+  if (anciennePriorite !== ticket.priority) {
     await activites.create({
-    action: "Priorité modifiée",
-    description: `Ticket passé de ${anciennePriorite} à ${priority}`,
-    userId: id,
-    ticketId: ticket.id,
-  });
-}
+      action: "Priorité modifiée",
+      description: `Ticket passé de ${anciennePriorite} à ${priority}`,
+      userId: id,
+      ticketId: ticket.id,
+    });
+  }
 
   return ticket;
 };
@@ -363,17 +363,11 @@ const statsTicketService = async (id) => {
 
 const adminStatsService = async () => {
   const total = await Ticket.count();
-
+  const utilisateurs = await User.count();
   // STATUS
   const remis = await Ticket.count({
     where: {
       status: "remis",
-    },
-  });
-
-  const ouvert = await Ticket.count({
-    where: {
-      status: "ouvert",
     },
   });
 
@@ -388,56 +382,71 @@ const adminStatsService = async () => {
       status: "résolu",
     },
   });
-
-  // TYPES
-  const posteTravail = await Ticket.count({
+  //PRIORIT2
+  const faible = await Ticket.count({
     where: {
-      type: "Poste de travail",
+      priority: "faible",
     },
   });
-
-  const telephonie = await Ticket.count({
+  const moyenne = await Ticket.count({
     where: {
-      type: "Téléphonie",
+      priority: "moyenne",
     },
   });
-
-  const compteAcces = await Ticket.count({
+  const haute = await Ticket.count({
     where: {
-      type: "Compte d'accès",
+      priority: "haute",
     },
   });
-
-  const messagerie = await Ticket.count({
+  const urgente = await Ticket.count({
     where: {
-      type: "Messagerie",
+      priority: "urgente",
     },
   });
-
-  const autres = await Ticket.count({
-    where: {
-      type: "Autres",
-    },
-  });
-
   return {
     total,
 
     status: {
       remis,
-      ouvert,
       enCours,
       resolu,
+      utilisateurs,
     },
-
-    types: {
-      posteTravail,
-      telephonie,
-      compteAcces,
-      messagerie,
-      autres,
+    priority: {
+      faible,
+      moyenne,
+      haute,
+      urgente,
     },
   };
+};
+
+const adminStatsEvolutionService = async () => {
+  const dateLimite = new Date();
+  dateLimite.setDate(dateLimite.getDate() - 7);
+
+  const tickets = await Ticket.findAll({
+    where: {
+      createdAt: {
+        [Op.gte]: dateLimite,
+      },
+    },
+  });
+  const groupes = {};
+  tickets.forEach((ticket) => {
+    const date = new Date(ticket.createdAt).toLocaleDateString();
+
+    if (date in groupes) {
+      groupes[date]++;
+    } else {
+      groupes[date] = 1;
+    }
+  });
+  const evolutionData = Object.entries(groupes).map(([date, tickets]) => ({
+    date,
+    tickets,
+  }));
+  return evolutionData;
 };
 
 module.exports = {
@@ -449,4 +458,5 @@ module.exports = {
   seeTheTicketService,
   statsTicketService,
   adminStatsService,
+  adminStatsEvolutionService,
 };

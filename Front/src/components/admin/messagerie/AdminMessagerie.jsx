@@ -11,7 +11,7 @@ import AdminListeMessages from "./AdminListeMessages";
 const socket = io("http://localhost:3030");
 export default function MessageComponents() {
   const messageEndRef = useRef(null);
-  const { id, role } = useContext(AuthContext);
+  const { id} = useContext(AuthContext);
   const { ticketId } = useParams();
   const token = localStorage.getItem("token");
   const { voirToutTicketsMessagerieContext, ticket, voirUnTicketContext } =
@@ -47,24 +47,25 @@ export default function MessageComponents() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!message.trim()) return;
 
     socket.emit("send_message", ticketId, message, id);
 
     setMessage("");
-    if (!message.trim()) return;
     voirToutTicketsMessagerieContext();
   };
-  useEffect(() => {
-    const charger = async () => {
-      await voirUnTicketContext(ticketId);
+useEffect(() => {
+  const charger = async () => {
+    await voirUnTicketContext(ticketId);
+    
+    if (!ticketId) return;
+    
+    await marquerMessagesLus(ticketId, token);
+    await voirToutTicketsMessagerieContext();
+  };
 
-      if (!ticketId) return;
-
-      await marquerMessagesLus(ticketId, token);
-    };
-
-    charger();
-  }, [ticketId]);
+  charger();
+}, [ticketId]);
   return (
     <AdminListeMessages>
       <div className="flex h-[calc(100vh-100px)] flex-col rounded-2xl bg-white shadow-sm">

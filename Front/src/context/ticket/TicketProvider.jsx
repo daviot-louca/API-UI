@@ -9,7 +9,11 @@ import {
   modifierTicket,
   voirStatsTickets,
 } from "../../services/ticket.service";
-import { voirToutTickets, voirAdminStats } from "../../services/admin.service";
+import {
+  voirToutTickets,
+  voirAdminStats,
+  voirAdminStatsEvolutionService,
+} from "../../services/admin.service";
 import {
   voirTicketsMessagerie,
   voirToutTicketsMessagerie,
@@ -25,6 +29,7 @@ const INITIAL_STATS = {
 export function TicketProvider({ children }) {
   const [stats, setStats] = useState(INITIAL_STATS);
   const [adminStats, setAdminStats] = useState(null);
+  const [adminEvolution, setAdminEvolution] = useState([]);
   const [tickets, setTickets] = useState([]);
   const [totalTickets, setTotalTickets] = useState(0);
   const [ticket, setTicket] = useState();
@@ -127,8 +132,17 @@ export function TicketProvider({ children }) {
       const token = localStorage.getItem("token");
 
       const data = await voirAdminStats(token);
-
       setAdminStats(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  const voirAdminStatsEvolution = useCallback(async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const data = await voirAdminStatsEvolutionService(token);
+      setAdminEvolution(data);
     } catch (error) {
       console.log(error);
     }
@@ -191,12 +205,7 @@ export function TicketProvider({ children }) {
         console.log(error);
       }
     },
-    [
-      currentPage,
-      selectedStatus,
-      voirAdminStatistiques,
-      voirToutTicket,
-    ],
+    [currentPage, selectedStatus, voirAdminStatistiques, voirToutTicket],
   );
   const supprimerTicket = useCallback(
     async (id) => {
@@ -213,12 +222,7 @@ export function TicketProvider({ children }) {
         console.log(error);
       }
     },
-    [
-      currentPage,
-      selectedStatus,
-      voirStatsTicket,
-      voirTicket,
-    ],
+    [currentPage, selectedStatus, voirStatsTicket, voirTicket],
   );
 
   const voirTicketsMessagerieContext = useCallback(async () => {
@@ -233,15 +237,15 @@ export function TicketProvider({ children }) {
     }
   }, []);
 
-const voirToutTicketsMessagerieContext = useCallback(async () => {
-  try {
-    const token = localStorage.getItem("token");
-    const data = await voirToutTicketsMessagerie(token);
-    setToutTicketsMessagerie(data);
-  } catch (error) {
-    console.log(error);
-  }
-}, []);
+  const voirToutTicketsMessagerieContext = useCallback(async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const data = await voirToutTicketsMessagerie(token);
+      setToutTicketsMessagerie(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
   // UPDATE
   const modifierTickets = useCallback(
     async (id, updates) => {
@@ -298,6 +302,8 @@ const voirToutTicketsMessagerieContext = useCallback(async () => {
       totalTickets,
       stats,
       adminStats,
+      adminEvolution,
+      voirAdminStatsEvolution,
       currentPage,
       setCurrentPage,
       selectedStatus,
@@ -325,10 +331,12 @@ const voirToutTicketsMessagerieContext = useCallback(async () => {
       ticketsMessagerie,
       voirTicketsMessagerieContext,
       toutTicketsMessagerie,
-      voirToutTicketsMessagerieContext
+      voirToutTicketsMessagerieContext,
     }),
     [
       adminStats,
+      adminEvolution,
+      voirAdminStatsEvolution,
       ajoutTicket,
       currentPage,
       modifierTickets,
