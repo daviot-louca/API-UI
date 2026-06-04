@@ -28,7 +28,7 @@ function App() {
     <div>
       <Routes>
         {/* HOME */}
-        <Route path="/" element={<HomePage />} />
+        <Route path="/home" element={<HomePage />} />
 
         {/* REGISTER */}
         <Route path="/register" element={<RegisterPage />} />
@@ -65,7 +65,6 @@ function App() {
           path="/admin/messagerie/:ticketId"
           element={
             <ProtectedRoute allowedRole="administrateur">
-              {console.log("admin page")}
               <AdminPageMessagerie />
             </ProtectedRoute>
           }

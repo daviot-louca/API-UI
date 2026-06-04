@@ -114,7 +114,7 @@ export function AuthProvider({ children }) {
     setRole("");
     setUsername("");
 
-    navigate("/");
+    navigate("/home");
   }, [navigate]);
 
   const handleModifierProfil = useCallback(async (id, email, username) => {
