@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 
 import { CategoriesContext } from "./CategoriesContext";
-
+import {toast} from "sonner"
 import {
     getCategories,
     ajoutCategories,
@@ -44,7 +44,7 @@ export function CategoryProvider({ children }) {
                     icon,
                     color
                 );
-
+                toast.success("Catégorie ajoutée")
                 await fetchCategories();
             } catch (error) {
                 console.log(error);
@@ -94,8 +94,10 @@ export function CategoryProvider({ children }) {
                 );
 
                 await fetchCategories();
+                toast.success("Catégorie supprimée")
             } catch (error) {
                 console.log(error);
+                toast.error("Tous les tickets en rapport avec cette catégories doivent être supprimés")
             }
         },
         [fetchCategories]

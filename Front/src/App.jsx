@@ -27,6 +27,7 @@ function App() {
   return (
     <div>
       <Routes>
+        <Route path="/" element={<HomePage />} />
         {/* HOME */}
         <Route path="/home" element={<HomePage />} />
 

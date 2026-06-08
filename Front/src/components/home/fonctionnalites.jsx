@@ -9,11 +9,11 @@ export default function Fonctionnalites() {
   return (
     <section className="mt-32">
       <div className="text-center">
-        <h2 className="text-[#2f5ea5] font-bold uppercase tracking-wider">
+        <h2 className="text-[#2f5ea5] font-bold text-4xl tracking-wider">
           Fonctionnalités
         </h2>
 
-        <h3 className="mt-4 text-4xl font-bold">
+        <h3 className="mt-4 text- font-medium">
           Tout ce qu'il vous faut pour un support efficace
         </h3>
       </div>

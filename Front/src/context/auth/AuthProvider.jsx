@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import {toast} from "sonner"
 import { AuthContext } from "./AuthContext";
 import {
   login,
@@ -64,8 +65,12 @@ export function AuthProvider({ children }) {
 
         if (reponse.role === "administrateur") {
           navigate("/admin/dashboard");
-        } else {
+        }
+        else if (reponse.role === "utilisateur") {
           navigate("/user/dashboard");
+        } else {
+
+          navigate("/login");
         }
 
         setPassword("");
@@ -108,13 +113,14 @@ export function AuthProvider({ children }) {
       localStorage.removeItem(key);
     });
 
+    toast.success("Déconnexion réussie")
     setEmail("");
     setId("");
     setAvatar("");
     setRole("");
     setUsername("");
-
     navigate("/home");
+    setRole("");
   }, [navigate]);
 
   const handleModifierProfil = useCallback(async (id, email, username) => {
@@ -130,6 +136,7 @@ export function AuthProvider({ children }) {
       localStorage.setItem("username", reponse.username ?? "");
       localStorage.setItem("email", reponse.email ?? "");
       localStorage.setItem("avatar", reponse.avatar ?? "");
+      
     } catch (error) {
       console.log(error);
     }
@@ -149,6 +156,7 @@ export function AuthProvider({ children }) {
         setOldPassword("")
         setNewPassword("")
         setConfirmNewPassword("")
+        toast.success("mot de passe modifié")
       } catch (error) {
         console.log(error);
       }

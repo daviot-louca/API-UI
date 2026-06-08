@@ -20,7 +20,6 @@ export default function AdminDashboard() {
     voirAdminStatistiques();
     voirAdminStatsEvolution();
   }, [voirAdminStatistiques, voirAdminStatsEvolution]);
-  console.log(adminEvolution);
   const priorityData = [
     {
       priority: "faible",

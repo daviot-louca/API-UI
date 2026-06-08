@@ -12,7 +12,7 @@ router.get("/admin/stats",authJwt,MiddlewarePermissions,adminStats);
 router.get("/admin/stats/evolution",authJwt,MiddlewarePermissions,adminStatsEvolution)
 router.get("/:id",authJwt,seeTheTicket)
 router.post("/",authJwt,TicketMiddleware,createTicket)
-router.put("/:id",authJwt,MiddlewarePermissions,updateTicket)
+router.put("/:id",authJwt,updateTicket)
 router.delete("/:id",authJwt,deleteTicket)
 
 module.exports = router;

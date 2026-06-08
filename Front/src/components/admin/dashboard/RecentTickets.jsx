@@ -16,7 +16,7 @@ export default function RecentTickets() {
         <h2 className="text-xl font-bold text-[#303030] mb-6">
           Tickets récents
         </h2>
-        <Link to={"/admin/tickets"} className="text-[#303030] underline text-lg">
+        <Link to={"/admin/ticket"} className="text-[#303030] underline text-lg">
           Voir tous →
         </Link>
       </div>

@@ -4,7 +4,6 @@ import { AdminContext } from "../../../context/admin/AdminContext";
 
 function UserList() {
   const { users, supprimerUser, modifierRole } = useContext(AdminContext);
-
   return (
     <div className="flex flex-col gap-4">
       {/* HEADER */}
@@ -64,7 +63,10 @@ function UserList() {
 
           {/* ACTIONS */}
           <div className="flex gap-3">
-            <button onClick={() => modifierRole(user.id, user.role)} className="bg-[#303030] font-semibold p-2 rounded-xl text-white">
+            <button
+              onClick={() => modifierRole(user.id, user.role)}
+              className="bg-[#303030] font-semibold p-2 rounded-xl text-white"
+            >
               {user.role === "administrateur"
                 ? "Passer utilisateur"
                 : "Passer administrateur"}

@@ -8,8 +8,9 @@ import App from "./App.jsx";
 import { AdminProvider } from "./context/admin/AdminProvider.jsx";
 import "./index.css";
 import { ActivitesProvider } from "./context/activites/activitesProvider.jsx";
-
+import {Toaster} from "sonner"
 createRoot(document.getElementById("root")).render(
+  
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
@@ -17,7 +18,7 @@ createRoot(document.getElementById("root")).render(
           <AdminProvider>
             <CategoryProvider>
               <ActivitesProvider>
-                <App />
+                <App /><Toaster richColors position="top-center"/>
               </ActivitesProvider>
             </CategoryProvider>
           </AdminProvider>

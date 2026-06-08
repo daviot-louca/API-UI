@@ -10,7 +10,8 @@ import Profile from "../../shared/Profile";
 function AdminDashboard() {
   const { voirToutUser, deleteAll, users, rechercheUserContext } =
     useContext(AdminContext);
-  const { handleLogout, username, role, avatar,setUsername,email,setEmail } = useContext(AuthContext);
+  const { handleLogout, username, role, avatar, setUsername, email, setEmail } =
+    useContext(AuthContext);
   const [recherche, setRecherche] = useState("");
   useEffect(() => {
     if (recherche === "") {
@@ -23,7 +24,7 @@ function AdminDashboard() {
 
   return (
     <DashboardLayout>
-      <div className="flex flex-col gap-8 p-8 w-full bg-[#F5F7FB]" >
+      <div className="flex flex-col gap-8 p-8 w-full bg-[#F5F7FB]">
         {/* STATS */}
         <div className="grid grid-cols-3 gap-6">
           {/* CARD 1 */}
@@ -69,22 +70,26 @@ function AdminDashboard() {
         {/* USER LIST */}
         <div className="bg-white rounded-3xl shadow-sm p-6">
           <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-800">
-                Liste des utilisateurs
-              </h2>
+            <div className="flex gap-5">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-800">
+                  Liste des utilisateurs
+                </h2>
 
-              <p className="text-gray-500 mt-1">
-                Gestion et suppression des comptes
-              </p>
+                <p className="text-gray-500 mt-1">
+                  Gestion et suppression des comptes
+                </p>
+              </div>
+              <div className="flex items-center">
+                <button
+                  onClick={deleteAll}
+                  className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-xl font-medium shadow-sm transition mr-2"
+                >
+                  Réinitialiser les utilisateurs
+                </button>
+              </div>
             </div>
             <div className="mr-10">
-              <button
-                onClick={deleteAll}
-                className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-xl font-medium shadow-sm transition mr-2"
-              >
-                Réinitialiser les utilisateurs
-              </button>
               <input
                 type="search"
                 name="search"

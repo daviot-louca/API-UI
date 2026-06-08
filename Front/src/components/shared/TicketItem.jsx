@@ -67,7 +67,7 @@ function TicketItem({ ticket, setIsShowTicketOpen, setSelectedTicket }) {
           </div>
 
           {/* ACTIONS */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-10">
             {/* VOIR */}
             <button
               onClick={() => {
@@ -85,14 +85,6 @@ function TicketItem({ ticket, setIsShowTicketOpen, setSelectedTicket }) {
               className="bg-[#AA0000] hover:bg-[#DD0000] text-white px-4 py-2 rounded-[5px] font-medium transition"
             >
               Supprimer
-            </button>
-            <button
-              className="bg-[#00AA] hover:bg-[#0000DD] text-white px-4 py-2 rounded-[5px] font-medium transition"
-              onClick={() => {
-                  navigate(`/admin/messagerie/${ticket.id}`);
-                }}
-            >
-              messagerie
             </button>
           </div>
         </div>
@@ -146,14 +138,6 @@ function TicketItem({ ticket, setIsShowTicketOpen, setSelectedTicket }) {
                 className="bg-[#303030] hover:bg-[#505050] text-slate-100 px-4 py-2 rounded-[5px] font-medium transition"
               >
                 Voir
-              </button>
-              <button
-                onClick={() => {
-                  navigate(`/user/message/${ticket.id}`);
-                }}
-                className="bg-[#303030] hover:bg-[#505050] text-slate-100 px-4 py-2 rounded-[5px] font-medium transition"
-              >
-                Messagerie
               </button>
             </div>
           </div>

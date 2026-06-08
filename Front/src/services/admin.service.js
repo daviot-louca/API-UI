@@ -8,7 +8,7 @@ export const voirToutTickets = async (
   categoryId,
   priority,
   sort,
-  search
+  search,
 ) => {
   const reponse = await axios.get(`${url}/tickets/admin/tickets`, {
     headers: {
@@ -20,7 +20,7 @@ export const voirToutTickets = async (
       categoryId,
       priority,
       sort,
-      search
+      search,
     },
   });
   return reponse.data;
@@ -61,12 +61,11 @@ export const voirAdminStats = async (token) => {
 };
 
 export const voirAdminStatsEvolutionService = async (token) => {
-  const reponse = await axios.get(`${url}/tickets/admin/stats/evolution`,{
-    headers:{Authorization:`Bearer ${token}`},
+  const reponse = await axios.get(`${url}/tickets/admin/stats/evolution`, {
+    headers: { Authorization: `Bearer ${token}` },
   });
   return reponse.data;
 };
-
 
 export const modifierRoleUser = async (id, role, token) => {
   const reponse = await axios.patch(

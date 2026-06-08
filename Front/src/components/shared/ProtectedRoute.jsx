@@ -10,10 +10,10 @@ export default function ProtectedRoute({
 
     const { role } = useContext(AuthContext);
 
-    if (role !== allowedRole) {
-
-        return <Navigate to="/home" />;
-    }
+if (role !== allowedRole) {
+    console.log("Navigate login");
+    return <Navigate to="/home" />;
+}
 
     return children;
 }

@@ -120,7 +120,7 @@ export default function CategoryTable({ categories, onDelete, onEdit }) {
                       <div className="flex justify-end gap-2">
                         <button
                           type="button"
-                          onClick={() => onEdit(category)}
+                          onClick={() => openEditModal(category)}
                           className="inline-flex h-9 items-center justify-center gap-2 rounded-lg border border-slate-200 px-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-300"
                         >
                           <Pencil size={16} />

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const AuthValidation = require("../middlewares/validation/validation.middleware")
 const MotDePasseMiddleware = require("../middlewares/validation/motDePasse.middlewares")
-const { loginController, createAuth, allUsers, deleteAll, deleteUser, updateUsers,rechercheUsers,modifierUsers,modifierMotDePasse } = require('../controllers/auth.controller');
+const { loginController, createAuth, allUsers, deleteAll, deleteUser, updateUsers,rechercheUsers,modifierUsers,modifierMotDePasse,countUsers } = require('../controllers/auth.controller');
 const MiddlewarePermissions = require('../middlewares/permissions.middlewares');
 const authJwt = require('../middlewares/JWT.middlewares');
 
@@ -18,5 +18,4 @@ router.get("/users",authJwt,MiddlewarePermissions,rechercheUsers);
 //modifier le profil utilisateur
 router.patch("/me/:id",authJwt,modifierUsers);
 router.patch("/password",authJwt,MotDePasseMiddleware,modifierMotDePasse)
-
 module.exports = router;

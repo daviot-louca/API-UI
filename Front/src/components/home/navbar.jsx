@@ -5,24 +5,33 @@ export default function Navbar() {
     <div className="flex justify-around py-4 bg-white">
       {/**logo */}
       <div className="flex items-center">
-        <img src="../../../public/logo.png" alt="" className="w-30" />
+        <img src="../../../logo.png" alt="" className="w-30" />
       </div>
       {/**navbar */}
       <div className="flex items-center gap-20">
-        <div>
-          <a href="">Acceuil</a>
+        <div className="inline-block">
+          <a
+            href="#"
+            className="relative inline-block after:content-[''] after:rounded-full after:absolute after:left-0 after:-bottom-6 after:w-full after:h-1 after:bg-[#303030] after:origin-left after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100"
+          >
+            Acceuil
+          </a>
         </div>
         <div>
-          <a href="">Fonctionnalités</a>
+          <a
+            href="#fonctionnalites"
+            className="relative inline-block after:content-[''] after:rounded-full after:absolute after:left-0 after:-bottom-6 after:w-full after:h-1 after:bg-[#303030] after:origin-left after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100"
+          >
+            Fonctionnalités
+          </a>
         </div>
         <div>
-          <a href="">Tarifs</a>
-        </div>
-        <div>
-          <a href="">A propos</a>
-        </div>
-        <div>
-          <a href="">Contact</a>
+          <a
+            href="#aPropos"
+            className="relative inline-block after:content-[''] after:rounded-full after:absolute after:left-0 after:-bottom-6 after:w-full after:h-1 after:bg-[#303030] after:origin-left after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100"
+          >
+            A propos
+          </a>
         </div>
       </div>
       {/**button */}

@@ -15,7 +15,7 @@ function Sidebar() {
       <div>
         {/* LOGO */}
         <div className="mb-8">
-          <h1 className="text-2xl font-bold">Gestionnaire</h1>
+          <img src="../../../../logoClair.png" alt="" className="w-30 m-2 pb-3" />
 
           <p className="text-[#F0F0F0] text-sm mt-1">Tickets user</p>
         </div>

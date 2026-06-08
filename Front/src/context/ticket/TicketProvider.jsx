@@ -19,6 +19,8 @@ import {
   voirToutTicketsMessagerie,
 } from "../../services/messages.service";
 
+
+import { toast } from "sonner";
 const INITIAL_STATS = {
   total: 0,
   remis: 0,
@@ -154,6 +156,7 @@ export function TicketProvider({ children }) {
       try {
         const token = localStorage.getItem("token");
 
+        toast.success("Ticket ajouté")
         await ajoutTickets({
           categoryId,
           titre,
@@ -201,6 +204,8 @@ export function TicketProvider({ children }) {
 
         await voirAdminStatistiques();
         await voirStatsTicket();
+        toast.success("ticket supprimé")
+ 
       } catch (error) {
         console.log(error);
       }
@@ -218,6 +223,8 @@ export function TicketProvider({ children }) {
 
         await voirAdminStatistiques();
         await voirStatsTicket();
+
+        toast.success("Ticket supprimé")
       } catch (error) {
         console.log(error);
       }
@@ -277,6 +284,8 @@ export function TicketProvider({ children }) {
         );
         await voirStatsTicket();
         await voirAdminStatistiques();
+
+        toast.success("Ticket modifié")
       } catch (error) {
         console.log(error);
       }

@@ -126,6 +126,8 @@ const modifierMotDePasse = async (req, res) => {
   }
 };
 
+
+
 module.exports = {
   createAuth,
   loginController,

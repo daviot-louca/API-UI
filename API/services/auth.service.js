@@ -1,7 +1,6 @@
 const auth = require("../models/user.model");
 const { hash, compare } = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { errorMonitor } = require("node:events");
 require("dotenv").config();
 const { Op } = require("sequelize");
 const Sequelize = require("sequelize");
@@ -149,5 +148,5 @@ module.exports = {
   updateUserService,
   rechercheUsersService,
   modifierUsersService,
-  modifierMotDePasseService
+  modifierMotDePasseService,
 };

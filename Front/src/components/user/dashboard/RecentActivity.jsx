@@ -15,9 +15,9 @@ export default function RecentActivity() {
 
       {activities.length > 0 ? (
         <div>
-          {activities.map((activite) => {
+          {activities.slice(0,6).map((activite) => {
             return (
-              <div key={activite.id}>
+              <div key={activite.id} className="mb-4">
                 <div className="font-bold text-lg text-[#303030]">{activite.description.slice(0,1).toUpperCase()}{activite.description.slice(1)}</div>
                 <div className="font-medium text-[#303030]">
                   Ticket #{activite.id} • modifié le{" "}
