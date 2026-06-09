@@ -10,7 +10,6 @@ export default function AdminCategories() {
     handleDelete,
     openEditModal,
   } = useAdminCategories();
-
   return (
     <DashboardLayout>
       <section className="w-full bg-[#F5F7FB] px-4 py-8 sm:px-6 lg:px-8">

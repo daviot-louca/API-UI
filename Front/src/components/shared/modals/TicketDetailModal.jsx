@@ -6,8 +6,6 @@ import PriorityBadge from "../PriorityBadge";
 import StatusBadge from "../StatusBadge";
 export default function TicketDetailModal({
   selectedTicket,
-  setSelectedTicket,
-  modifierTickets,
   setIsShowTicketOpen,
 }) {
   const { role } = useContext(AuthContext);
@@ -64,7 +62,7 @@ export default function TicketDetailModal({
                   </div>
                 <button className="p-2 border rounded-xl bg-gray-200">
                   Crée le :
-                  {new Date(selectedTicket.createdAt).toLocaleDateString()} à{" "}
+                  {new Date(selectedTicket.createdAt).toLocaleDateString()} à
                   {new Date(selectedTicket.createdAt).toLocaleTimeString(
                     "fr-FR",
                     { hour: "2-digit", minute: "numeric" },
@@ -100,7 +98,7 @@ export default function TicketDetailModal({
                     Dernière mise à jour
                   </h3>
                   <p>
-                    {new Date(selectedTicket.updatedAt).toLocaleDateString()} à{" "}
+                    {new Date(selectedTicket.updatedAt).toLocaleDateString()} à
                     {new Date(selectedTicket.updatedAt).toLocaleTimeString(
                       "fr-FR",
                       { hour: "2-digit", minute: "2-digit" },

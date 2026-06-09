@@ -10,4 +10,5 @@ router.post("/",authJwt,MiddlewarePermissions,categoriesMiddlewares,ajoutCategor
 router.put("/:id",authJwt,MiddlewarePermissions,modifierCategories);
 router.delete("/:id",authJwt,MiddlewarePermissions,supprimerCategories);
 
+router.get
 module.exports = router;

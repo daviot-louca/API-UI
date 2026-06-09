@@ -21,21 +21,29 @@ export default function AdminNavbar() {
               ? "Messagerie"
               : location.pathname.startsWith("/admin/messagerie/")
                 ? "Conversation"
-                : "";
+                : location.pathname === "/admin/tags"
+                  ? "Gestion des Tags"
+                  : location.pathname.startsWith("/admin/tags/")
+                    ? "Gestion des Tags"
+                    : "";
   const description =
     location.pathname === "/admin/dashboard"
       ? "Visualisez les indicateurs clés, les tickets en cours et l'activité récente."
       : location.pathname === "/admin/ticket"
         ? "Gérez l'ensemble des tickets et suivez leur progression."
-      : location.pathname === "/admin/users"
-        ? "Consultez, modifiez et gérez les comptes utilisateurs de la plateforme."
-        : location.pathname === "/admin/categories"
-          ? "Créez, modifiez et organisez les catégories de tickets."
-          : location.pathname === "/admin/messagerie"
-            ? "Consultez et gérez les échanges entre les utilisateurs et le support."
-            : location.pathname.startsWith("/admin/messagerie/")
-              ? "Suivez une conversation liée à un ticket."
-              : "";
+        : location.pathname === "/admin/users"
+          ? "Consultez, modifiez et gérez les comptes utilisateurs de la plateforme."
+          : location.pathname === "/admin/categories"
+            ? "Créez, modifiez et organisez les catégories de tickets."
+            : location.pathname === "/admin/messagerie"
+              ? "Consultez et gérez les échanges entre les utilisateurs et le support."
+              : location.pathname.startsWith("/admin/messagerie/")
+                ? "Suivez une conversation liée à un ticket."
+                : location.pathname === "/admin/tags"
+                  ? "Ajouter des tags afin d'automatiser les catégories"
+                  : location.pathname.startsWith("/admin/tags/")
+                    ? "Ajouter des tags afin d'automatiser les catégories"
+                    : "";
   return (
     <div className="flex flex-wrap items-start justify-between gap-5 pt-2">
       {/* LEFT */}
@@ -70,11 +78,7 @@ export default function AdminNavbar() {
           setIsPassword={setIsPassword}
         />
       )}
-      {isPassword&&(
-        <NouveauMotDePasse
-        setIsPassword={setIsPassword}
-        />
-      )}
+      {isPassword && <NouveauMotDePasse setIsPassword={setIsPassword} />}
     </div>
   );
 }

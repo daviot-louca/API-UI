@@ -1,7 +1,8 @@
 const categories = require("../models/categories.model");
+const tags = require("../models/tags.model")
 
 const allCategoriesServices = async () => {
-  const infos = await categories.findAll();
+  const infos = await categories.findAll({include:tags});
   return infos;
 };
 

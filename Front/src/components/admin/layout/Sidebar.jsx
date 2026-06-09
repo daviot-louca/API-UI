@@ -5,6 +5,7 @@ import {
   User2,
   MessageCircle,
   Layers,
+  Tags
 } from "lucide-react";
 function Sidebar() {
   return (
@@ -105,6 +106,23 @@ function Sidebar() {
                   <Layers size={18} />
                 </span>
                 <span>Gestion des categories</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/admin/tags"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200  hover:px-5 ${
+                    isActive
+                      ? "bg-[#266fdb] text-white px-5"
+                      : "text-slate-400 hover:bg-indigo-900"
+                  }`
+                }
+              >
+                <span>
+                  <Tags size={18} />
+                </span>
+                <span>Gestion des tags</span>
               </NavLink>
             </li>
           </ul>

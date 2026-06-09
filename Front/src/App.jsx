@@ -8,6 +8,8 @@ import AdminPageDashboard from "./pages/admin/AdminPageDashboard";
 import AdminPageCategories from "./pages/admin/AdminPageCategories";
 import AdminPageMessagerie from "./pages/admin/AdminPageMessagerie";
 import AdminMessagerieVide from "./components/admin/messagerie/AdminMessagerieVide";
+import AdminPageTags from "./pages/admin/AdminPageTags";
+import AdminPageCategoryTag from "./pages/admin/AdminPageCategoryTags";
 /* PAGES SHARED*/
 import LoginPage from "./pages/shared/LoginPage";
 import RegisterPage from "./pages/shared/RegisterPage";
@@ -74,7 +76,7 @@ function App() {
           path="/admin/messagerie"
           element={
             <ProtectedRoute allowedRole="administrateur">
-              <AdminMessagerieVide/>
+              <AdminMessagerieVide />
             </ProtectedRoute>
           }
         />
@@ -83,6 +85,22 @@ function App() {
           element={
             <ProtectedRoute allowedRole="administrateur">
               <AdminPageCategories />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/tags"
+          element={
+            <ProtectedRoute allowedRole="administrateur">
+              <AdminPageTags />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/tags/:categoryId"
+          element={
+            <ProtectedRoute allowedRole="administrateur">
+              <AdminPageCategoryTag/>
             </ProtectedRoute>
           }
         />

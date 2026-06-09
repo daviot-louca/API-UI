@@ -8,6 +8,7 @@ const routeAuth = require("./routes/auth.route");
 const routeCategories = require("./routes/categories.routes");
 const routeMessages = require("./routes/messages.routes");
 const routeActivite = require ("./routes/activites.route")
+const routeTags = require("./routes/tags.route")
 const LoggerMiddlewares = require("./middlewares/logger.middlewares");
 //communication en temps réel sinon on doit rafraichir la page pour voir les messages
 const socket = require("socket.io");
@@ -24,6 +25,7 @@ app.use("/tickets", route);
 app.use("/categories", routeCategories);
 app.use("/messages", routeMessages);
 app.use("/activites",routeActivite)
+app.use("/tags",routeTags)
 app.use(routeAuth);
 //vérifie que le serveur tourne vraiment
 app.get("/healthz", (req, res) => {

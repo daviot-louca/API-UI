@@ -8,7 +8,6 @@ import DashboardLayout from "../layout/DashboardLayout";
 
 import { AdminContext } from "../../../context/admin/AdminContext";
 
-import { AuthContext } from "../../../context/auth/AuthContext";
 //composents
 
 import TicketDetailModal from "../../shared/modals/TicketDetailModal";

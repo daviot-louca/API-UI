@@ -13,13 +13,7 @@ import StatusBadge from "../../shared/StatusBadge";
 import PriorityBadge from "../../shared/PriorityBadge";
 export default function MessageComponents() {
   const {
-    handleLogout,
-    username,
     role,
-    avatar,
-    email,
-    setUsername,
-    setEmail,
     id,
   } = useContext(AuthContext);
   const messageEndRef = useRef(null);
@@ -56,7 +50,7 @@ export default function MessageComponents() {
     if (ticket) {
       setChecked(ticket.status === "résolu");
     }
-  }, [ticketId, token,ticket]);
+  }, [ticketId, token, ticket]);
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -88,7 +82,6 @@ export default function MessageComponents() {
     };
     charger();
   }, [ticketId]);
-  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const ticketResolu = async (isChecked) => {
     if (role === "administrateur") {
       await modifierTickets(ticketId, isChecked ? "résolu" : "en cours", token);
@@ -97,23 +90,13 @@ export default function MessageComponents() {
     }
   };
   return (
-    <DashboardLayout
-      username={username}
-      handleLogout={handleLogout}
-      role={role}
-      avatar={avatar}
-      email={email}
-      setUsername={setUsername}
-      setEmail={setEmail}
-      setIsProfileModalOpen={setIsProfileModalOpen}
-    >
+    <DashboardLayout>
       <div className="grid grid-cols-[70%_30%] gap-10 h-[calc(100vh-100px)] flex-col rounded-2xl mr-10">
         {/* Header */}
         <div className="h-full flex flex-col rounded-2xl bg-white shadow-xl">
           <div className="flex items-center justify-between border-b px-6 py-4">
             <div>
               <h2 className="text-xl font-bold text-[#303030]">
-                {console.log(ticket)}
                 {ticket?.user?.username}
               </h2>
             </div>
@@ -246,6 +229,6 @@ export default function MessageComponents() {
           </label>
         </div>
       </div>
-    </DashboardLayout> 
+    </DashboardLayout>
   );
 }

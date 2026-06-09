@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { TicketContext } from "../../../context/ticket/TicketContext";
 import PriorityBadge from "../../shared/PriorityBadge";
 export default function AdminListeMessages({ children }) {
-  const { handleLogout, username, role, avatar, email, setUsername, setEmail,id } =
+  const {id } =
     useContext(AuthContext);
   const {
     toutTicketsMessagerie,
@@ -21,7 +21,6 @@ export default function AdminListeMessages({ children }) {
 
     charger();
   }, []);
-  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const filteredTickets = toutTicketsMessagerie
@@ -72,16 +71,7 @@ export default function AdminListeMessages({ children }) {
   };
   return (
     <div>
-      <DashboardLayout
-        username={username}
-        handleLogout={handleLogout}
-        role={role}
-        avatar={avatar}
-        email={email}
-        setUsername={setUsername}
-        setEmail={setEmail}
-        setIsProfileModalOpen={setIsProfileModalOpen}
-      >
+      <DashboardLayout>
         <div className="flex gap-10">
           <div className="w-1/5 flex flex-col h-[calc(100vh-105px)]">
             <div className="flex-1 overflow-y-auto h-[calc(80vh)] hide-scrollbar">

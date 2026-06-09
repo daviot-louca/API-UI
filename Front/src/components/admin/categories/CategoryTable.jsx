@@ -15,7 +15,6 @@ export default function CategoryTable({ categories, onDelete, onEdit }) {
     isSubmitting,
     openEditModal,
     selectedCategory,deletingCategoryId, openCreateModal } = useAdminCategories();
-
   return (
     <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
       <div className="flex justify-between gap-1 border-b border-slate-200 px-5 py-4 sm:px-6">
