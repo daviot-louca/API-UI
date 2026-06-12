@@ -43,7 +43,7 @@ export default function Apropos() {
         </div>
         <div>
           <img
-            src="../../../DashboardMessagerie.png"
+            src={`${import.meta.env.BASE_URL}DashboardMessagerie.png`}
             alt=""
             className="rounded-3xl shadow-2xl scale-100 hover:scale-102 hover:-translate-y-2 transition-all duration-300"
           />
@@ -53,7 +53,7 @@ export default function Apropos() {
       <div className="grid grid-cols-2 gap-10 mt-32 mr-5 items-center">
         <div>
           <img
-            src="../../../dashboardTicket.png"
+            src={`${import.meta.env.BASE_URL}dashboardTicket.png`}
             alt=""
             className="rounded-3xl shadow-2xl scale-100 hover:scale-102 hover:-translate-y-2 transition-all duration-300"
           />

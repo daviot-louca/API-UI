@@ -6,6 +6,7 @@ import {
   Ticket,
   CircleHelp,
   MessageSquare,
+  BookOpenIcon,
 } from "lucide-react";
 function Sidebar() {
   const { setSelectedStatus, stats } = useContext(TicketContext);
@@ -15,7 +16,7 @@ function Sidebar() {
       <div>
         {/* LOGO */}
         <div className="mb-8">
-          <img src="../../../../logoClair.png" alt="" className="w-30 m-2 pb-3" />
+          <img src={`${import.meta.env.BASE_URL}logoClair.png`} alt="" className="w-30 m-2 pb-3" />
 
           <p className="text-[#F0F0F0] text-sm mt-1">Tickets user</p>
         </div>
@@ -78,6 +79,24 @@ function Sidebar() {
                   <MessageSquare />
                 </span>
                 <span>Messagerie</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/user/connaissances"
+                onClick={() => setSelectedStatus("all")}
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-2 py-2 rounded-xl transition-all duration-200 ${
+                    isActive
+                      ? "bg-[#266fdb] text-white"
+                      : "text-slate-400 hover:bg-indigo-900"
+                  }`
+                }
+              >
+                <span>
+                  <BookOpenIcon />
+                </span>
+                <span>Centre d'aides</span>
               </NavLink>
             </li>
             <li>

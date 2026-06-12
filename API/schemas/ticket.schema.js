@@ -1,11 +1,6 @@
 const {z} = require("zod");
 
 const TicketSchema = z.object({
-    categoryId: z
-        .coerce
-        .number()
-        .int({message:"La catégorie est invalide"})
-        .positive({message:"Veuillez sélectionner une catégorie"}),
     title: z
         .string()
         .trim()
@@ -15,7 +10,7 @@ const TicketSchema = z.object({
         .string()
         .trim()
         .min(10,{message:"Veuilez précisez votre problème : 10 caractères minimum"})
-        .max(120,{message:"Votre description est trop longue, Veuillez résumez, 120 caractères maximum"}),
+        .max(500,{message:"Votre description est trop longue, Veuillez résumez, 120 caractères maximum"}),
     status: z
   .enum([
     "remis",

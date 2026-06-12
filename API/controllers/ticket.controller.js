@@ -82,11 +82,10 @@ const createTicket = async (req, res) => {
   try {
     const id = req.user.id;
 
-    const { categoryId, title, description, status, priority } = req.body;
+    const { title, description, status, priority } = req.body;
 
     const informations = await createTicketService({
       id,
-      categoryId,
       title,
       description,
       status,

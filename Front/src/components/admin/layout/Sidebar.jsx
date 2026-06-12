@@ -5,7 +5,8 @@ import {
   User2,
   MessageCircle,
   Layers,
-  Tags
+  Tags,
+  BookOpen
 } from "lucide-react";
 function Sidebar() {
   return (
@@ -14,7 +15,7 @@ function Sidebar() {
       <div>
         {/* LOGO */}
         <div className="mb-12">
-          <img src="../../../../logoClair.png" alt="" className="w-30 m-2 pb-3"/>
+          <img src={`${import.meta.env.BASE_URL}logoClair.png`} alt="" className="w-30 m-2 pb-3"/>
 
           <h1 className="text-indigo-300 text-sm mt-1">Gestionnaire de Tickets</h1>
         </div>
@@ -123,6 +124,23 @@ function Sidebar() {
                   <Tags size={18} />
                 </span>
                 <span>Gestion des tags</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/admin/connaissances"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200  hover:px-5 ${
+                    isActive
+                      ? "bg-[#266fdb] text-white px-5"
+                      : "text-slate-400 hover:bg-indigo-900"
+                  }`
+                }
+              >
+                <span>
+                  <BookOpen size={18} />
+                </span>
+                <span>Connaissances Tickets</span>
               </NavLink>
             </li>
           </ul>

@@ -5,7 +5,7 @@ export default function Navbar() {
     <div className="flex justify-around py-4 bg-white">
       {/**logo */}
       <div className="flex items-center">
-        <img src="../../../logo.png" alt="" className="w-30" />
+        <img src={`${import.meta.env.BASE_URL}logo.png`} alt="" className="w-30" />
       </div>
       {/**navbar */}
       <div className="flex items-center gap-20">

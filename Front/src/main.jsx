@@ -4,21 +4,24 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/auth/AuthProvider.jsx";
 import { TicketProvider } from "./context/ticket/TicketProvider.jsx";
 import { CategoryProvider } from "./context/categories/CategoriesProvider.jsx";
-import App from "./App.jsx";
 import { AdminProvider } from "./context/admin/AdminProvider.jsx";
-import "./index.css";
 import { ActivitesProvider } from "./context/activites/activitesProvider.jsx";
-import {Toaster} from "sonner"
+import { ConnaissancesProvider } from "./context/baseConnaisssance/ConnaissancesProvider.jsx";
+import App from "./App.jsx";
+import "./index.css";
+import { Toaster } from "sonner";
 createRoot(document.getElementById("root")).render(
-  
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/NovaDesk">
       <AuthProvider>
         <TicketProvider>
           <AdminProvider>
             <CategoryProvider>
               <ActivitesProvider>
-                <App /><Toaster richColors position="top-center"/>
+                <ConnaissancesProvider>
+                  <App />
+                  <Toaster richColors position="top-center" />
+                </ConnaissancesProvider>
               </ActivitesProvider>
             </CategoryProvider>
           </AdminProvider>

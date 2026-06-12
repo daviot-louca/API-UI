@@ -52,7 +52,7 @@ export default function Header() {
       </div>
       <div className="flex justify-center">
         <img
-          src="../../../dashboardAdmin.png"
+          src={`${import.meta.env.BASE_URL}logoClair.png`}
           alt="Dashboard NovaDesk"
           className="rounded-3xl shadow-2xl scale-100 hover:scale-102 hover:-translate-y-2 transition-all duration-300"
         />

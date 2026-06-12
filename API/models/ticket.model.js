@@ -39,6 +39,10 @@ const ticket = db.define("ticket", {
     closedAt:{
         type:DataTypes.DATE,
         allowNull:true
+    },
+    scoreFiabilite:{
+        type:DataTypes.INTEGER,
+        allowNull:true,
     }
     
 },{

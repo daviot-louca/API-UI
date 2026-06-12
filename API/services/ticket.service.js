@@ -2,6 +2,7 @@ const Ticket = require("../models/ticket.model");
 const User = require("../models/user.model");
 const Category = require("../models/categories.model");
 const activites = require("../models/activite.model");
+const tags = require("../models/tags.model");
 const { Op } = require("sequelize");
 
 // SEE ALL ADMIN
@@ -46,6 +47,26 @@ const seeAllService = async ({
 
       {
         description: {
+          [Op.like]: `%${search}%`,
+        },
+      },
+      {
+        priority: {
+          [Op.like]: `%${search}%`,
+        },
+      },
+      {
+        status: {
+          [Op.like]: `%${search}%`,
+        },
+      },
+      {
+        "$category.name$": {
+          [Op.like]: `%${search}%`,
+        },
+      },
+      {
+        "$user.username$": {
           [Op.like]: `%${search}%`,
         },
       },
@@ -193,32 +214,63 @@ const seeTheTicketService = async (id) => {
 // CREATE
 const createTicketService = async ({
   id,
-  categoryId,
   title,
   description,
   status,
   priority,
 }) => {
-  const category = await Category.findByPk(categoryId);
+  //recherche par rapport aux tags
+  const texteComplet = (title + " " + description).toLowerCase();
+  const allTag = await tags.findAll();
+  const CompterTagsParCategory = () => {
+    const compteurCategory = {};
+    for (var indexTag = 0; indexTag < allTag.length; indexTag++) {
+      if (texteComplet.includes(allTag[indexTag].nom)) {
+        if (compteurCategory[allTag[indexTag].categoryId] === undefined) {
+          compteurCategory[allTag[indexTag].categoryId] = 1;
+        } else {
+          compteurCategory[allTag[indexTag].categoryId]++;
+        }
+      }
+    }
+    return compteurCategory;
+  };
+  const compteurCategories = CompterTagsParCategory();
+  const trouverCategorieGagnante = (compteurCategories) => {
+    let max = 0;
+    let indexMax = 0;
+    const keys = Object.keys(compteurCategories);
+    for (let indexCompteur = 0; indexCompteur < keys.length; indexCompteur++) {
+      if (compteurCategories[keys[indexCompteur]] > max) {
+        max = compteurCategories[keys[indexCompteur]];
+        indexMax = keys[indexCompteur];
+      }
+    }
+    return {indexMax,max};
+  };
 
-  if (!category) {
-    throw new Error("catégorie introuvable");
-  }
+  const compteurFiabilite = (max, compteurCategories) => {
+    const values = Object.values(compteurCategories);
+    const total = values.reduce((acc, valeur) => acc + valeur, 0);
+    const fiabilite = (max / total)*100;
+    return fiabilite;
+  };
 
+  const {indexMax} = trouverCategorieGagnante(compteurCategories);
+  const {max} = trouverCategorieGagnante(compteurCategories);
+  const categoryGagnante = await Category.findByPk(indexMax);
+  const categoryvide = await Category.findOne({ where: { name: "Autres" } });
+  const fiabilite = compteurFiabilite(max, compteurCategories);
+  //envoie du tic
   const envoie = await Ticket.create({
     userId: id,
-
-    categoryId,
-
-    type: category.name,
-
+    categoryId: indexMax || categoryvide.id,
+    type: categoryGagnante?.name || categoryvide.name,
     title,
-
     description,
-
     status,
-
     priority,
+    scoreFiabilite: fiabilite,
   });
   await activites.create({
     action: "ticket créé",
@@ -226,8 +278,6 @@ const createTicketService = async ({
     userId: id,
     ticketId: envoie.id,
   });
-
-  return envoie;
 };
 
 // UPDATE

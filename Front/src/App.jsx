@@ -10,6 +10,10 @@ import AdminPageMessagerie from "./pages/admin/AdminPageMessagerie";
 import AdminMessagerieVide from "./components/admin/messagerie/AdminMessagerieVide";
 import AdminPageTags from "./pages/admin/AdminPageTags";
 import AdminPageCategoryTag from "./pages/admin/AdminPageCategoryTags";
+import AdminPageConnaissances from "./pages/shared/AdminPageConnaissances";
+import AdminPageConnaissancesDetail from "./pages/shared/AdminPageConnaissancesDetail";
+import AdminPageConnaissancesCreate from "./pages/admin/AdminPageConnaissancesCreate";
+import AdminPageEdit from "./pages/admin/AdminPageEdit";
 /* PAGES SHARED*/
 import LoginPage from "./pages/shared/LoginPage";
 import RegisterPage from "./pages/shared/RegisterPage";
@@ -24,6 +28,8 @@ import FAQ from "./pages/user/FAQ";
 /* PROTECTED ROUTES */
 import ProtectedRoute from "./components/shared/ProtectedRoute";
 import MessageVide from "./components/user/messages/MessageVide";
+import DashboardLayout from "./components/admin/layout/DashboardLayout";
+import DashboardLayoutUser from "./components/user/layout/DashboardLayoutUser";
 
 function App() {
   return (
@@ -100,11 +106,46 @@ function App() {
           path="/admin/tags/:categoryId"
           element={
             <ProtectedRoute allowedRole="administrateur">
-              <AdminPageCategoryTag/>
+              <AdminPageCategoryTag />
             </ProtectedRoute>
           }
         />
-
+        <Route
+          path="/admin/connaissances"
+          element={
+            <ProtectedRoute allowedRole="administrateur">
+              <DashboardLayout>
+                <AdminPageConnaissances />
+              </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/connaissances/:connaissanceId"
+          element={
+            <ProtectedRoute allowedRole="administrateur">
+              <DashboardLayout>
+                <AdminPageConnaissancesDetail />
+              </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={"/admin/connaissances/create"}
+          element={
+            <ProtectedRoute allowedRole="administrateur">
+              <AdminPageConnaissancesCreate />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={"/admin/connaissances/edit/:editId"}
+          element={
+            <ProtectedRoute allowedRole="administrateur">
+              <AdminPageEdit />
+            </ProtectedRoute>
+          }
+        />
         {/* USER ROUTES */}
         <Route
           path="/user/dashboard"
@@ -146,6 +187,22 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path={"/user/connaissances"}
+          element={
+            <DashboardLayoutUser>
+              <AdminPageConnaissances />
+            </DashboardLayoutUser>
+          }
+        />
+        <Route
+  path={"/user/connaissances/:connaissanceId"}
+  element={
+    <DashboardLayoutUser>
+      <AdminPageConnaissancesDetail />
+    </DashboardLayoutUser>
+  }
+/>
       </Routes>
     </div>
   );

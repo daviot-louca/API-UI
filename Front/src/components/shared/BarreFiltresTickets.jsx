@@ -85,7 +85,7 @@ export default function BarreFiltresFunction() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="w-150 bg-white px-4 border rounded-xl"
-          placeholder="Rechercher un ticket..."
+          placeholder="Rechercher un ticket ou un utilisateur..."
         />
       </div>
       <div className="flex flex-wrap gap-4">
@@ -99,12 +99,14 @@ export default function BarreFiltresFunction() {
           <option value="az">A à Z</option>
           <option value="za">Z à A</option>
         </select>
+
           <button
             className="bg-[#303030] p-2.5 rounded-xl text-slate-100 hover:bg-[#505050]"
             onClick={() => setIsTicketModalOpen(true)}
           >
             + Ajouter un Ticket
           </button>
+
       </div>
       {isTicketModalOpen && (
         <ModalNouveauTicket

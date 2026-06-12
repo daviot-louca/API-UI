@@ -15,11 +15,11 @@ export default function Navbar({}) {
         ? "Consultez et gérez tous vos tickets."
         : location.pathname === "/user/faq"
           ? "Trouvez rapidement des réponses à vos questions"
-          : location.pathname === "/user/message"
+          : location.pathname.startsWith("/user/message")
             ? "Consultez vos échanges liés aux tickets."
-            : location.pathname.startsWith("/user/message/")
-              ? "Consultez vos échanges liés aux tickets."
-              : "";
+            : location.pathname.startsWith("/user/connaissances")
+              ? "Base de connaissance"
+                : "";
   const titre =
     location.pathname === "/user/dashboard"
       ? `Bonjour, ${username.slice(0, 1).toUpperCase()}${username.slice(1)}`
@@ -31,7 +31,9 @@ export default function Navbar({}) {
             ? "Messagerie"
             : location.pathname.startsWith("/user/message/")
               ? "Conversation"
-              : "";
+              : location.pathname.startsWith("/user/connaissances")
+                ? "Base de connaissance"
+                : "";
 
   return (
     <div className="flex flex-wrap items-start justify-between gap-5 pt-2">

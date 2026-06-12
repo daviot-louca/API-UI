@@ -3,18 +3,20 @@ import TicketTypeIcon from "../../shared/TicketTypeIcon";
 import { getCategoryId, INITIAL_CATEGORY_FORM } from "./categoryAdmin.helpers";
 import { useAdminCategories } from "../../../hooks/category/useAdminCategories";
 import CategoryModal from "./CategoryModal";
-export default function CategoryTable({ categories, onDelete, onEdit }) {
+export default function CategoryTable({ categories, onDelete, }) {
   const {
     closeModal,
     formData,
     formError,
-    handleDelete,
     handleFormChange,
     handleSubmit,
     isModalOpen,
     isSubmitting,
     openEditModal,
-    selectedCategory,deletingCategoryId, openCreateModal } = useAdminCategories();
+    selectedCategory,
+    deletingCategoryId,
+    openCreateModal,
+  } = useAdminCategories();
   return (
     <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
       <div className="flex justify-between gap-1 border-b border-slate-200 px-5 py-4 sm:px-6">
@@ -115,28 +117,29 @@ export default function CategoryTable({ categories, onDelete, onEdit }) {
                       </div>
                     </td>
 
-                    <td className="px-5 py-4">
-                      <div className="flex justify-end gap-2">
-                        <button
-                          type="button"
-                          onClick={() => openEditModal(category)}
-                          className="inline-flex h-9 items-center justify-center gap-2 rounded-lg border border-slate-200 px-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-300"
-                        >
-                          <Pencil size={16} />
-                          Modifier
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={() => onDelete(category)}
-                          disabled={isDeleting}
-                          className="inline-flex h-9 items-center justify-center gap-2 rounded-lg bg-red-500 px-3 text-sm font-semibold text-white transition hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 disabled:cursor-not-allowed disabled:opacity-60"
-                        >
-                          <Trash2 size={16} />
-                          {isDeleting ? "Suppression..." : "Supprimer"}
-                        </button>
-                      </div>
-                    </td>
+                    {category.name !== "Autres" && (
+                      <td className="px-5 py-4">
+                        <div className="flex justify-end gap-2">
+                          <button
+                            type="button"
+                            onClick={() => openEditModal(category)}
+                            className="inline-flex h-9 items-center justify-center gap-2 rounded-lg border border-slate-200 px-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-300"
+                          >
+                            <Pencil size={16} />
+                            Modifier
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => onDelete(category)}
+                            disabled={isDeleting}
+                            className="inline-flex h-9 items-center justify-center gap-2 rounded-lg bg-red-500 px-3 text-sm font-semibold text-white transition hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 disabled:cursor-not-allowed disabled:opacity-60"
+                          >
+                            <Trash2 size={16} />
+                            {isDeleting ? "Suppression..." : "Supprimer"}
+                          </button>
+                        </div>
+                      </td>
+                    )}
                   </tr>
                 );
               })

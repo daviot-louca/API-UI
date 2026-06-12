@@ -3,7 +3,7 @@ export default function () {
     <div className="bg-white p-8">
       <div className="grid  grid-cols-6 ">
         <div className="flex items-center ml-30">
-          <img src="../../../logo.png" alt="" className="w-30" />
+          <img src={`${import.meta.env.BASE_URL}logo.png`} alt="" className="w-30" />
         </div>
         <div className="col-span-4 flex m-5 gap-10 justify-center">
           <div>

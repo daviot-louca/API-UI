@@ -3,12 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const db = require("./models/index");
-const route = require("./routes/ticket.route");
-const routeAuth = require("./routes/auth.route");
-const routeCategories = require("./routes/categories.routes");
-const routeMessages = require("./routes/messages.routes");
-const routeActivite = require ("./routes/activites.route")
-const routeTags = require("./routes/tags.route")
+const routes = require("./routes")
 const LoggerMiddlewares = require("./middlewares/logger.middlewares");
 //communication en temps réel sinon on doit rafraichir la page pour voir les messages
 const socket = require("socket.io");
@@ -21,12 +16,7 @@ const server = http.createServer(app);
 app.use(cors());
 app.use(express.json());
 app.use(LoggerMiddlewares);
-app.use("/tickets", route);
-app.use("/categories", routeCategories);
-app.use("/messages", routeMessages);
-app.use("/activites",routeActivite)
-app.use("/tags",routeTags)
-app.use(routeAuth);
+app.use("/",routes)
 //vérifie que le serveur tourne vraiment
 app.get("/healthz", (req, res) => {
   res.json({

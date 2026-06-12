@@ -23,106 +23,110 @@ export default function TicketDetailModal({
           onClick={(e) => e.stopPropagation()}
         >
           {/*header */}
-          <div className="flex justify-between px-4 mb-3 items-center">
-            <div>
-              <h2 className="font-bold text-2xl">
-                Détail du ticket #{selectedTicket.id}
-              </h2>
-            </div>
-            <div
-              onClick={() => setIsShowTicketOpen(false)}
-              className="cursor-pointer"
-            >
-              <p className="text-2xl rounded-full bg-[#303030] w-10 h-10 flex items-center justify-center text-white pb-1 my-3">
-                x
-              </p>
-            </div>
-          </div>
-          <hr />
-          {/**logo + titre + status etc... */}
-          <div className="flex gap-3 my-3">
-            {/**logo type */}
-            <div className="flex items-center">
+          <div className="flex gap-5 py-5">
+            <div className="flex h-16 w-16 items-center justify-center">
               <TicketTypeIcon
                 type={categoryName}
                 category={selectedTicket?.category}
-                size={30}
+                size={34}
               />
             </div>
-            {/**titre, status etc... */}
-            <div>
-              <div>
-                <h3 className="text-lg font-bold">{selectedTicket.title}</h3>
-                <p className="text-lg font-semibold">{categoryName}</p>
-              </div>
-              <div className="flex gap-5 my-2">
-                  <div className="flex gap-4">
-                    <PriorityBadge priority={selectedTicket.priority} />
-                    <StatusBadge status={selectedTicket.status} />
-                  </div>
-                <button className="p-2 border rounded-xl bg-gray-200">
-                  Crée le :
-                  {new Date(selectedTicket.createdAt).toLocaleDateString()} à
-                  {new Date(selectedTicket.createdAt).toLocaleTimeString(
-                    "fr-FR",
-                    { hour: "2-digit", minute: "numeric" },
-                  )}
-                </button>
-              </div>
-            </div>
-          </div>
-          <hr className="h-2" />
-          {/**description */}
-          <div className="my-3">
-            <h3 className="text-lg font-bold">Description</h3>
-            <p className="break-all">{selectedTicket.description}</p>
-          </div>
-          <hr />
-          {/**informations */}
-          <div>
-            <h3 className="text-lg font-bold my-1">Informations</h3>
-            <div className="my-2">
-              <span></span>
-              <div>
-                <h4 className="text-lg font-semibold">Demandeur</h4>
-                <p>
-                  {selectedTicket.user.username} ({selectedTicket.user.email})
-                </p>
-              </div>
-            </div>
-            <div className="my-2">
-              <span></span>
-              <div className="flex justify-between">
+
+            <div className="flex-1">
+              <div className="flex items-start justify-between">
                 <div>
-                  <h3 className="text-lg font-semibold">
-                    Dernière mise à jour
+                  <h3 className="text-2xl font-bold text-slate-800">
+                    {selectedTicket.title}
                   </h3>
+
+                  <p className="text-slate-500 font-medium mt-1">
+                    {categoryName}
+                  </p>
+                </div>
+
+                <div className="text-right">
+                  <p className="text-xs uppercase text-slate-400">Fiabilité</p>
+
+                  <p
+                    className={`text-2xl font-bold ${
+                      selectedTicket?.scoreFiabilite >= 80
+                        ? "text-green-600"
+                        : selectedTicket?.scoreFiabilite >= 60
+                          ? "text-orange-500"
+                          : "text-red-500"
+                    }`}
+                  >
+                    {selectedTicket?.scoreFiabilite}%
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 mt-5">
+                <PriorityBadge priority={selectedTicket.priority} />
+                <StatusBadge status={selectedTicket.status} />
+              </div>
+            </div>
+          </div>
+          <div className="my-6">
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-3">
+              Description
+            </h3>
+
+            <div className="rounded-2xl p-5">
+              <p className="leading-7 text-slate-700 whitespace-pre-wrap">
+                {selectedTicket.description}
+              </p>
+            </div>
+          </div>
+          <div className="border-t border-slate-200 pt-5">
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-4">
+              Informations
+            </h3>
+            <div className="space-y-4">
+              <div>
+                <p className="text-slate-400 text-sm">Demandeur</p>
+                <p className="font-medium text-slate-700">
+                  {selectedTicket.user.username}
+                </p>
+                <p className="text-slate-500">{selectedTicket.user.email}</p>
+              </div>
+              <div className="flex justify-between items-end">
+                 <div>
+                <div>
+                  <p className="text-slate-400 text-sm">Création</p>
                   <p>
-                    {new Date(selectedTicket.updatedAt).toLocaleDateString()} à
-                    {new Date(selectedTicket.updatedAt).toLocaleTimeString(
+                    {new Date(selectedTicket.createdAt).toLocaleDateString()} à{" "}
+                    {new Date(selectedTicket.createdAt).toLocaleTimeString(
                       "fr-FR",
-                      { hour: "2-digit", minute: "2-digit" },
+                      {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      },
                     )}
                   </p>
                 </div>
-                <div className="flex items-center">
-                  <button
-                    className="bg-[#00AA] hover:bg-[#0000DD] text-white px-4 py-2 rounded-[5px] font-medium transition"
-                    onClick={() => {
-                      if(role==="administrateur"){
-                        navigate(`/admin/messagerie/${selectedTicket.id}`);
-                      }else{
-                        navigate(`/user/message/${selectedTicket.id}`);
-                      }
-                    }}
-                  >
-                    messagerie
-                  </button>
+                <div>
+                  <p className="text-slate-400 text-sm">Dernière mise à jour</p>
+
+                  <p>
+                    {new Date(selectedTicket.updatedAt).toLocaleDateString()} à{" "}
+                    {new Date(selectedTicket.updatedAt).toLocaleTimeString(
+                      "fr-FR",
+                      {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      },
+                    )}
+                  </p>
                 </div>
               </div>
+              <div>
+                <button onClick={()=>navigate(`/admin/messagerie/${selectedTicket?.id}`)}  className="py-3 px-4 rounded-2xl bg-[#333370] font-medium text-white">Messagerie</button>
+              </div>
+              </div>
+             
             </div>
           </div>
-          {/**button */}
         </div>
       </div>
     </div>

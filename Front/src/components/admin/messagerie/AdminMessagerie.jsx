@@ -12,10 +12,7 @@ const socket = io("http://localhost:3030");
 import StatusBadge from "../../shared/StatusBadge";
 import PriorityBadge from "../../shared/PriorityBadge";
 export default function MessageComponents() {
-  const {
-    role,
-    id,
-  } = useContext(AuthContext);
+  const { role, id } = useContext(AuthContext);
   const messageEndRef = useRef(null);
   const { ticketId } = useParams();
   const token = localStorage.getItem("token");
@@ -149,84 +146,129 @@ export default function MessageComponents() {
             </form>
           </div>
         </div>
-        <div className="bg-white shadow-xl rounded-2xl px-6 py-4 text-xl font-bold text-[#303030]">
-          <div className="grid grid-cols-[40%_30%_30%] items-center justify-center mb-10">
+        <div className="rounded-3xl bg-white p-8 shadow-xl">
+          {/* Header */}
+          <div className="mb-8 flex items-center justify-between border-b border-slate-300 pb-6">
             <div>
-              <p>Ticket #{ticketId}</p>
+              <p className="text-sm text-slate-500">Ticket</p>
+              <h2 className="text-3xl font-bold text-slate-800">#{ticketId}</h2>
             </div>
-            <div className="flex">
+
+            <div className="flex gap-3">
               <StatusBadge status={ticket?.status} />
-            </div>
-            <div className="flex">
               <PriorityBadge priority={ticket?.priority} />
             </div>
           </div>
-          <div className="flex flex-col gap-3 mb-8">
-            <h3 className="font-semibold">Titre:</h3>
-            <p className="font-bold">{ticket?.title}</p>
-          </div>
-          <div className="flex flex-col gap-3 mb-8">
-            <h3 className="font-semibold">Description:</h3>
-            <p className="font-bold">{ticket?.description}</p>
-          </div>
-          <div className="flex flex-col gap-3 mb-8">
-            <h3 className="font-semibold">Demandeur</h3>
-            <p className="font-bold">{ticket?.user?.email}</p>
-          </div>
-          <div className="grid grid-cols-2 mb-8">
-            <div className="flex flex-col gap-3">
-              <h3 className="font-semibold">Date de création:</h3>
-              <p className="font-bold">
-                {new Date(ticket?.createdAt).toLocaleDateString("fr-FR", {
-                  day: "2-digit",
-                  month: "long",
-                  year: "numeric",
-                })}{" "}
-                à{" "}
-                {new Date(ticket?.createdAt).toLocaleTimeString("fr-FR", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
+
+          {/* Contenu */}
+          <div className="space-y-6">
+            <div className="rounded-2xl  p-5">
+              <p className="mb-2 text-xs uppercase tracking-wider text-slate-500">
+                Titre
+              </p>
+
+              <p className="text-lg font-semibold text-slate-800">
+                {ticket?.title}
               </p>
             </div>
-            <div className="flex flex-col gap-3 ">
-              <h3 className="font-semibold">Date de modification:</h3>
-              <p className="font-bold">
-                {new Date(ticket?.updatedAt).toLocaleDateString("fr-FR", {
-                  day: "2-digit",
-                  month: "long",
-                  year: "numeric",
-                })}{" "}
-                à{" "}
-                {new Date(ticket?.updatedAt).toLocaleTimeString("fr-FR", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
+
+            <div className="rounded-2xl  p-5">
+              <p className="mb-2 text-xs uppercase tracking-wider text-slate-500">
+                Description
+              </p>
+
+              <p className="leading-relaxed text-slate-700">
+                {ticket?.description}
               </p>
             </div>
-          </div>
-          <label className="flex items-center gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={checked}
-              onChange={async (e) => {
-                const value = e.target.checked;
-                setChecked(value);
-                await ticketResolu(value);
-              }}
-              className="hidden"
-            />
 
-            <div
-              className={`w-6 h-6 rounded-full border flex items-center justify-center ${
-                checked ? "bg-green-600 text-white border-green-600" : ""
-              }`}
-            >
-              {checked && "✓"}
+            <div className="rounded-2xl  p-5">
+              <p className="mb-2 text-xs uppercase tracking-wider text-slate-500">
+                Demandeur
+              </p>
+
+              <p className="font-medium text-slate-800">
+                {ticket?.user?.email}
+              </p>
             </div>
 
-            <span>Ticket résolu</span>
-          </label>
+            <div className="grid grid-cols-2 gap-5">
+              <div className="rounded-2xl  p-5">
+                <p className="mb-2 text-xs uppercase tracking-wider text-slate-500">
+                  Créé le
+                </p>
+
+                <p className="font-medium text-slate-800">
+                  {new Date(ticket?.createdAt).toLocaleDateString("fr-FR", {
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </p>
+
+                <p className="text-sm text-slate-500">
+                  {new Date(ticket?.createdAt).toLocaleTimeString("fr-FR", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </p>
+              </div>
+
+              <div className="rounded-2xl  p-5">
+                <p className="mb-2 text-xs uppercase tracking-wider text-slate-500">
+                  Dernière modification
+                </p>
+
+                <p className="font-medium text-slate-800">
+                  {new Date(ticket?.updatedAt).toLocaleDateString("fr-FR", {
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </p>
+
+                <p className="text-sm text-slate-500">
+                  {new Date(ticket?.updatedAt).toLocaleTimeString("fr-FR", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="mt-8 border-t border-slate-300 pt-6">
+            <label className="group flex cursor-pointer items-center gap-4">
+              <input
+                type="checkbox"
+                checked={checked}
+                onChange={async (e) => {
+                  const value = e.target.checked;
+                  setChecked(value);
+                  await ticketResolu(value);
+                }}
+                className="hidden"
+              />
+
+              <div
+                className={`flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300 ${
+                  checked
+                    ? "bg-green-600 text-white shadow-lg"
+                    : "border-2 border-slate-300"
+                }`}
+              >
+                {checked && "✓"}
+              </div>
+
+              <div>
+                <p className="font-semibold text-slate-800">Ticket résolu</p>
+                <p className="text-sm text-slate-500">
+                  Marquer ce ticket comme traité
+                </p>
+              </div>
+            </label>
+          </div>
         </div>
       </div>
     </DashboardLayout>

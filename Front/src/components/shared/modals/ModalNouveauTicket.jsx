@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { X } from "lucide-react";
-
+import { ConnaissancesContext } from "../../../context/baseConnaisssance/ConnaissancesContext";
 import { useCategory } from "../../../hooks/category/useCategory";
-
+import {useNavigate} from "react-router-dom"
 const initialFormState = {
   categoryId: "",
   titre: "",
@@ -19,8 +19,8 @@ export default function ModalNouveauTicket({
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
-
-  const categoryList = Array.isArray(categories) ? categories : [];
+  const { suggestions, suggestionConnaissances,resetSuggestions } =
+    useContext(ConnaissancesContext);
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -51,11 +51,6 @@ export default function ModalNouveauTicket({
       priority: formData.priority,
     };
 
-    if (!formData.categoryId) {
-      setError("Veuillez sélectionner une catégorie.");
-      return;
-    }
-
     if (payload.titre.length < 3) {
       setError("Le titre doit contenir au moins 3 caractères.");
       return;
@@ -78,13 +73,14 @@ export default function ModalNouveauTicket({
       setIsSubmitting(false);
     }
   };
-
+  const navigate = useNavigate()
   return (
     <div
       className="fixed inset-0 z-50 bg-black/50 px-4 py-6"
       onClick={() => {
         if (!isSubmitting) {
           setIsTicketModalOpen(false);
+          resetSuggestions()
         }
       }}
     >
@@ -98,14 +94,11 @@ export default function ModalNouveauTicket({
               <h1 className="text-2xl font-bold text-[#303030]">
                 Nouveau ticket
               </h1>
-              <p className="mt-2 text-base text-[#505050]">
-                Sélectionnez une catégorie puis décrivez votre demande.
-              </p>
             </div>
 
             <button
               type="button"
-              onClick={() => setIsTicketModalOpen(false)}
+              onClick={() => (setIsTicketModalOpen(false), resetSuggestions())}
               disabled={isSubmitting}
               className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white text-slate-600 transition hover:bg-slate-200 disabled:cursor-not-allowed disabled:opacity-60"
               aria-label="Fermer la modal"
@@ -120,36 +113,6 @@ export default function ModalNouveauTicket({
                 {error}
               </div>
             )}
-
-            <div className="flex flex-col">
-              <label
-                htmlFor="categoryId"
-                className="text-lg font-bold text-[#303030]"
-              >
-                Catégorie
-              </label>
-
-              <select
-                id="categoryId"
-                name="categoryId"
-                value={formData.categoryId}
-                onChange={handleChange}
-                disabled={isLoadingCategories || isSubmitting}
-                className="my-3 rounded-xl bg-white p-3 outline-none transition focus:ring-2 focus:ring-[#303030] disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                <option value="">
-                  {isLoadingCategories
-                    ? "Chargement des categories..."
-                    : "Sélectionner une catégorie"}
-                </option>
-
-                {categoryList.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-              </select>
-            </div>
 
             <div className="flex flex-col">
               <label
@@ -188,10 +151,56 @@ export default function ModalNouveauTicket({
                 value={formData.description}
                 onChange={handleChange}
                 minLength="10"
-                maxLength="120"
+                maxLength="500"
                 required
                 className="my-3 h-36 resize-none rounded-xl bg-white p-3 outline-none transition focus:ring-2 focus:ring-[#303030]"
               />
+              <button
+                type="button"
+                onClick={() =>
+                  suggestionConnaissances(formData.titre, formData.description)
+                }
+                className="mt-2 rounded-2xl bg-[#333370] px-6 py-3 font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-[#40408f] active:scale-95 "
+              >
+                Rechercher des solutions
+              </button>
+              {suggestions.length > 0 && (
+                <details className="mt-4 rounded-2xl bg-white shadow-sm">
+                  <summary
+                    className="cursor-pointer list-none rounded-2xl px-5 py-4 font-semibold text-[#333370] hover:bg-slate-50"
+                  >
+                     {suggestions.length} solution(s) trouvée(s)
+                  </summary>
+
+                  <div className="flex flex-col gap-3 p-4">
+                    {suggestions.map((suggestion) => (
+                      <div
+                        key={suggestion.article.id}
+                        className="rounded-xl border border-slate-200 bg-slate-50 p-4"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="font-bold">
+                              {suggestion.article.title}
+                            </h4>
+
+                            <p className="text-sm text-slate-500">
+                              Score : {suggestion.points}
+                            </p>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={()=>navigate(`/user/connaissances/${suggestion?.article?.id}`)}
+                            className="rounded-lg bg-[#333370] px-3 py-2 text-sm font-semibold text-white">
+                            Voir
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </details>
+              )}
             </div>
 
             <div className="flex flex-col">
@@ -219,7 +228,7 @@ export default function ModalNouveauTicket({
             <div className="flex justify-end gap-3 pt-2">
               <button
                 type="button"
-                onClick={() => setIsTicketModalOpen(false)}
+                onClick={() => (setIsTicketModalOpen(false),resetSuggestions())}
                 disabled={isSubmitting}
                 className="rounded-xl bg-white px-5 py-3 font-semibold text-[#303030] transition hover:bg-slate-200 disabled:cursor-not-allowed disabled:opacity-60"
               >

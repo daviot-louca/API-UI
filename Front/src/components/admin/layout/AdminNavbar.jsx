@@ -25,7 +25,9 @@ export default function AdminNavbar() {
                   ? "Gestion des Tags"
                   : location.pathname.startsWith("/admin/tags/")
                     ? "Gestion des Tags"
-                    : "";
+                    : location.pathname.startsWith("/admin/connaissances")
+                      ? "Base de connaissances"
+                      : "";
   const description =
     location.pathname === "/admin/dashboard"
       ? "Visualisez les indicateurs clés, les tickets en cours et l'activité récente."
@@ -43,7 +45,9 @@ export default function AdminNavbar() {
                   ? "Ajouter des tags afin d'automatiser les catégories"
                   : location.pathname.startsWith("/admin/tags/")
                     ? "Ajouter des tags afin d'automatiser les catégories"
-                    : "";
+                    : location.pathname.startsWith("/admin/connaissances")
+                      ? "Centralisez les solutions issues des tickets résolus."
+                      : "";
   return (
     <div className="flex flex-wrap items-start justify-between gap-5 pt-2">
       {/* LEFT */}
